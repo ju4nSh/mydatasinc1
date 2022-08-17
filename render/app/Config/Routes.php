@@ -54,4 +54,4 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
 $routes->get('index', 'Home::index');$routes->get('login', 'Home::login');$routes->get('tablas', 'Home::tablas');$routes->post('guardar', 'Home::guardar');
-$routes->post('salir', 'Home::salir');$routes->get('productos', 'Home::productos');
+$routes->post('salir', 'Home::salir');$routes->get('productos', 'Home::productos');$routes->post('registrar', 'Home::registrar');$routes->get('mostrarRegistrar', 'Home::mostrarRegistrar');

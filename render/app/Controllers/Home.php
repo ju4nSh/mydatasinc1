@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Usuarios;
+
 class Home extends BaseController
 {
     public function index()
@@ -53,20 +55,23 @@ class Home extends BaseController
     public function guardar()
     {
         $ssesion =\Config\Services::session();
-        $nombre = $this->request->getVar("Nombre");
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
         $user = $this->request->getVar("Usuario");
-        $pass = $this->request->getVar("password");
-        $home = new Home();
-        if ($user==="juan" && $pass==="1234") {
-            $var=[
-                'user'=>$nombre
-            ];
-            $ssesion->set($var);
-           $r= new Home();
-           $r->index();
-        } else {
-            $view = \Config\Services::renderer();
+        $pass =  $this->request->getVar("password");
+        $data_array = array('Usuario' => $user);
+        $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
+        foreach ($datos as $variable) {
+            if(password_verify($pass,$variable['Password'])){
+                $var=[
+                    'user'=>$user
+                ];
+                $ssesion->set($var);
+                $this->index();
+            }else{
+                $view = \Config\Services::renderer();
             echo $view->render("Contenido/login");
+            }
         }
     }
     public function salir(){
@@ -74,4 +79,21 @@ class Home extends BaseController
         $ssesion->remove("user");
         return "hola";
     }
+    public function registrar(){
+        $id = $this->request->getVar("Id");
+        $user = $this->request->getVar("Usuario");
+        $pass =  password_hash($this->request->getVar("password"), PASSWORD_DEFAULT);
+        $compra = new Usuarios();
+        $compra->insert([
+            'Identificacion' => $id,
+            'Usuario' => $user,
+            'Password' => $pass
+        ]);
+        return $this->response->redirect(site_url('/'));
+    }
+    public function mostrarRegistrar(){
+        $view = \Config\Services::renderer();
+        echo $view->render("Contenido/Registrar");
+    }
+    
 }
