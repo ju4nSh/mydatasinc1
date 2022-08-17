@@ -53,3 +53,59 @@ in APPPATH\Controllers\Home.php on line 63.
  3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
  4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 12:01:31 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 12:01:34 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 12:01:51 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 12:01:54 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 12:02:06 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 12:02:07 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 12:02:07 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 13:36:54 --> Array to string conversion
+in APPPATH\Controllers\Home.php on line 155.
+ 1 APPPATH\Controllers\Home.php(155): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Home.php', 155, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->llenarPerfil()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
