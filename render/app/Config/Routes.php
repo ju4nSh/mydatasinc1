@@ -53,5 +53,11 @@ $routes->get('/', 'Home::login');
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
-$routes->get('index', 'Home::index');$routes->get('login', 'Home::login');$routes->get('tablas', 'Home::tablas');$routes->post('guardar', 'Home::guardar');
-$routes->post('salir', 'Home::salir');$routes->get('productos', 'Home::productos');
+$routes->get('index', 'Home::index');
+$routes->get('login', 'Home::login');
+$routes->get('tablas', 'Home::tablas');
+$routes->post('guardar', 'Home::guardar');
+$routes->post('salir', 'Home::salir');
+$routes->get('productos', 'Home::productos');
+$routes->get('obtenercategoria', 'Productos::obtenerCategoria');
+$routes->get('obtenerdetallescategoria/(:any)', 'Productos::obtenerDetallesCategoria/$1');

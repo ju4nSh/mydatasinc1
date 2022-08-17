@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Producto;
+
 class Home extends BaseController
 {
     public function index()
@@ -35,12 +37,15 @@ class Home extends BaseController
     public function productos(){
         $ssesion =\Config\Services::session();
         $id= $ssesion->get("user");
-        if (!isset($id)) {
+        if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         }else{
+            $producto = new Productos();
+            $respuesta = $producto->getProduct();
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-            ->setVar('pagina', "Productos");
+            ->setVar('pagina', "Productos")
+            ->setVar("productos", $respuesta);
             echo $view->render("Contenido/contenidoProducto");
         }
         
@@ -62,8 +67,9 @@ class Home extends BaseController
                 'user'=>$nombre
             ];
             $ssesion->set($var);
-           $r= new Home();
-           $r->index();
+            $this->index();
+        //    $r= new Home();
+        //    $r->index();
         } else {
             $view = \Config\Services::renderer();
             echo $view->render("Contenido/login");
