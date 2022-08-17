@@ -1,0 +1,28 @@
+CRITICAL - 2022-08-17 07:56:37 --> Undefined variable: pagina
+in APPPATH\Views\Partes\navArriba.php on line 6.
+ 1 APPPATH\Views\Partes\navArriba.php(6): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: pagina', 'APPPATH\\Views\\Partes\\navArriba.php', 6, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\navArriba.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/navArriba', null, true)
+ 5 APPPATH\Views\Contenido\contenidoTablas.php(9): CodeIgniter\View\View->include('Partes/navArriba')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoTablas.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Home.php(67): CodeIgniter\View\View->render('Contenido/contenidoTablas')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->guardar()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-17 07:56:49 --> Undefined variable: pagina
+in APPPATH\Views\Partes\navArriba.php on line 6.
+ 1 APPPATH\Views\Partes\navArriba.php(6): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: pagina', 'APPPATH\\Views\\Partes\\navArriba.php', 6, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\navArriba.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/navArriba', null, true)
+ 5 APPPATH\Views\Contenido\contenidoTablas.php(9): CodeIgniter\View\View->include('Partes/navArriba')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoTablas.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Home.php(67): CodeIgniter\View\View->render('Contenido/contenidoTablas')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->guardar()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
