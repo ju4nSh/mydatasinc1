@@ -53,8 +53,14 @@ $routes->get('/', 'Home::login');
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+
 $routes->get('index', 'Home::index');
 $routes->get('login', 'Home::login');
+$routes->post('registrar', 'Home::registrar');
+$routes->get('mostrarRegistrar', 'Home::mostrarRegistrar');
+$routes->get('perfil', 'Home::perfil');
+$routes->get('llenarPerfil', 'Home::llenarPerfil');
+$routes->post('ModificarPerfil', 'Home::ModificarPerfil');
 $routes->get('tablas', 'Home::tablas');
 $routes->post('guardar', 'Home::guardar');
 $routes->post('salir', 'Home::salir');

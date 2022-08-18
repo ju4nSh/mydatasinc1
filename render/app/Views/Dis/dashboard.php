@@ -14,17 +14,20 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-<?= $this->include("Partes/head");?>
+<?= $this->include("Partes/head"); ?>
 
 
 <body  class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <?= $this->renderSection("navLateral");?>
-  <main id="app" class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->  
-    <?= $this->renderSection("navArriba");?>
+
+  <?= $this->renderSection("navLateral"); ?>
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <?= $this->renderSection("navArriba"); ?>
     <!-- End Navbar -->
-    <?= $this->renderSection("contenido");?>
+   <div id="app">
+    <?= $this->renderSection("contenido"); ?>
+    </div>
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -98,7 +101,9 @@
       </div>
     </div>
   </div>
+ 
   <!--   Core JS Files   -->
+
   <script src="./js/core/popper.min.js"></script>
   <script src="./js/core/bootstrap.min.js"></script>
   <script src="./js/plugins/perfect-scrollbar.min.js"></script>
@@ -196,10 +201,31 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
+
+  <script src="js/core/popper.min.js"></script>
+  <script src="js/core/bootstrap.min.js"></script>
+  <script src="js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="js/plugins/chartjs.min.js"></script>
+
+  
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="js/argon-dashboard.min.js?v=2.0.4"></script>
+  <?= $this->renderSection("funciones"); ?>
 </body>
 <?= $this->include("Partes/pie")?>
 </html>
+
+</html>
+
+
+<script type="application/javascript">
+    var q = new Vue({
+        el: '#app',
+        data: {
+            datos: [],
+        }
+    })
+  </script>
