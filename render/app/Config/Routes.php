@@ -61,3 +61,6 @@ $routes->post('salir', 'Home::salir');
 $routes->get('productos', 'Home::productos');
 $routes->get('obtenercategoria', 'Productos::obtenerCategoria');
 $routes->get('obtenerdetallescategoria/(:any)', 'Productos::obtenerDetallesCategoria/$1');
+$routes->get('attributesCategory/(:any)', 'Productos::attributesCategory/$1');
+$routes->post('publicarMercadolibre', 'Productos::publicarMercadolibre');
+$routes->post('actualizarproducto', 'Productos::actualizarProducto');

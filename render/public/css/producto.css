@@ -7,16 +7,18 @@ a.addProductBoton {
     text-decoration: none;
 }
 
-a.addProductBoton > i {
+a.addProductBoton>i {
     font-size: 18px;
     /* color: var(--bs-info) */
 }
 
-div#agregarProductoModal {
-    z-index: 10001;
+div#agregarProductoModal,
+div#modalActualizarProductos
+{
+z-index: 10001 !important;
 }
 
-div.categoriesDetail > .form-group {
+div.categoriesDetail>.form-group {
     padding: 0;
     max-height: 300px;
     overflow: scroll;
@@ -24,27 +26,29 @@ div.categoriesDetail > .form-group {
     cursor: pointer;
 }
 
-div.categoriesDetail > .form-group::-webkit-scrollbar {
+div.categoriesDetail>.form-group::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
-div.categoriesDetail > .form-group::-webkit-scrollbar:vertical {
-    width:6px;
+div.categoriesDetail>.form-group::-webkit-scrollbar:vertical {
+    width: 6px;
 }
 
-div.categoriesDetail > .form-group::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+div.categoriesDetail>.form-group::-webkit-scrollbar-button:increment,
+.contenedor::-webkit-scrollbar-button {
     display: none;
-} 
-div.categoriesDetail > .form-groupcontenedor::-webkit-scrollbar:horizontal {
+}
+
+div.categoriesDetail>.form-groupcontenedor::-webkit-scrollbar:horizontal {
     height: 10px;
 }
 
-div.categoriesDetail > .form-group::-webkit-scrollbar-thumb {
+div.categoriesDetail>.form-group::-webkit-scrollbar-thumb {
     background-color: #5e72e4;
     border-radius: 20px;
     border: 1px solid #5e72e4;
 }
 
-div.categoriesDetail > .form-group::-webkit-scrollbar-track {
-    border-radius: 6px;  
+div.categoriesDetail>.form-group::-webkit-scrollbar-track {
+    border-radius: 6px;
 }

@@ -61,12 +61,12 @@
                                                 <?php
                                                 if ($value["estado"]) {
                                                 ?>
-                                                    <a href="javascript:;" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-toggle="tooltip" data-original-title="Edit user">
+                                                    <a data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-original-title="Edit user">
                                                         Editar
                                                     </a> <?php
                                                         } else {
                                                             ?>
-                                                    <a href="javascript:;" class="text-light font-weight-bold text-xs badge badge-sm bg-warning" data-toggle="tooltip" data-original-title="Edit user">
+                                                    <a href="javascript:;" class="text-light font-weight-bold text-xs badge badge-sm bg-warning">
                                                         Activar
                                                     </a>
 
@@ -74,6 +74,12 @@
                                                         }
                                                 ?>
 
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <input hidden type="text" value="<?= $value["descripcion"] ?>">
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <input hidden type="text" value="<?= $value["id"] ?>">
                                             </td>
                                         </tr>
 
@@ -88,6 +94,7 @@
             </div>
         </div>
     </div>
+
     <!-- MODAL AGREGAR UN NUEVO PRODUCTO -->
     <div class="modal fade" id="agregarProductoModal" tabindex="-1" role="dialog" aria-labelledby="agregarProductoModal" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -156,8 +163,53 @@
             </div>
         </div>
     </div>
-
     <!-- FIN MODAL AGREGAR UN NUEVO PRODUCTO -->
-</div>
 
-<?= $this->include("scripts/productos") ?>
+    <!-- MODAL ACTUALIZAR PRODUCTO -->
+    <div class="modal fade" id="modalActualizarProductos" tabindex="-1" role="dialog" aria-labelledby="labelActualizar" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="labelActualizar">Actualizar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input id="codigoPaActualizar" type="hidden" name="" value="">
+                        <input id="codigoProductoAC" type="hidden" name="" value="">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="nombreAC">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="message-text" class="col-form-label">Cantidad:</label>
+                                <input class="form-control" type="text" name="" id="cantidadAC">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="message-text" class="col-form-label">Precio:</label>
+                                <input class="form-control" type="text" name="" id="precioAC">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="my-input">Descripción:</label>
+                                <textarea class="form-control" name="" id="descripcionAC" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cerrarAC" data-dismiss="modal">Cerrar</button>
+                    <button @click="publicarAC" type="button" class="btn btn-primary">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN MODAL ACTUALIZAR PRODUCTO -->
+
+</div>

@@ -201,5 +201,5 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="js/argon-dashboard.min.js?v=2.0.4"></script>
 </body>
-
+<?= $this->include("Partes/pie")?>
 </html>
