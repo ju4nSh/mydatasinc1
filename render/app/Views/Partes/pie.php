@@ -28,4 +28,3 @@
         </div>
     </div>
 </footer>
-<?= $this->include("scripts/productos") ?>

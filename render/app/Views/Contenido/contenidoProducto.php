@@ -12,3 +12,7 @@
 <?= $this->section("contenido"); ?>
 <?= $this->include("Partes/productos")?>
 <?= $this->endSection() ?>
+
+<?= $this->section("funciones"); ?>
+<?= $this->include("scripts/productos")?>
+<?= $this->endSection() ?>
