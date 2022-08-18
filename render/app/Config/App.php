@@ -24,7 +24,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://localhost/render/public/';
+    public $baseURL = 'http://localhost/mydatasinc1/render/public/';
 
     /**
      * --------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Producto;
 use App\Models\Usuarios;
 
 class Home extends BaseController
@@ -33,17 +34,19 @@ class Home extends BaseController
             echo $view->render("Contenido/contenidoTablas");
         }
     }
-
-    public function productos()
-    {
-        $ssesion = \Config\Services::session();
-        $id = $ssesion->get("user");
-        if (!isset($id)) {
+    
+    public function productos(){
+        $ssesion =\Config\Services::session();
+        $id= $ssesion->get("user");
+        if (empty($id)) {
             return $this->response->redirect(site_url('/'));
-        } else {
+        }else{
+            $producto = new Productos();
+            $respuesta = $producto->getProduct();
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Productos");
+            ->setVar('pagina', "Productos")
+            ->setVar("productos", $respuesta);
             echo $view->render("Contenido/contenidoProducto");
         }
     }
@@ -59,6 +62,7 @@ class Home extends BaseController
         $db = \Config\Database::connect();
         $builder = $db->table('users');
         $user = $this->request->getVar("Usuario");
+
         $pass =  $this->request->getVar("password");
         $data_array = array('Usuario' => $user);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();

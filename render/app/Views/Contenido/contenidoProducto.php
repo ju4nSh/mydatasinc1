@@ -2,88 +2,236 @@
 
 
 <?= $this->section("navLateral"); ?>
-<?= $this->include("Partes/navLateral");?>
+<?= $this->include("Partes/navLateral"); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section("navArriba"); ?>
-<?= $this->include("Partes/navArriba");?>
+<?= $this->include("Partes/navArriba"); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
-<div class="row mt-3">
-        <div class="col-lg-6 mb-lg-0 mb-4">
-<div class="container">
-<div class="card ">
-            <div class="card-header pb-0 p-4">
-              <div class="d-flex justify-content-between">
-                <h4 class="mb-2">Datos</h4>
-              </div>
-            </div>
-            <div class="container">
-            <form method="post" action="<?= site_url('/agregar') ?>">
-                            <div class="form-group">
-                                <div class="row prueba">
-                                    <div class="col-4">
-                                        <label for="exampleInputEmail1">Id</label>
-                                        <input type="text" class="form-control" aria-describedby="emailHelp" id="txtId"
-                                            name="txtId">
-                                        <template v-if="condicionNombreCat===true">
-                                            <label for="exampleInputEmail1">Titulo ---- Categoria: {{NombreCat}}
-                                            </label>
-                                        </template>
-                                        <template v-else>
-                                            <label for="exampleInputEmail1">Titulo </label>
-                                        </template>
-                                      
-                                        <input type="text" class="form-control" aria-describedby="emailHelp"
-                                            id="NameCategoria" name="NameCategoria" :value="idCategoria" hidden>
-                                        <label for="exampleInputEmail1">Precio</label>
-                                        <input type="text" class="form-control" aria-describedby="emailHelp"
-                                            id="txtPrecio" name="txtPrecio">
-                                        <label for="exampleInputEmail1">Cantidad</label>
-                                        <input type="text" class="form-control" aria-describedby="emailHelp"
-                                            id="txtCantidad" name="txtCantidad">
-                                        <br>
-                                        <label for="exampleInputEmail1">imagen</label>
-                                        <input type="button" @click="count=count+1" value="+">
-                                        <template v-for="(val, i) in count">
-                                            <input type="text" class="form-control" aria-describedby="emailHelp"
-                                                :id="'txtImagen'+i" :name="'txtImagen'+i">
-                                            <br>
-                                        </template>
-                                    </div>
-                                    <div class="col-6">
-                                        <template v-for="(data, p) in atributos">
-                                            <input type="text" class="form-control" aria-describedby="emailHelp"
-                                                :id="'txtNombreAtributo'+p" :name="'txtNombreAtributo'+p"
-                                                :value="data.id" hidden>
-                                            <label for="exampleInputEmail1">{{data.id}}</label>
-                                            <template v-if="data.values===null">
-                                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                                    :id="'txtAtributo'+p" :name="'txtAtributo'+p">
-                                            </template>
-                                            <template v-else>
-                                                <select class="form-control" :name="'txtAtributo'+p"
-                                                    :id="'txtAtributo'+p">
-                                                    <template v-for="datavalue in data.values">
-                                                        <option :value="datavalue.name">{{datavalue.name}}</option>
-                                                    </template>
-                                                </select>
-                                                <br>
-                                            </template>
-                                        </template>
-                                        <input type="text" class="form-control" aria-describedby="emailHelp"
-                                            id="numAtributo" name="numAtributo" :value="atributos.length" hidden>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="numerfotos"
-                                :value="count">Submit</button>
-                        </form>
-            </div>
-            </div>
-          </div>
+<div class="row mt-3" id="test">
+	<div class="col-lg-12 mb-lg-0 mb-4">
+		<div class="row p-3">
+			<div class="card col-md-auto m-1 d-flex justify-content-between">
+				<a data-target="#agregarProductoModal" @click="categoriasProductos" data-toggle="modal" class="addProductBoton"><i class="fas fa-plus"></i>Agregar producto</a>
+			</div>
+			<div class="card col-md-12">
+				<div class="card-header pb-0">
+					<div class="d-flex justify-content-between align-content-center">
+						<h4 class="mb-2">Mis productos</h4>
+
+					</div>
+				</div>
+				<div class="container">
+					<div class="card-body px-0 pt-0 pb-2">
+						<div class="table-responsive p-0">
+							<table class="table align-items-center mb-0">
+								<thead>
+									<tr>
+										<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
+										<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">codigo</th>
+										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">categoria</th>
+										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">stock</th>
+										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">precio</th>
+										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">link</th>
+										<th class="text-secondary opacity-7"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									// var_dump($productos)
+									foreach ($productos as $value) {
+									?>
+										<tr>
+											<td>
+												<div class="d-flex px-2 py-1">
+													<div>
+														<img src="<?= json_decode($value["imagen"])[0] ?>" class="avatar avatar-sm me-3" alt="user1">
+													</div>
+													<div class="d-flex flex-column justify-content-center">
+														<h6 class="mb-0 text-sm"><?= $value["nombre"] ?></h6>
+													</div>
+												</div>
+											</td>
+											<td>
+												<p class="text-xs font-weight-bold mb-0"><?= $value["codigo"] ?></p>
+											</td>
+											<td class="align-middle text-center text-sm">
+												<span class="badge badge-sm bg-gradient-success"><?= $value["categoria"] ?></span>
+											</td>
+											<td class="align-middle text-center">
+												<span class="text-secondary text-xs font-weight-bold"><?= $value["cantidad"] ?></span>
+											</td>
+											<td class="align-middle text-center">
+												<span class="text-secondary text-xs font-weight-bold"><?= $value["precio"] ?></span>
+											</td>
+											<td class="align-middle text-center">
+												<a target="_blank" href="<?= $value["link"] ?>" class="text-secondary text-xs font-weight-bold">Visitar</a>
+											</td>
+											<td class="align-middle text-center">
+												<?php
+												if ($value["estado"]) {
+												?>
+													<a data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-original-title="Edit user">
+														Editar
+													</a> <?php
+														} else {
+															?>
+													<a href="javascript:;" class="text-light font-weight-bold text-xs badge badge-sm bg-warning">
+														Activar
+													</a>
+
+												<?php
+														}
+												?>
+
+											</td>
+											<td class="align-middle text-center">
+												<input hidden type="text" value="<?= $value["descripcion"] ?>">
+											</td>
+											<td class="align-middle text-center">
+												<input hidden type="text" value="<?= $value["id"] ?>">
+											</td>
+										</tr>
+
+									<?php
+									}
+									?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- MODAL AGREGAR UN NUEVO PRODUCTO -->
+	<div class="modal fade" id="agregarProductoModal" tabindex="-1" role="dialog" aria-labelledby="agregarProductoModal" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Publicar un producto nuevo</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input id="codigoPaPublicar" type="hidden" name="" value="">
+						<div class="row categoriesDetail">
+							<div class="form-group col-md-auto">
+								<div v-for="(c, index) in categoriasEncontradas" :key="index" class="form-control">
+									<div @click="detallesCategoria(c.id, index)" for="my-input">{{c.name}}</div>
+								</div>
+							</div>
+							<div class="form-group col-md-auto">
+								<div v-for="(c, index) in detallesEncontrados" :key="index" class="form-control">
+									<div @click="subcategory(c.id, -1)" :id="c.id" for="my-input">{{c.name}}</div>
+								</div>
+							</div>
+
+							<div class="form-group col-md-auto" v-for="(item, p) in childrenCategories">
+								<div is="sub-category" v-for="(j, index) in item" v-bind:id="j.id" v-bind:name="j.name" v-on:add="subcategory(j.id, p)"></div>
+							</div>
+
+						</div>
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label for="recipient-name" class="col-form-label">Nombre:</label>
+								<input type="text" class="form-control col-md-11" id="nombrePN">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label for="message-text" class="col-form-label">Categoria:</label>
+								<input class="form-control" type="text" name="" id="categoriaPN">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="message-text" class="col-form-label">Precio:</label>
+								<input class="form-control" type="text" name="" id="precioPN">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label for="message-text" class="col-form-label">Cantidad:</label>
+								<input class="form-control" type="text" name="" id="cantidadPN">
+							</div>
+							<div class="form-group col-md-6">
+								<label class="col-form-label" for="my-input">Imagen url:</label>
+								<a @click="crearInputImagen" href="javascript:;" class="bg-info p-1"><i class="fas fa-plus"></i></a>
+
+								<div class="fieldInput" class="form-control">
+									<input v-for="input in inputImagen" id="imagenPN" class="form-control" :class="input.clase" type="text" name="">
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div v-for="(item, p) in camposRequeridos" is="campos" v-bind:typedata="item.value_type" v-bind:id="item.id" v-bind:name="item.name" v-bind:data="item.data" v-bind:allowed_units="item.allowed_units"></div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="cerrarPN" data-dismiss="modal">Cerrar</button>
+					<button @click="publicarPN" type="button" class="btn btn-primary">Publicar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIN MODAL AGREGAR UN NUEVO PRODUCTO -->
+
+	<!-- MODAL ACTUALIZAR PRODUCTO -->
+	<div class="modal fade" id="modalActualizarProductos" tabindex="-1" role="dialog" aria-labelledby="labelActualizar" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="labelActualizar">Actualizar producto</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input id="codigoPaActualizar" type="hidden" name="" value="">
+						<input id="codigoProductoAC" type="hidden" name="" value="">
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label for="recipient-name" class="col-form-label">Nombre:</label>
+								<input type="text" class="form-control" id="nombreAC">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label for="message-text" class="col-form-label">Cantidad:</label>
+								<input class="form-control" type="text" name="" id="cantidadAC">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="message-text" class="col-form-label">Precio:</label>
+								<input class="form-control" type="text" name="" id="precioAC">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label for="my-input">Descripción:</label>
+								<textarea class="form-control" name="" id="descripcionAC" cols="30" rows="10"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="cerrarAC" data-dismiss="modal">Cerrar</button>
+					<button @click="publicarAC" type="button" class="btn btn-primary">Actualizar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIN MODAL ACTUALIZAR PRODUCTO -->
+
 </div>
-</div>
-          </div>
+<?= $this->endSection() ?>
+
+<?= $this->section("funciones"); ?>
+<?= $this->include("scripts/productos") ?>
 <?= $this->endSection() ?>

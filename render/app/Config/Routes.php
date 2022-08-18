@@ -53,7 +53,20 @@ $routes->get('/', 'Home::login');
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
-$routes->get('index', 'Home::index');$routes->get('login', 'Home::login');$routes->get('tablas', 'Home::tablas');$routes->post('guardar', 'Home::guardar');
-$routes->post('salir', 'Home::salir');$routes->get('productos', 'Home::productos');$routes->post('registrar', 'Home::registrar');$routes->get('mostrarRegistrar', 'Home::mostrarRegistrar');
-$routes->get('perfil', 'Home::perfil');$routes->get('llenarPerfil', 'Home::llenarPerfil');
+
+$routes->get('index', 'Home::index');
+$routes->get('login', 'Home::login');
+$routes->post('registrar', 'Home::registrar');
+$routes->get('mostrarRegistrar', 'Home::mostrarRegistrar');
+$routes->get('perfil', 'Home::perfil');
+$routes->get('llenarPerfil', 'Home::llenarPerfil');
 $routes->post('ModificarPerfil', 'Home::ModificarPerfil');
+$routes->get('tablas', 'Home::tablas');
+$routes->post('guardar', 'Home::guardar');
+$routes->post('salir', 'Home::salir');
+$routes->get('productos', 'Home::productos');
+$routes->get('obtenercategoria', 'Productos::obtenerCategoria');
+$routes->get('obtenerdetallescategoria/(:any)', 'Productos::obtenerDetallesCategoria/$1');
+$routes->get('attributesCategory/(:any)', 'Productos::attributesCategory/$1');
+$routes->post('publicarMercadolibre', 'Productos::publicarMercadolibre');
+$routes->post('actualizarproducto', 'Productos::actualizarProducto');

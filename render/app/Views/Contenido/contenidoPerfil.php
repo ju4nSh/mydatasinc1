@@ -83,7 +83,6 @@
       </div>
     </div>
     
-  <?= $this->include("Partes/pie"); ?>
 </div>
 </div>
 
