@@ -168,7 +168,7 @@
                 <div class="text-center">
                   <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
                 </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="javascript:;" class="text-dark font-weight-bolder">Sign in</a></p>
+                <p class="text-sm mt-3 mb-0">Already have an account? <a href="<?= base_url('/')?>" class="text-dark font-weight-bolder">Sign in</a></p>
               </form>
             </div>
           </div>

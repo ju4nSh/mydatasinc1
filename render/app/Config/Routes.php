@@ -70,3 +70,6 @@ $routes->get('obtenerdetallescategoria/(:any)', 'Productos::obtenerDetallesCateg
 $routes->get('attributesCategory/(:any)', 'Productos::attributesCategory/$1');
 $routes->post('publicarMercadolibre', 'Productos::publicarMercadolibre');
 $routes->post('actualizarproducto', 'Productos::actualizarProducto');
+$routes->get('mostrarClientesReferenciados', 'Home::mostrarClientesReferenciados');
+$routes->post('agregarClienteRef', 'Home::agregarClienteRef');
+$routes->post('eliminarClienteRef', 'Home::eliminarClienteRef');

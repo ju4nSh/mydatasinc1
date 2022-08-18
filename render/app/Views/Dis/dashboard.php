@@ -25,7 +25,6 @@
     <!-- Navbar -->
     <?= $this->renderSection("navArriba"); ?>
     <!-- End Navbar -->
-
     <?= $this->renderSection("contenido"); ?>
 
   </main>
