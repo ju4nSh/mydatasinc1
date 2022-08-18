@@ -29,6 +29,10 @@
   <link id="pagestyle" href="css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+   <!-- sweetallert -->
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- FIN VUE -->
+
   <!-- VUE -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <!-- FIN VUE -->

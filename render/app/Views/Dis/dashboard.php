@@ -25,9 +25,9 @@
     <!-- Navbar -->
     <?= $this->renderSection("navArriba"); ?>
     <!-- End Navbar -->
-   <div id="app">
+   
     <?= $this->renderSection("contenido"); ?>
-    </div>
+    
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -221,11 +221,4 @@
 </html>
 
 
-<script type="application/javascript">
-    var q = new Vue({
-        el: '#app',
-        data: {
-            datos: [],
-        }
-    })
-  </script>
+

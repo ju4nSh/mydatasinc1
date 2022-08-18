@@ -8,4 +8,11 @@ $(document).ready(function() {
         }
     });
   });
+
+  var q = new Vue({
+        el: '#app',
+        data: {
+            datos: [],
+        }
+    })
 </script>

@@ -10,7 +10,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
-<div class="container-fluid py-4">
+<div class="container-fluid py-4" id="app">
   <div class="row">
     <div class="col-md-7">
       <div class="card">
@@ -82,12 +82,11 @@
         </div>
       </div>
     </div>
-    
-  <?= $this->include("Partes/pie"); ?>
+  
 </div>
 </div>
 
-<?= $this->endSection("contenido") ?>
+<?= $this->endSection() ?>
 
 <?= $this->section("funciones"); ?>
 <?= $this->include("Archexternos/scripts")?>

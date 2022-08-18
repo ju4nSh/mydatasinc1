@@ -89,20 +89,28 @@ class Home extends BaseController
     {
         $id = $this->request->getVar("Id");
         $user = $this->request->getVar("Usuario");
-        $pass =  password_hash($this->request->getVar("password"), PASSWORD_DEFAULT);
-        $compra = new Usuarios();
-        $compra->insert([
-            'Identificacion' => $id,
-            'Usuario' => $user,
-            'Password' => $pass
-        ]);
-        return $this->response->redirect(site_url('/'));
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $data_array = array('Usuario' => $user,'Identificacion ' => $id);
+        $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
+        if(count($datos) > 0){
+            $pass =  password_hash($this->request->getVar("password"), PASSWORD_DEFAULT);
+            $data_pass = array(
+                'Password' => $pass
+            );
+            $builder->where('Usuario', $user);
+            $builder->update($data_pass);
+            return $this->response->redirect(site_url('/'));
+        }else{
+            return $this->response->redirect(site_url('/'));
+        }
     }
     public function mostrarRegistrar()
     {
         $view = \Config\Services::renderer();
         echo $view->render("Contenido/Registrar");
     }
+    
     public function perfil()
     {
         $ssesion = \Config\Services::session();
@@ -170,5 +178,69 @@ class Home extends BaseController
             
         }
         echo json_encode($array);
+    }
+    public function mostrarClientesReferenciados()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
+        $data_array = array('Referenciado' => $id);
+        $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
+        foreach ($datos as $variable) {
+            $array []= [
+                'Identificacion' => $variable['Identificacion'],
+                'Nombre' => $variable['Nombre'],
+                'Apellido' => $variable['Apellido'],
+                'Correo' => $variable['Correo'],
+                'Ciudad' => $variable['Ciudad'],
+                'Pais' => $variable['Pais']
+            ];
+            
+        }
+        echo json_encode($array);
+    }
+
+    public function agregarClienteRef()
+    {
+        $Identificacion=$this->request->getVar("Id");
+        $Nombre=$this->request->getVar("Nombre");
+        $Apellido=$this->request->getVar("Apellido");
+        $Correo=$this->request->getVar("Correo");
+        $Ciudad=$this->request->getVar("Ciudad");
+        $Pais=$this->request->getVar("Pais");
+        $Usuario=$this->request->getVar("Usuario");
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
+        $compra = new Usuarios();
+        $compra->insert([
+            'Identificacion' => $Identificacion,
+            'Nombre' => $Nombre,
+            'Apellido' => $Apellido,
+            'Correo' => $Correo,
+            'Ciudad' => $Ciudad,
+            'Pais' => $Pais,
+            'Usuario' => $Usuario,
+            'Referenciado' => $id,
+        ]);
+        
+        $dato[]=[
+            'Identificacion' => $Identificacion,
+            'Nombre' => $Nombre,
+            'Apellido' => $Apellido,
+            'Correo' => $Correo,
+            'Ciudad' => $Ciudad,
+            'Pais' => $Pais,
+            'Usuario' => $Usuario,
+            'Referenciado' => $id,
+        ];
+        echo json_encode($dato);
+    }
+    public function eliminarClienteRef(){
+        $Identificacion=$this->request->getVar("identificacion");
+        $usuario = new Usuarios();
+        $data_array = array('Identificacion' => $Identificacion);
+        $usuario->delete($data_array);
+        echo json_encode("dsjdkskdj");
     }
 }
