@@ -79,6 +79,7 @@
             detallesEncontrados: [],
             childrenCategories: [],
             camposRequeridos: [],
+            inputImagen: [],
         },
         mounted: function() {
             // $("#nombrePN").keyup(c => {
@@ -102,6 +103,11 @@
 
         filters: {},
         methods: {
+            crearInputImagen: function () {
+                app.inputImagen.push({
+                    clase: "input",
+                })
+            },
             subcategory: function(id, index) {
                 $.ajax({
                     url: "<?= base_url("obtenerdetallescategoria") ?>/" + id,
@@ -206,11 +212,16 @@
                     //  console.log($(`#${value.id}`).val());
                 });
                 // console.log(attributes)
+                let imagenes = [];
+                $.each($(".input"), function (indexInArray, valueOfElement) {
+                    if(valueOfElement.value !== "")
+                     imagenes.push(valueOfElement.value)
+                });
                 $.ajax({
                     async: false,
                     type: "post",
                     url: "<?= base_url("publicarMercadolibre") ?>",
-                    data: "nombre=" + $("#nombrePN").val() + "&categoria=" + $("#categoriaPN").val() + "&precio=" + $("#precioPN").val() + "&cantidad=" + $("#cantidadPN").val() + "&imagen=" + $("#imagenPN").val() + "&attributes=" + JSON.stringify(attributes),
+                    data: "nombre=" + $("#nombrePN").val() + "&categoria=" + $("#categoriaPN").val() + "&precio=" + $("#precioPN").val() + "&cantidad=" + $("#cantidadPN").val() + "&imagen=" + JSON.stringify(imagenes) + "&attributes=" + JSON.stringify(attributes),
                     dataType: "json",
                     success: function(response) {
                         console.log(response)

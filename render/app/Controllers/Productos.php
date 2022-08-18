@@ -74,10 +74,13 @@ class Productos extends Controller
             "precio" => $this->request->getVar("precio"),
             "categoria" => $this->request->getVar("categoria"),
             "cantidad" => $this->request->getVar("cantidad"),
-            "imagen" => $this->request->getVar("imagen"),
+            "imagen" => json_decode($this->request->getVar("imagen")),
             "attributes" => json_decode($this->request->getVar("attributes")),
         ];
-        $imagen = array($data["imagen"]);
+        $imagen = $data["imagen"];
+        foreach($imagen as $key => $img){
+            $imagen[$key] = array("source" => $img);
+        }
         $datos = [
             "title" => $data["nombre"],
             "category_id" => $data["categoria"],
@@ -86,11 +89,7 @@ class Productos extends Controller
             "available_quantity" => $data["cantidad"],
             "condition" => "new",
             "listing_type_id" => "gold_pro",
-            "pictures" => [
-                [
-                    "source" => "$imagen",
-                ]
-            ],
+            "pictures" => $imagen ,
             "attributes" => $data["attributes"],
         ];
 
@@ -110,7 +109,7 @@ class Productos extends Controller
                 "precio" => $data["precio"],
                 "categoria" => $categoryP,
                 "codigo"  => $idP,
-                "imagen" => $imagen,
+                "imagen" => json_encode($data["imagen"]),
                 "link" => $linkP,
                 "cantidad" => $data["cantidad"]
             ];
