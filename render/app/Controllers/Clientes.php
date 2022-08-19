@@ -22,7 +22,8 @@ class Clientes extends Controller
         $view = \Config\Services::renderer();
         $view->setVar('one', session("user"))
         ->setVar("clientes", $this->listarClientes())
-            ->setVar('pagina', "Usuarios");
+            ->setVar('pagina', "Usuarios")
+            ->setVar('titulo', "Usuarios");
         return $view->render("Contenido/contenidoUsuario");
     }
     public function llenarClientes()

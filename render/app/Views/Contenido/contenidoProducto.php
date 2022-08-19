@@ -1,6 +1,10 @@
 <?= $this->extend("Dis/dashboard"); ?>
 
 
+<?= $this->section("head"); ?>
+<?= $this->include("Partes/head"); ?>
+<?= $this->endSection() ?>
+
 <?= $this->section("navLateral"); ?>
 <?= $this->include("Partes/navLateral"); ?>
 <?= $this->endSection() ?>

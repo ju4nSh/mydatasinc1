@@ -13,9 +13,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-
-<?= $this->include("Partes/head")?>
-
+<?= $this->renderSection("head"); ?>
 <html lang="en">
 
 

@@ -16,7 +16,8 @@ class Home extends BaseController
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Salpicadero");
+                ->setVar('pagina', "Salpicadero")
+                ->setVar('titulo', "Dashboard");
             echo $view->render("Contenido/contenidoDashboard");
         }
     }
@@ -30,7 +31,8 @@ class Home extends BaseController
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Tablas");
+                ->setVar('pagina', "Clientes")
+                ->setVar('titulo', "Clientes");
             echo $view->render("Contenido/contenidoTablas");
         }
     }
@@ -46,8 +48,9 @@ class Home extends BaseController
             $respuesta = $producto->getProduct();
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Productos")
-                ->setVar("productos", $respuesta);
+            ->setVar('pagina', "Productos")
+            ->setVar("productos", $respuesta)
+            ->setVar('titulo', "Productos");
             echo $view->render("Contenido/contenidoProducto");
         }
     }
@@ -122,20 +125,22 @@ class Home extends BaseController
             $view = \Config\Services::renderer();
 
             $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil");
+                ->setVar('pagina', "Perfil")
+                ->setVar('titulo', "Perfil");
             echo $view->render("Contenido/contenidoPerfil");
         }
     }
 
     public function ModificarPerfil()
     {
-        $Nombre = $this->request->getVar("Nombre");
-        $Apellido = $this->request->getVar("Apellido");
-        $Correo = $this->request->getVar("Correo");
-        $Direccion = $this->request->getVar("Direccion");
-        $Ciudad = $this->request->getVar("Ciudad");
-        $Pais = $this->request->getVar("Pais");
-        $SobreMi = $this->request->getVar("SobreMi");
+        $Nombre=$this->request->getVar("Nombre");
+        $Foto=$this->request->getVar("Foto");
+        $Apellido=$this->request->getVar("Apellido");
+        $Correo=$this->request->getVar("Correo");
+        $Direccion=$this->request->getVar("Direccion");
+        $Ciudad=$this->request->getVar("Ciudad");
+        $Pais=$this->request->getVar("Pais");
+        $SobreMi=$this->request->getVar("SobreMi");
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $db = \Config\Database::connect();
@@ -148,14 +153,17 @@ class Home extends BaseController
             'Ciudad' => $Ciudad,
             'Pais' => $Pais,
             'SobreMi' => $SobreMi,
+            'Foto' => $Foto
         );
         $builder->where('Usuario', $id);
         $builder->update($data_array);
         $view = \Config\Services::renderer();
 
-        $view->setVar('one', $id)
-            ->setVar('pagina', "Perfil");
-        echo $view->render("Contenido/contenidoPerfil");
+            $view->setVar('one', $id)
+                ->setVar('pagina', "Perfil")
+                ->setVar('titulo', "Perfil");
+            echo $view->render("Contenido/contenidoPerfil");
+
     }
     public function llenarPerfil()
     {
@@ -166,7 +174,7 @@ class Home extends BaseController
         $data_array = array('Usuario' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
-            $array[] = [
+            $array []= [
                 'Nombre' => $variable['Nombre'],
                 'Apellido' => $variable['Apellido'],
                 'Correo' => $variable['Correo'],
@@ -174,6 +182,7 @@ class Home extends BaseController
                 'Ciudad' => $variable['Ciudad'],
                 'Pais' => $variable['Pais'],
                 'SobreMi' => $variable['SobreMi'],
+                'Foto' => $variable['Foto'],
             ];
         }
         echo json_encode($array);
@@ -247,8 +256,9 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $view = \Config\Services::renderer();
-        $view->setVar('one', $id)
-            ->setVar('pagina', "Perfil");
-        echo $view->render("Contenido/contenidoTablaApi");
+            $view->setVar('one', $id)
+                ->setVar('pagina', "Tabla Api")
+                ->setVar('titulo', "Tabla Api");
+            echo $view->render("Contenido/contenidoTablaApi");
     }
 }

@@ -1,5 +1,8 @@
 <?= $this->extend("Dis/dashboard"); ?>
 
+<?= $this->section("head"); ?>
+<?= $this->include("Partes/head"); ?>
+<?= $this->endSection() ?>
 
 <?= $this->section("navLateral"); ?>
 <?= $this->include("Partes/navLateral");?>
@@ -33,6 +36,7 @@
 
                                     </div>
                                     <br>
+                                    <div class="container">
                                     <v-data-table :headers="columnas" :items="articulos" class="elevation-19"
                                         :search="search">
                                         <template v-slot:item.actions="{ item }">
@@ -42,6 +46,7 @@
                                         </template>
                                         </template>
                                     </v-data-table>
+                                    </div>
                                 </v-main>
                             </v-app>
                         </div>
