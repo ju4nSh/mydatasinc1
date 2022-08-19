@@ -1,5 +1,8 @@
 <?= $this->extend("Dis/dashboard"); ?>
 
+<?= $this->section("title"); ?>
+Productos
+<?= $this->endSection() ?>
 
 <?= $this->section("navLateral"); ?>
 <?= $this->include("Partes/navLateral"); ?>
@@ -10,7 +13,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
-<div class="row mt-3" id="test">
+<div class="row mt-3">
 	<div class="col-lg-12 mb-lg-0 mb-4">
 		<div class="row p-3">
 			<div class="card col-md-auto m-1 d-flex justify-content-between">
@@ -87,11 +90,11 @@
 												?>
 
 											</td>
-											<td class="align-middle text-center">
-												<input hidden type="text" value="<?= $value["descripcion"] ?>">
+											<td hidden class="align-middle text-center">
+												<input  type="text" value="<?= $value["descripcion"] ?>">
 											</td>
-											<td class="align-middle text-center">
-												<input hidden type="text" value="<?= $value["id"] ?>">
+											<td hidden class="align-middle text-center">
+												<input  type="text" value="<?= $value["id"] ?>">
 											</td>
 										</tr>
 

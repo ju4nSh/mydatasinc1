@@ -13,6 +13,10 @@ class Clientes extends Controller
     {
         $this->clientes = new Cliente();
     }
+    public function listarClientes()
+    {
+        return json_encode(["result" => 1, "data" => $this->clientes->findAll()]);
+    }
     public function index()
     {
         $view = \Config\Services::renderer();

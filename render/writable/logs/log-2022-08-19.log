@@ -20,3 +20,23 @@ in APPPATH\Controllers\Clientes.php on line 47.
  4 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
  5 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  6 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 08:56:38 --> Undefined variable: productos
+in APPPATH\Views\Contenido\contenidoUsuario.php on line 31.
+ 1 APPPATH\Views\Contenido\contenidoUsuario.php(31): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: productos', 'APPPATH\\Views\\Contenido\\contenidoUsuario.php', 31, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoUsuario.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 APPPATH\Controllers\Clientes.php(21): CodeIgniter\View\View->render('Contenido/contenidoUsuario')
+ 5 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->index()
+ 6 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 7 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 08:58:03 --> Undefined variable: value
+in APPPATH\Views\Contenido\contenidoUsuario.php on line 34.
+ 1 APPPATH\Views\Contenido\contenidoUsuario.php(34): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: value', 'APPPATH\\Views\\Contenido\\contenidoUsuario.php', 34, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoUsuario.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 APPPATH\Controllers\Clientes.php(21): CodeIgniter\View\View->render('Contenido/contenidoUsuario')
+ 5 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->index()
+ 6 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 7 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

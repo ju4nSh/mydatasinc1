@@ -1,5 +1,4 @@
 <script>
-    alert(1)
     $(document).ready(data => {
         $('#modalActualizarProductos').on('show.bs.modal', function(event) {
             // var button = $(event.relatedTarget)
@@ -61,24 +60,31 @@
     var app = new Vue({
         el: '#app',
         components: {
-            subCategory: subCategory,
-            campos: campos
+
         },
         data: {
-            categoriasEncontradas: [],
-            detallesEncontrados: [],
-            childrenCategories: [],
-            camposRequeridos: [],
-            inputImagen: [],
+            usuariosBD: [],
+            usuarioActivo: true,
         },
         mounted: function() {
 
         },
-        created: function() {},
+        created: function() {
+            $.ajax({
+                url: "<?= base_url("/listarClientes") ?>",
+                dataType: "json",
+                success: function(response) {
+                    if (response.result)
+                        app.usuariosBD = response.data
+                    else
+                        swal("error", "no se encontraron usuarios", "error");
+                }
+            });
+        },
 
         filters: {},
         methods: {
-            
+
         },
         watch: {}
     });

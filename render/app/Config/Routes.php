@@ -76,3 +76,4 @@ $routes->post('eliminarClienteRef', 'Home::eliminarClienteRef');
 
 $routes->get('generateClient', 'Clientes::llenarClientes');
 $routes->get('usuarios', 'Clientes::index');
+$routes->get('listarClientes', 'Clientes::listarClientes');
