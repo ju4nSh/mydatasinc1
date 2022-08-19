@@ -87,6 +87,7 @@
     <!-- Navbar -->
     <?= $this->renderSection("navArriba"); ?>
     <!-- End Navbar -->
+
     <?= $this->renderSection("contenido"); ?>
 
   </main>
@@ -279,3 +280,4 @@
 <?= $this->include("Partes/pie") ?>
 
 </html>
+

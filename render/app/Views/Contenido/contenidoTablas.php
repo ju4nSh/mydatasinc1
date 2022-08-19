@@ -76,19 +76,19 @@ Tablas
                     <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Identificacion</label>
-                                <input class="form-control" type="text" id="Id" name="Id">
+                                <input class="form-control" type="text" required id="Id" name="Id" >
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">First name</label>
-                                <input class="form-control" type="text" id="Nombre" name="Nombre">
+                                <input class="form-control" type="text" required id="Nombre" name="Nombre" >
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Last name</label>
-                                <input class="form-control" type="text" id="Apellido" name="Apellido">
+                                <input class="form-control" type="text" required id="Apellido" name="Apellido" >
                             </div>
                         </div>
                       </div>
@@ -99,7 +99,7 @@ Tablas
                 <div class="col-md-4">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Email address</label>
-                                <input class="form-control" type="email" id="Correo" name="Correo">
+                                <input class="form-control" type="email" required id="Correo" name="Correo" >
                             </div>
                         </div>
                         </div>
@@ -107,13 +107,13 @@ Tablas
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="example-text-input" class="form-control-label">City</label>
-                            <input class="form-control" type="text" id="Ciudad" name="Ciudad">
+                            <input class="form-control" type="text" required id="Ciudad" name="Ciudad" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="example-text-input" class="form-control-label">Country</label>
-                            <input class="form-control" type="text" id="Pais" name="Pais">
+                            <input class="form-control" type="text" required id="Pais" name="Pais" >
                         </div>
                     </div>
                     </div>
@@ -123,7 +123,7 @@ Tablas
                 <div class="col-md-4">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Usuario</label>
-                                <input class="form-control" type="text" id="Usuario" name="Usuario">
+                                <input class="form-control" type="text" required id="Usuario" name="Usuario" >
                             </div>
                         </div>
                         </div>

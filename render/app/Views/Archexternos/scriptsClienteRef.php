@@ -17,7 +17,9 @@ function AgregarCliente() {
     var Ciudad = document.getElementById("Ciudad").value;
     var Pais = document.getElementById("Pais").value;
     var Usuario = document.getElementById("Usuario").value;
-    $.ajax({
+    var respuesta= validar(Id,Nombre,Apellido,Correo,Ciudad,Pais,Usuario);
+    if(respuesta===true){
+        $.ajax({
         type: "post",
         url: '<?= base_url("/agregarClienteRef") ?>',
         data: {
@@ -48,6 +50,7 @@ function AgregarCliente() {
             });
         }
     });
+    };
 }
 
 function limpiar() {
@@ -59,6 +62,17 @@ function limpiar() {
     document.getElementById("Ciudad").value = "";
     document.getElementById("Pais").value = "";
     document.getElementById("Usuario").value = "";
+}
+
+function validar(Id,Nombre,Apellido,Correo,Ciudad,Pais,Usuario) {
+  if (Id.length == 0 || Nombre.length == 0 || Apellido.length == 0 || Correo.length == 0 || Ciudad.length == 0 || Pais.length == 0 || Usuario.length == 0) {
+    swal("Verfique llenar todos los campos", {
+                            icon: "warning",
+        });
+    return false;
+  }else{
+    return true;
+  }
 }
 
 var q = new Vue({
