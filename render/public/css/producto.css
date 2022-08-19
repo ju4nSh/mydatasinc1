@@ -26,29 +26,40 @@ div.categoriesDetail>.form-group {
     cursor: pointer;
 }
 
-div.categoriesDetail>.form-group::-webkit-scrollbar {
+div.categoriesDetail>.form-group::-webkit-scrollbar ,
+div.fieldInput::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
-div.categoriesDetail>.form-group::-webkit-scrollbar:vertical {
+div.categoriesDetail>.form-group::-webkit-scrollbar:vertical,
+div.fieldInput::-webkit-scrollbar:vertical  {
     width: 6px;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-button:increment,
-.contenedor::-webkit-scrollbar-button {
+.contenedor::-webkit-scrollbar-button,
+div.fieldInput::-webkit-scrollbar-button:increment  {
     display: none;
 }
 
-div.categoriesDetail>.form-groupcontenedor::-webkit-scrollbar:horizontal {
+div.categoriesDetail>.form-groupcontenedor::-webkit-scrollbar:horizontal,
+div.fieldInput::-webkit-scrollbar:horizontal  {
     height: 10px;
 }
 
-div.categoriesDetail>.form-group::-webkit-scrollbar-thumb {
+div.categoriesDetail>.form-group::-webkit-scrollbar-thumb,
+div.fieldInput::-webkit-scrollbar-thumb  {
     background-color: #5e72e4;
     border-radius: 20px;
     border: 1px solid #5e72e4;
 }
 
-div.categoriesDetail>.form-group::-webkit-scrollbar-track {
+div.categoriesDetail>.form-group::-webkit-scrollbar-track ,
+div.fieldInput::-webkit-scrollbar-track {
     border-radius: 6px;
+}
+
+div.fieldInput {
+    max-height: 100px;
+    overflow: auto;
 }

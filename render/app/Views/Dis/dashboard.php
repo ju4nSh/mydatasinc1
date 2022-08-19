@@ -17,17 +17,18 @@
 <?= $this->include("Partes/head"); ?>
 
 
-<body  class="g-sidenav-show   bg-gray-100">
+<body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
 
   <?= $this->renderSection("navLateral"); ?>
-  <main class="main-content position-relative border-radius-lg ">
+  <main id="app" class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
     <?= $this->renderSection("navArriba"); ?>
     <!-- End Navbar -->
+
    
     <?= $this->renderSection("contenido"); ?>
-    
+
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -101,7 +102,7 @@
       </div>
     </div>
   </div>
- 
+
   <!--   Core JS Files   -->
 
   <script src="./js/core/popper.min.js"></script>
@@ -209,7 +210,7 @@
   <script src="js/plugins/smooth-scrollbar.min.js"></script>
   <script src="js/plugins/chartjs.min.js"></script>
 
-  
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
@@ -221,7 +222,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
-</html>
 
 
 
