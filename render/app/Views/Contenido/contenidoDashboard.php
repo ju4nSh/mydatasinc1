@@ -284,15 +284,7 @@
     </div>
   </div>
 </div>
-<?= $this->section("funciones"); ?>
+<?= $this->endSection() ?>
 
-<script type="application/javascript">
-  var q = new Vue({
-    el: '#app',
-    data: {
-      datos: [],
-      hggr: []
-    }
-  })
-</script>
+<?= $this->section("funciones"); ?>
 <?= $this->endSection() ?>
