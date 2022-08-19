@@ -73,3 +73,5 @@ $routes->post('actualizarproducto', 'Productos::actualizarProducto');
 $routes->get('mostrarClientesReferenciados', 'Home::mostrarClientesReferenciados');
 $routes->post('agregarClienteRef', 'Home::agregarClienteRef');
 $routes->post('eliminarClienteRef', 'Home::eliminarClienteRef');
+$routes->get('mostrarDatosApi', 'Home::mostrarDatosApi');
+$routes->get('datosApi', 'Home::datosApi');

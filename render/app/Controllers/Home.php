@@ -243,4 +243,12 @@ class Home extends BaseController
         $usuario->delete($data_array);
         echo json_encode("dsjdkskdj");
     }
+    public function datosApi(){
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
+        $view = \Config\Services::renderer();
+            $view->setVar('one', $id)
+                ->setVar('pagina', "Perfil");
+            echo $view->render("Contenido/contenidoTablaApi");
+    }
 }

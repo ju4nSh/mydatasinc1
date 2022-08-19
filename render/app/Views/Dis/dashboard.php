@@ -109,6 +109,7 @@
   <script src="./js/plugins/perfect-scrollbar.min.js"></script>
   <script src="./js/plugins/smooth-scrollbar.min.js"></script>
   <script src="./js/plugins/chartjs.min.js"></script>
+  
   <script>
     // var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -217,7 +218,9 @@
 </body>
 <?= $this->include("Partes/pie")?>
 </html>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
 </html>
 
 
