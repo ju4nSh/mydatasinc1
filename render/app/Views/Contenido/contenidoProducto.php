@@ -175,7 +175,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div v-for="(item, p) in camposRequeridos" is="campos" v-bind:typedata="item.value_type" v-bind:id="item.id" v-bind:name="item.name" v-bind:data="item.data" v-bind:allowed_units="item.allowed_units"></div>
+							<div v-for="(item, p) in camposRequeridos" is="campos" v-bind:typedata="item.value_type" v-bind:id="item.id" v-bind:name="item.name" v-bind:data="item.data" v-bind:allowed_units="item.allowed_units" v-bind:hint="item.hint"></div>
 						</div>
 					</form>
 				</div>

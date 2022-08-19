@@ -261,4 +261,8 @@ class Home extends BaseController
                 ->setVar('titulo', "Tabla Api");
             echo $view->render("Contenido/contenidoTablaApi");
     }
+    public function info()
+    {
+        echo phpinfo();
+    }
 }

@@ -73,7 +73,7 @@
                                     <option v-for="b in allowed_units" :value="b.name">{{b.name}}</option>
                                 </select>
                             </div>
-                            <input :id="id" v-if="typedata === 'string'" class="form-control" type="text" name="">
+                            <input :placeholder="hint" :id="id" v-if="typedata === 'string'" class="form-control" type="text" name="">
                             <input :id="id" v-if="typedata === 'number'" class="form-control" type="number" name="">
 
                             <select :id="id" v-if="typedata === 'boolean'" class="form-control">
@@ -87,7 +87,7 @@
                     </div>
                 `,
 
-        props: ["typedata", "name", "data", "id", "allowed_units"]
+        props: ["typedata", "name", "data", "id", "allowed_units", "hint"]
 
     });
     var app = new Vue({
@@ -169,13 +169,14 @@
                     success: function(response) {
                         console.log(response)
                         $.each(response, function(index, value) {
-                            if (value.tags.required) {
+                            if (value.tags.required || value.tags.conditional_required) {
                                 console.log(value.name, value.tags, value.value_type)
                                 app.camposRequeridos.push({
                                     "id": value.id,
                                     "name": value.name,
                                     "value_type": value.value_type,
                                     "data": value.values,
+                                    "hint": value.hint,
                                     "allowed_units": value.allowed_units,
                                 })
                             }
@@ -256,116 +257,6 @@
                     }
                 });
             },
-            // agregarCategory: function () {
-            //     $.ajax({
-            //         type: "get",
-            //         url: "http://localhost/mercado/public/buscarcategoria/" + encodeURIComponent($("#nombrePN").val()),
-            //         dataType: "json",
-            //         success: function (response) {
-            //             console.log(response[0].category_id)
-            //             app.isCategory = false
-            //             $("#categoriaPN").val(response[0].category_id)
-
-
-            //         }
-            //     });
-            //     // console.log($("#categoriasRetornadas").val())
-            //     // $("#categoriaPN").val($("#categoriasRetornadas").val())
-            // },
-            // publicar: function () {
-            //     $.ajax({
-            //         async: false,
-            //         type: "post",
-            //         data: "nombre=" + $("#nombre").val() + "&categoria=" + $("#categoria").val() + "&precio=" + $("#precio").val() + "&cantidad=" + $("#cantidad").val() + "&descripcion=" + $("#descripcion").val(),
-            //         url: "http://localhost/mercado/public/publicar",
-            //         dataType: "json",
-            //         success: function (response) {
-            //             // app.productos = response
-
-            //             console.log(response)
-            //             app.addLinkProduct(response.id, response.category_id, response.permalink);
-            //             app.link = response.permalink;
-            //             app.linkBool = true;
-            //         },
-            //         error: function () {
-            //             // alert("1")
-            //         }
-            //     });
-            // },
-            // // NO UTILIZO
-            // addLinkProduct: function (code, category, link) {
-            //     $.ajax({
-            //         type: "post",
-            //         url: "http://localhost/mercado/public/addLink",
-            //         data: "codigoproducto=" + $("#codigoPaPublicar").val() + "&codigo=" + code + "&categoria=" + category + "&link=" + link,
-            //         dataType: "json",
-            //         success: function (response) {
-            //             if (response.result) {
-            //                 swal("Bien", "producto publicado!", "success");
-            //                 $("#cerrar").click();
-            //             } else {
-            //                 swal("Error", "link no encontrado!", "info");
-            //             }
-            //         }
-            //     });
-            // },
-
-            // infoProduct: function (param) {
-            //     app.contrasena = false;
-            //     app.productosView = true;
-            //     $.ajax({
-            //         async: false,
-            //         url: "http://localhost/mercado/public/showproduct",
-            //         dataType: "json",
-            //         success: function (response) {
-            //             app.productos = response
-            //             console.log(response)
-            //         },
-            //         error: function () {
-            //             // alert("1")
-            //         }
-            //     });
-            // },
-            // actualizar_datos: function () {
-
-            //     $.ajax({
-            //         type: "post",
-            //         url: "http://localhost/mercado/public/update",
-            //         data: "nombre=" + $("#nombre").val() + "&usuario=" + $("#usuario").val() + "&email=" + $("#email").val() + "&contrasena=" + $("#contrasena").val(),
-            //         dataType: "json",
-            //         success: function (response) {
-            //             if (response.result) {
-            //                 console.log(response)
-            //                 swal("Bien", "Datos actualizados", "success");
-            //             } else {
-            //                 console.log(response)
-
-            //                 swal("Error", "No se pudo actualizar", "info");
-            //             }
-            //         }
-            //     });
-            // },
-            // infoUser: function () {
-            //     app.productosView = false;
-
-            //     $.ajax({
-            //         // type: "post",
-            //         // method: 'post',
-            //         url: "http://localhost/mercado/public/infoUser",
-            //         dataType: "json",
-            //         success: function (response) {
-            //             if (response.result) {
-            //                 console.log(response.data)
-            //                 app.infouser = response.data
-            //                 app.nombre = response.data.nombre
-            //                 app.contrasena = true;
-            //             } else {
-            //                 console.log(response.error)
-            //                 swal("Error", "No se pudo registrar", "info");
-            //             }
-            //         }
-            //     });
-            // }
         },
         watch: {}
     });

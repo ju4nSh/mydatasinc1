@@ -81,4 +81,3 @@ $routes->get('listarClientes', 'Clientes::listarClientes');
 
 $routes->get('mostrarDatosApi', 'Home::mostrarDatosApi');
 $routes->get('datosApi', 'Home::datosApi');
-
