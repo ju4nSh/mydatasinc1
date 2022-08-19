@@ -83,7 +83,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $ssesion->remove("user");
-        return "hola";
+        return $this->response->redirect(site_url('/'));
     }
     public function registrar()
     {

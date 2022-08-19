@@ -40,8 +40,8 @@
             <i class="fa fa-bell cursor-pointer"></i>
           </a>
           <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-            <li class="mb-2" onclick="salir()">
-              <a class="dropdown-item border-radius-md" href="javascript:;">
+            <li class="mb-2">
+              <a  class="dropdown-item border-radius-md" href="<?= base_url("/salir")?>">
                 <div class="d-flex py-1">
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="text-sm font-weight-normal mb-1">

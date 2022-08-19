@@ -89,6 +89,7 @@
     <!-- End Navbar -->
 
     <?= $this->renderSection("contenido"); ?>
+    <?= $this->include("Partes/pie") ?>
 
   </main>
   <div class="fixed-plugin">
@@ -166,11 +167,11 @@
 
   <!--   Core JS Files   -->
 
-  <script src="./js/core/popper.min.js"></script>
-  <script src="./js/core/bootstrap.min.js"></script>
-  <script src="./js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="./js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="./js/plugins/chartjs.min.js"></script>
+  <script src="../public/js/core/popper.min.js"></script>
+  <script src="../public/js/core/bootstrap.min.js"></script>
+  <script src="../public/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../public/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../public/js/plugins/chartjs.min.js"></script>
   <script>
     // var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -264,20 +265,12 @@
     }
   </script>
 
-  <script src="js/core/popper.min.js"></script>
-  <script src="js/core/bootstrap.min.js"></script>
-  <script src="js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="js/plugins/chartjs.min.js"></script>
-
-
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="js/argon-dashboard.min.js?v=2.0.4"></script>
+  <script src="../public/js/argon-dashboard.min.js?v=2.0.4"></script>
   <?= $this->renderSection("funciones"); ?>
 </body>
-<?= $this->include("Partes/pie") ?>
 
 </html>
 
