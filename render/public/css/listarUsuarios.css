@@ -1,6 +1,4 @@
-div.dataTables_paginate {
-    
-}
+
 div.dataTables_paginate > span > a {
     border-radius: 100% !important;
     borer: 1px solid black !important;
@@ -10,21 +8,30 @@ div.dataTables_paginate > span > a {
     line-height: 30px;
     height: 30px !important;
     font-size: 14px !important;
+    
 }
 
-div.dataTables_length > label {
-    color: var(--bs-light) !important
+div.dataTables_length > label, 
+    div.dataTables_length > label > select {
+    color: #8392ab !important
+}
+div#usuarios_filter  {
+    display: none !important;
+}
+div#usuarios_wrapper {
+    overflow: hidden !important;
 }
 
 div.dataTables_paginate > a {
     padding: 0 !important;
     border-radius: 100% !important;
+    text-align: center !important;
 }
 
 div.dataTables_paginate > span > a:hover {
     background-color: var(--bs-primary) !important ;
 }
 div.dataTables_info {
-    color: var(--bs-light) !important;
+    color: #8392ab !important;
     font-size: 14px !important;
 }
