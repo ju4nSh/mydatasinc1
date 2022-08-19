@@ -16,7 +16,8 @@ class Home extends BaseController
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Salpicadero");
+                ->setVar('pagina', "Salpicadero")
+                ->setVar('titulo', "Dashboard");
             echo $view->render("Contenido/contenidoDashboard");
         }
     }
@@ -30,7 +31,8 @@ class Home extends BaseController
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Tablas");
+                ->setVar('pagina', "Clientes")
+                ->setVar('titulo', "Clientes");
             echo $view->render("Contenido/contenidoTablas");
         }
     }
@@ -46,7 +48,8 @@ class Home extends BaseController
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
             ->setVar('pagina', "Productos")
-            ->setVar("productos", $respuesta);
+            ->setVar("productos", $respuesta)
+            ->setVar('titulo', "Productos");
             echo $view->render("Contenido/contenidoProducto");
         }
     }
@@ -121,7 +124,8 @@ class Home extends BaseController
             $view = \Config\Services::renderer();
 
             $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil");
+                ->setVar('pagina', "Perfil")
+                ->setVar('titulo', "Perfil");
             echo $view->render("Contenido/contenidoPerfil");
         }
     }
@@ -129,6 +133,7 @@ class Home extends BaseController
     public function ModificarPerfil()
     {
         $Nombre=$this->request->getVar("Nombre");
+        $Foto=$this->request->getVar("Foto");
         $Apellido=$this->request->getVar("Apellido");
         $Correo=$this->request->getVar("Correo");
         $Direccion=$this->request->getVar("Direccion");
@@ -147,13 +152,15 @@ class Home extends BaseController
             'Ciudad' => $Ciudad,
             'Pais' => $Pais,
             'SobreMi' => $SobreMi,
+            'Foto' => $Foto
         );
         $builder->where('Usuario', $id);
         $builder->update($data_array);
         $view = \Config\Services::renderer();
 
             $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil");
+                ->setVar('pagina', "Perfil")
+                ->setVar('titulo', "Perfil");
             echo $view->render("Contenido/contenidoPerfil");
 
     }
@@ -167,6 +174,7 @@ class Home extends BaseController
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
             $array []= [
+
                 'Nombre' => $variable['Nombre'],
                 'Apellido' => $variable['Apellido'],
                 'Correo' => $variable['Correo'],
@@ -174,6 +182,7 @@ class Home extends BaseController
                 'Ciudad' => $variable['Ciudad'],
                 'Pais' => $variable['Pais'],
                 'SobreMi' => $variable['SobreMi'],
+                'Foto' => $variable['Foto'],
             ];
             
         }
@@ -248,7 +257,8 @@ class Home extends BaseController
         $id = $ssesion->get("user");
         $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil");
+                ->setVar('pagina', "Tabla Api")
+                ->setVar('titulo', "Tabla Api");
             echo $view->render("Contenido/contenidoTablaApi");
     }
 }

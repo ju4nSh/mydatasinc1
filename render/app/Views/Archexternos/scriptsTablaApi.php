@@ -11,23 +11,23 @@ $(document).ready(function() {
                 columnas: [{
                         text: 'IDENTIFICACION',
                         value: 'id',
-                        class: 'green accent-2'
+                        class: 'blue accent-2'
                     },
                     {
                         text: 'NOMBRE',
                         value: 'name',
-                        class: 'green accent-2'
+                        class: 'blue accent-2'
                     },
                     {
                         text: 'EMAIL',
                         value: 'email',
-                        class: 'green accent-2'
+                        class: 'blue accent-2'
                     },
                     {
                         text: 'Actions',
                         value: 'actions',
                         sortable: false,
-                        class: 'green accent-2'
+                        class: 'blue accent-2'
                     }
                 ],
                 articulos: [],

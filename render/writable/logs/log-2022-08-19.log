@@ -1,0 +1,122 @@
+ERROR - 2022-08-19 14:47:15 --> Table 'mydatasinc.productos' doesn't exist
+CRITICAL - 2022-08-19 14:47:15 --> Table 'mydatasinc.productos' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *
+FROM `productos`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `productos`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `productos`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `productos`', [], false)
+ 5 SYSTEMPATH\Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Productos.php(20): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Home.php(45): App\Controllers\Productos->getProduct()
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->productos()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2022-08-19 14:54:22 --> Table 'mydatasinc.clientes' doesn't exist
+CRITICAL - 2022-08-19 14:54:22 --> Table 'mydatasinc.clientes' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *
+FROM `clientes`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `clientes`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `clientes`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `clientes`', [], false)
+ 5 SYSTEMPATH\Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Clientes.php(18): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Clientes.php(24): App\Controllers\Clientes->listarClientes()
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->index()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 15:50:53 --> Undefined variable: titulo
+in APPPATH\Views\Partes\head.php on line 7.
+ 1 APPPATH\Views\Partes\head.php(7): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: titulo', 'APPPATH\\Views\\Partes\\head.php', 7, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\head.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/head', null, true)
+ 5 APPPATH\Views\Contenido\contenidoTablas.php(5): CodeIgniter\View\View->include('Partes/head')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoTablas.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Home.php(35): CodeIgniter\View\View->render('Contenido/contenidoTablas')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->tablas()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 15:52:27 --> Undefined variable: titulo
+in APPPATH\Views\Partes\head.php on line 7.
+ 1 APPPATH\Views\Partes\head.php(7): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: titulo', 'APPPATH\\Views\\Partes\\head.php', 7, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\head.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/head', null, true)
+ 5 APPPATH\Views\Contenido\contenidoTablaApi.php(4): CodeIgniter\View\View->include('Partes/head')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoTablaApi.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Home.php(260): CodeIgniter\View\View->render('Contenido/contenidoTablaApi')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->datosApi()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 15:52:30 --> Undefined variable: titulo
+in APPPATH\Views\Partes\head.php on line 7.
+ 1 APPPATH\Views\Partes\head.php(7): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: titulo', 'APPPATH\\Views\\Partes\\head.php', 7, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\head.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/head', null, true)
+ 5 APPPATH\Views\Contenido\contenidoTablaApi.php(4): CodeIgniter\View\View->include('Partes/head')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoTablaApi.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Home.php(260): CodeIgniter\View\View->render('Contenido/contenidoTablaApi')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->datosApi()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 15:53:01 --> Undefined variable: titulo
+in APPPATH\Views\Partes\head.php on line 7.
+ 1 APPPATH\Views\Partes\head.php(7): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: titulo', 'APPPATH\\Views\\Partes\\head.php', 7, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\head.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/head', null, true)
+ 5 APPPATH\Views\Contenido\contenidoTablaApi.php(4): CodeIgniter\View\View->include('Partes/head')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoTablaApi.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Home.php(260): CodeIgniter\View\View->render('Contenido/contenidoTablaApi')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->datosApi()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 16:00:21 --> Undefined variable: titulo
+in APPPATH\Views\Partes\head.php on line 7.
+ 1 APPPATH\Views\Partes\head.php(7): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: titulo', 'APPPATH\\Views\\Partes\\head.php', 7, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\head.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/head', null, true)
+ 5 APPPATH\Views\Contenido\contenidoUsuario.php(4): CodeIgniter\View\View->include('Partes/head')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoUsuario.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Clientes.php(26): CodeIgniter\View\View->render('Contenido/contenidoUsuario')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->index()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 16:00:26 --> Undefined variable: titulo
+in APPPATH\Views\Partes\head.php on line 7.
+ 1 APPPATH\Views\Partes\head.php(7): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: titulo', 'APPPATH\\Views\\Partes\\head.php', 7, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Partes\\head.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(429): CodeIgniter\View\View->render('Partes/head', null, true)
+ 5 APPPATH\Views\Contenido\contenidoUsuario.php(4): CodeIgniter\View\View->include('Partes/head')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoUsuario.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 APPPATH\Controllers\Clientes.php(26): CodeIgniter\View\View->render('Contenido/contenidoUsuario')
+ 9 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->index()
+10 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+11 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

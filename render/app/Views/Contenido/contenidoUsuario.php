@@ -1,7 +1,7 @@
 <?= $this->extend("Dis/dashboard"); ?>
 
-<?= $this->section("title"); ?>
-Usuarios
+<?= $this->section("head"); ?>
+<?= $this->include("Partes/head"); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section("navLateral"); ?>
