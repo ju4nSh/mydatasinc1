@@ -20,14 +20,14 @@
   <link rel="apple-touch-icon" sizes="76x76" href="./img/apple-icon.png">
   <link rel="icon" type="image/png" href="./img/favicon.png">
   <title>
-    <?= $this->renderSection("title")?> &nbsp; - &nbsp; 
+    <?= $this->renderSection("title") ?> &nbsp; - &nbsp; MyDataSinc S.A.S
   </title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- LINK CSS PRODUCTO -->
   <link rel="stylesheet" href="./css/producto.css">
   <!-- LINK CSS PRODUCTO -->
-   <!-- LINK CSS USUARIOS LISTAR -->
-   <link rel="stylesheet" href="./css/listarUsuarios.css">
+  <!-- LINK CSS USUARIOS LISTAR -->
+  <link rel="stylesheet" href="./css/listarUsuarios.css">
   <!-- LINK CSS USUARIOS LISTAR -->
 
   <!--     Fonts and icons     -->
@@ -68,12 +68,12 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-<!-- DATATABLES -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-  
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+  <!-- DATATABLES -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
-<!-- DATATABLES -->
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+  <!-- DATATABLES -->
 
 </head>
 <html lang="en">

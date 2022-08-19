@@ -1,32 +1,54 @@
 <script>
     $(document).ready(data => {
+        $('#productos').DataTable({
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "_MENU_ entradas por página",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": ">",
+                    "previous": "<"
+                }
+            },
+        })
         $('#modalActualizarProductos').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             // console.log(button[0].parentElement.parentElement.childNodes)
-                let nombre = button[0].parentElement.parentElement.childNodes[0].innerText;
-                let codigoMercadolibre = button[0].parentElement.parentElement.childNodes[2].innerText;
-                let cantidad = button[0].parentElement.parentElement.childNodes[6].innerText;
-                let precio = button[0].parentElement.parentElement.childNodes[8].innerText;
-                let descripcion = button[0].parentElement.parentElement.childNodes[14].firstChild.value;
-                let codigoBD = button[0].parentElement.parentElement.childNodes[16].firstChild.value;
-                // let nombre = button[0].parentNode.parentNode.childNodes[0].innerText;
-                // let precio = button[0].parentNode.parentNode.childNodes[3].innerText.split(":")[1].trim().split(".").join("");
-                // let cantidad = button[0].parentNode.parentNode.childNodes[5].innerText.split(":")[1].trim();
-                // let codigo = button[0].parentNode.parentNode.childNodes[15].value;
-                // let descripcion = button[0].parentNode.parentNode.childNodes[17].value;
-                // let codigoProductoActualizar = button[0].parentNode.parentNode.childNodes[19].value;
-                // // Button that triggered the modal
-                // // var recipient = button.data('whatever') // Extract info from data-* attributes
-                // // // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                // // // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                var modal = $(this)
-                modal.find('#nombreAC').val(nombre)
-                modal.find('#precioAC').val(precio)
-                modal.find('#cantidadAC').val(cantidad)
-                modal.find('#descripcionAC').val(descripcion)
-                modal.find("#codigoPaActualizar").val(codigoMercadolibre)
-                modal.find("#codigoProductoAC").val(codigoBD)
-            })
+            let nombre = button[0].parentElement.parentElement.childNodes[0].innerText;
+            let codigoMercadolibre = button[0].parentElement.parentElement.childNodes[2].innerText;
+            let cantidad = button[0].parentElement.parentElement.childNodes[6].innerText;
+            let precio = button[0].parentElement.parentElement.childNodes[8].innerText;
+            let descripcion = button[0].parentElement.parentElement.childNodes[14].firstChild.value;
+            let codigoBD = button[0].parentElement.parentElement.childNodes[16].firstChild.value;
+            // let nombre = button[0].parentNode.parentNode.childNodes[0].innerText;
+            // let precio = button[0].parentNode.parentNode.childNodes[3].innerText.split(":")[1].trim().split(".").join("");
+            // let cantidad = button[0].parentNode.parentNode.childNodes[5].innerText.split(":")[1].trim();
+            // let codigo = button[0].parentNode.parentNode.childNodes[15].value;
+            // let descripcion = button[0].parentNode.parentNode.childNodes[17].value;
+            // let codigoProductoActualizar = button[0].parentNode.parentNode.childNodes[19].value;
+            // // Button that triggered the modal
+            // // var recipient = button.data('whatever') // Extract info from data-* attributes
+            // // // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // // // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('#nombreAC').val(nombre)
+            modal.find('#precioAC').val(precio)
+            modal.find('#cantidadAC').val(cantidad)
+            modal.find('#descripcionAC').val(descripcion)
+            modal.find("#codigoPaActualizar").val(codigoMercadolibre)
+            modal.find("#codigoProductoAC").val(codigoBD)
+        })
     })
     var subCategory = Vue.component("sub-category", {
         template: `
@@ -98,12 +120,11 @@
             // 	});
             // })
         },
-        created: function() {
-        },
+        created: function() {},
 
         filters: {},
         methods: {
-            crearInputImagen: function () {
+            crearInputImagen: function() {
                 app.inputImagen.push({
                     clase: "input",
                 })
@@ -183,14 +204,14 @@
                     }
                 });
             },
-            publicarAC: function () {
+            publicarAC: function() {
                 $.ajax({
                     async: false,
                     type: "post",
                     url: "<?= base_url("actualizarproducto") ?>",
                     data: "id=" + $("#codigoPaActualizar").val() + "&codigo=" + $("#codigoProductoAC").val() + "&nombre=" + $("#nombreAC").val() + "&precio=" + $("#precioAC").val() + "&descripcion=" + $("#descripcionAC").val() + "&cantidad=" + $("#cantidadAC").val(),
                     dataType: "json",
-                    success: function (response) {
+                    success: function(response) {
                         // console.log(response)
                         if (response.result) {
                             swal("Bien", "producto actualizado!", "success");
@@ -213,9 +234,9 @@
                 });
                 // console.log(attributes)
                 let imagenes = [];
-                $.each($(".input"), function (indexInArray, valueOfElement) {
-                    if(valueOfElement.value !== "")
-                     imagenes.push(valueOfElement.value)
+                $.each($(".input"), function(indexInArray, valueOfElement) {
+                    if (valueOfElement.value !== "")
+                        imagenes.push(valueOfElement.value)
                 });
                 $.ajax({
                     async: false,

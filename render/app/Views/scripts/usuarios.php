@@ -1,5 +1,14 @@
 <script>
     $(document).ready(data => {
+        // $.ajax({
+        //     async: false,
+        //     url: "<?= base_url("/listarClientes")?>",
+        //     dataType: "json",
+        //     success: function (response) {
+        //         alert(1)
+        //         app.usuariosBD = response;
+        //     }
+        // });
         $('#usuarios').DataTable({
             language: {
                 "decimal": "",

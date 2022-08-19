@@ -50,3 +50,23 @@ in APPPATH\Views\Contenido\contenidoUsuario.php on line 42.
  6 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
  7 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  8 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 11:48:30 --> Undefined variable: value
+in APPPATH\Views\Contenido\contenidoUsuario.php on line 81.
+ 1 APPPATH\Views\Contenido\contenidoUsuario.php(81): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: value', 'APPPATH\\Views\\Contenido\\contenidoUsuario.php', 81, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoUsuario.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 APPPATH\Controllers\Clientes.php(26): CodeIgniter\View\View->render('Contenido/contenidoUsuario')
+ 5 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->index()
+ 6 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 7 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 11:56:30 --> Invalid argument supplied for foreach()
+in APPPATH\Views\Contenido\contenidoUsuario.php on line 42.
+ 1 APPPATH\Views\Contenido\contenidoUsuario.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Invalid argument supplied for foreach()', 'APPPATH\\Views\\Contenido\\contenidoUsuario.php', 42, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Contenido\\contenidoUsuario.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 APPPATH\Controllers\Clientes.php(26): CodeIgniter\View\View->render('Contenido/contenidoUsuario')
+ 5 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->index()
+ 6 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 7 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
