@@ -73,3 +73,6 @@ $routes->post('actualizarproducto', 'Productos::actualizarProducto');
 $routes->get('mostrarClientesReferenciados', 'Home::mostrarClientesReferenciados');
 $routes->post('agregarClienteRef', 'Home::agregarClienteRef');
 $routes->post('eliminarClienteRef', 'Home::eliminarClienteRef');
+
+$routes->get('generateClient', 'Clientes::llenarClientes');
+$routes->get('usuarios', 'Clientes::index');

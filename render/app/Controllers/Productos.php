@@ -46,8 +46,8 @@ class Productos extends Controller
         ];
         // agregar descripcion al producto
         $descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
-        if ($descripcion) {
 
+        if ($descripcion) {
             if ($this->producto->update($id, $data)) {
                 //actualizar productos en mercadolibre
                 if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
@@ -78,7 +78,7 @@ class Productos extends Controller
             "attributes" => json_decode($this->request->getVar("attributes")),
         ];
         $imagen = $data["imagen"];
-        foreach($imagen as $key => $img){
+        foreach ($imagen as $key => $img) {
             $imagen[$key] = array("source" => $img);
         }
         $datos = [
@@ -89,7 +89,7 @@ class Productos extends Controller
             "available_quantity" => $data["cantidad"],
             "condition" => "new",
             "listing_type_id" => "gold_pro",
-            "pictures" => $imagen ,
+            "pictures" => $imagen,
             "attributes" => $data["attributes"],
         ];
 

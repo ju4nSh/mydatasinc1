@@ -1,0 +1,22 @@
+CRITICAL - 2022-08-19 07:44:31 --> Undefined property: stdClass::$id
+in APPPATH\Controllers\Productos.php on line 104.
+ 1 APPPATH\Controllers\Productos.php(104): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined property: stdClass::$id', 'APPPATH\\Controllers\\Productos.php', 104, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->publicarMercadolibre()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 07:44:56 --> Undefined property: stdClass::$id
+in APPPATH\Controllers\Productos.php on line 104.
+ 1 APPPATH\Controllers\Productos.php(104): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined property: stdClass::$id', 'APPPATH\\Controllers\\Productos.php', 104, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->publicarMercadolibre()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-19 08:22:36 --> Undefined offset: 27
+in APPPATH\Controllers\Clientes.php on line 47.
+ 1 APPPATH\Controllers\Clientes.php(47): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offset: 27', 'APPPATH\\Controllers\\Clientes.php', 47, [...])
+ 2 APPPATH\Controllers\Clientes.php(18): App\Controllers\Clientes->generateCorreo()
+ 3 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->llenarClientes()
+ 4 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 5 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
