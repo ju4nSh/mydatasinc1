@@ -262,30 +262,30 @@ function navbarMinimize(el) {
   }
 }
 
-function toggleNavLinksColor(type) {
-  let navLinks = document.querySelectorAll('.navbar-main .nav-link, .navbar-main .breadcrumb-item, .navbar-main .breadcrumb-item a, .navbar-main h6')
-  let navLinksToggler = document.querySelectorAll('.navbar-main .sidenav-toggler-line')
+// function toggleNavLinksColor(type) {
+//   let navLinks = document.querySelectorAll('.navbar-main .nav-link, .navbar-main .breadcrumb-item, .navbar-main .breadcrumb-item a, .navbar-main h6')
+//   let navLinksToggler = document.querySelectorAll('.navbar-main .sidenav-toggler-line')
 
-  if (type === "blur") {
-    navLinks.forEach(element => {
-      element.classList.remove('text-white')
-    });
+//   if (type === "blur") {
+//     navLinks.forEach(element => {
+//       element.classList.remove('text-white')
+//     });
 
-    navLinksToggler.forEach(element => {
-      element.classList.add('bg-dark')
-      element.classList.remove('bg-white')
-    });
-  } else if (type === "transparent") {
-    navLinks.forEach(element => {
-      element.classList.add('text-white')
-    });
+//     navLinksToggler.forEach(element => {
+//       element.classList.add('bg-dark')
+//       element.classList.remove('bg-white')
+//     });
+//   } else if (type === "transparent") {
+//     navLinks.forEach(element => {
+//       element.classList.add('text-white')
+//     });
 
-    navLinksToggler.forEach(element => {
-      element.classList.remove('bg-dark')
-      element.classList.add('bg-white')
-    });
-  }
-}
+//     navLinksToggler.forEach(element => {
+//       element.classList.remove('bg-dark')
+//       element.classList.add('bg-white')
+//     });
+//   }
+// }
 
 
 // Navbar blur on scroll

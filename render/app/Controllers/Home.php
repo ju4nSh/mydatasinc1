@@ -34,19 +34,20 @@ class Home extends BaseController
             echo $view->render("Contenido/contenidoTablas");
         }
     }
-    
-    public function productos(){
-        $ssesion =\Config\Services::session();
-        $id= $ssesion->get("user");
+
+    public function productos()
+    {
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
         if (empty($id)) {
             return $this->response->redirect(site_url('/'));
-        }else{
+        } else {
             $producto = new Productos();
             $respuesta = $producto->getProduct();
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-            ->setVar('pagina', "Productos")
-            ->setVar("productos", $respuesta);
+                ->setVar('pagina', "Productos")
+                ->setVar("productos", $respuesta);
             echo $view->render("Contenido/contenidoProducto");
         }
     }
@@ -91,9 +92,9 @@ class Home extends BaseController
         $user = $this->request->getVar("Usuario");
         $db = \Config\Database::connect();
         $builder = $db->table('users');
-        $data_array = array('Usuario' => $user,'Identificacion ' => $id);
+        $data_array = array('Usuario' => $user, 'Identificacion ' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
-        if(count($datos) > 0){
+        if (count($datos) > 0) {
             $pass =  password_hash($this->request->getVar("password"), PASSWORD_DEFAULT);
             $data_pass = array(
                 'Password' => $pass
@@ -101,7 +102,7 @@ class Home extends BaseController
             $builder->where('Usuario', $user);
             $builder->update($data_pass);
             return $this->response->redirect(site_url('/'));
-        }else{
+        } else {
             return $this->response->redirect(site_url('/'));
         }
     }
@@ -110,7 +111,7 @@ class Home extends BaseController
         $view = \Config\Services::renderer();
         echo $view->render("Contenido/Registrar");
     }
-    
+
     public function perfil()
     {
         $ssesion = \Config\Services::session();
@@ -128,13 +129,13 @@ class Home extends BaseController
 
     public function ModificarPerfil()
     {
-        $Nombre=$this->request->getVar("Nombre");
-        $Apellido=$this->request->getVar("Apellido");
-        $Correo=$this->request->getVar("Correo");
-        $Direccion=$this->request->getVar("Direccion");
-        $Ciudad=$this->request->getVar("Ciudad");
-        $Pais=$this->request->getVar("Pais");
-        $SobreMi=$this->request->getVar("SobreMi");
+        $Nombre = $this->request->getVar("Nombre");
+        $Apellido = $this->request->getVar("Apellido");
+        $Correo = $this->request->getVar("Correo");
+        $Direccion = $this->request->getVar("Direccion");
+        $Ciudad = $this->request->getVar("Ciudad");
+        $Pais = $this->request->getVar("Pais");
+        $SobreMi = $this->request->getVar("SobreMi");
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $db = \Config\Database::connect();
@@ -152,10 +153,9 @@ class Home extends BaseController
         $builder->update($data_array);
         $view = \Config\Services::renderer();
 
-            $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil");
-            echo $view->render("Contenido/contenidoPerfil");
-
+        $view->setVar('one', $id)
+            ->setVar('pagina', "Perfil");
+        echo $view->render("Contenido/contenidoPerfil");
     }
     public function llenarPerfil()
     {
@@ -166,7 +166,7 @@ class Home extends BaseController
         $data_array = array('Usuario' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
-            $array []= [
+            $array[] = [
                 'Nombre' => $variable['Nombre'],
                 'Apellido' => $variable['Apellido'],
                 'Correo' => $variable['Correo'],
@@ -175,7 +175,6 @@ class Home extends BaseController
                 'Pais' => $variable['Pais'],
                 'SobreMi' => $variable['SobreMi'],
             ];
-            
         }
         echo json_encode($array);
     }
@@ -188,7 +187,7 @@ class Home extends BaseController
         $data_array = array('Referenciado' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
-            $array []= [
+            $array[] = [
                 'Identificacion' => $variable['Identificacion'],
                 'Nombre' => $variable['Nombre'],
                 'Apellido' => $variable['Apellido'],
@@ -196,20 +195,19 @@ class Home extends BaseController
                 'Ciudad' => $variable['Ciudad'],
                 'Pais' => $variable['Pais']
             ];
-            
         }
         echo json_encode($array);
     }
 
     public function agregarClienteRef()
     {
-        $Identificacion=$this->request->getVar("Id");
-        $Nombre=$this->request->getVar("Nombre");
-        $Apellido=$this->request->getVar("Apellido");
-        $Correo=$this->request->getVar("Correo");
-        $Ciudad=$this->request->getVar("Ciudad");
-        $Pais=$this->request->getVar("Pais");
-        $Usuario=$this->request->getVar("Usuario");
+        $Identificacion = $this->request->getVar("Id");
+        $Nombre = $this->request->getVar("Nombre");
+        $Apellido = $this->request->getVar("Apellido");
+        $Correo = $this->request->getVar("Correo");
+        $Ciudad = $this->request->getVar("Ciudad");
+        $Pais = $this->request->getVar("Pais");
+        $Usuario = $this->request->getVar("Usuario");
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $compra = new Usuarios();
@@ -223,8 +221,8 @@ class Home extends BaseController
             'Usuario' => $Usuario,
             'Referenciado' => $id,
         ]);
-        
-        $dato[]=[
+
+        $dato[] = [
             'Identificacion' => $Identificacion,
             'Nombre' => $Nombre,
             'Apellido' => $Apellido,
@@ -236,19 +234,21 @@ class Home extends BaseController
         ];
         echo json_encode($dato);
     }
-    public function eliminarClienteRef(){
-        $Identificacion=$this->request->getVar("identificacion");
+    public function eliminarClienteRef()
+    {
+        $Identificacion = $this->request->getVar("identificacion");
         $usuario = new Usuarios();
         $data_array = array('Identificacion' => $Identificacion);
         $usuario->delete($data_array);
         echo json_encode("dsjdkskdj");
     }
-    public function datosApi(){
+    public function datosApi()
+    {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $view = \Config\Services::renderer();
-            $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil");
-            echo $view->render("Contenido/contenidoTablaApi");
+        $view->setVar('one', $id)
+            ->setVar('pagina', "Perfil");
+        echo $view->render("Contenido/contenidoTablaApi");
     }
 }

@@ -1,9 +1,5 @@
 <?= $this->extend("Dis/dashboard"); ?>
 
-<?= $this->section("title"); ?>
-Usuarios
-<?= $this->endSection() ?>
-
 <?= $this->section("navLateral"); ?>
 <?= $this->include("Partes/navLateral"); ?>
 <?= $this->endSection() ?>
