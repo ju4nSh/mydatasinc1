@@ -15,12 +15,13 @@ class Clientes extends Controller
     }
     public function listarClientes()
     {
-        return json_encode(["result" => 1, "data" => $this->clientes->findAll()]);
+        return $this->clientes->findAll();
     }
     public function index()
     {
         $view = \Config\Services::renderer();
         $view->setVar('one', session("user"))
+        ->setVar("clientes", $this->listarClientes())
             ->setVar('pagina', "Usuarios");
         return $view->render("Contenido/contenidoUsuario");
     }

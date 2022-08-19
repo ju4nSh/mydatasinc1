@@ -1,0 +1,30 @@
+div.dataTables_paginate {
+    
+}
+div.dataTables_paginate > span > a {
+    border-radius: 100% !important;
+    borer: 1px solid black !important;
+    padding: 0 !important;
+    width: 30px !important;
+    text-align: center;
+    line-height: 30px;
+    height: 30px !important;
+    font-size: 14px !important;
+}
+
+div.dataTables_length > label {
+    color: var(--bs-light) !important
+}
+
+div.dataTables_paginate > a {
+    padding: 0 !important;
+    border-radius: 100% !important;
+}
+
+div.dataTables_paginate > span > a:hover {
+    background-color: var(--bs-primary) !important ;
+}
+div.dataTables_info {
+    color: var(--bs-light) !important;
+    font-size: 14px !important;
+}

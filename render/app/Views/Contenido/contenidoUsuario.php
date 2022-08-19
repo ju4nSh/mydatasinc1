@@ -16,7 +16,7 @@ Usuarios
 <div class="row mt-3">
     <div class="col-lg-12 mb-lg-0 mb-4">
         <div class="row p-3">
-           
+
             <div class="card col-md-12">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between align-content-center">
@@ -27,7 +27,7 @@ Usuarios
                 <div class="container">
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table id="usuarios" class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
@@ -38,40 +38,34 @@ Usuarios
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="usuario in usuariosBD">
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{usuario.nombre}}</h6>
+                                    <?php
+                                    foreach ($clientes as $value) {
+                                    ?>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-y2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm"><?= $value["nombre"] ?></h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{usuario.identificacion}}</p>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="badge badge-sm bg-gradient-success">{{usuario.correo}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{usuario.direccion}}</span>
-                                        </td>
-                                        <td v-if="usuarioActivo" class="align-middle text-center">
-                                            <a data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-original-title="Edit user">
-                                                Editar
-                                            </a>
-                                        </td>
-                                        <td v-if="!usuarioActivo" class="align-middle text-center">
-                                            <a data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-original-title="Edit user">
-                                                Activar
-                                            </a>
-                                        </td>
-                                        <td hidden class="align-middle text-center">
-                                            <input type="text" value="">
-                                        </td>
-                                        <td hidden class="align-middle text-center">
-                                            <input type="text" value="">
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0"><?= $value["identificacion"] ?></p>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class=""><?= $value["correo"] ?></span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold"><?= $value["direccion"] ?></span>
+                                            </td>
+                                            <td v-if="usuarioActivo" class="align-middle text-center">
+                                                <a data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-original-title="Edit user">
+                                                    Editar
+                                                </a>
+                                            </td>
+                                        </tr><?php
+                                            }
+                                                ?>
                                 </tbody>
                             </table>
                         </div>

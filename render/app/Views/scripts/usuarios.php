@@ -1,20 +1,26 @@
 <script>
     $(document).ready(data => {
-        $('#modalActualizarProductos').on('show.bs.modal', function(event) {
-            // var button = $(event.relatedTarget)
-            // let nombre = button[0].parentElement.parentElement.childNodes[0].innerText;
-            // let codigoMercadolibre = button[0].parentElement.parentElement.childNodes[2].innerText;
-            // let cantidad = button[0].parentElement.parentElement.childNodes[6].innerText;
-            // let precio = button[0].parentElement.parentElement.childNodes[8].innerText;
-            // let descripcion = button[0].parentElement.parentElement.childNodes[14].firstChild.value;
-            // let codigoBD = button[0].parentElement.parentElement.childNodes[16].firstChild.value;
-            // var modal = $(this)
-            // modal.find('#nombreAC').val(nombre)
-            // modal.find('#precioAC').val(precio)
-            // modal.find('#cantidadAC').val(cantidad)
-            // modal.find('#descripcionAC').val(descripcion)
-            // modal.find("#codigoPaActualizar").val(codigoMercadolibre)
-            // modal.find("#codigoProductoAC").val(codigoBD)
+        $('#usuarios').DataTable({
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "_MENU_ entradas por página",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": ">",
+                    "previous": "<"
+                }
+            },
         })
     })
     // var subCategory = Vue.component("sub-category", {
@@ -70,16 +76,8 @@
 
         },
         created: function() {
-            $.ajax({
-                url: "<?= base_url("/listarClientes") ?>",
-                dataType: "json",
-                success: function(response) {
-                    if (response.result)
-                        app.usuariosBD = response.data
-                    else
-                        swal("error", "no se encontraron usuarios", "error");
-                }
-            });
+
+
         },
 
         filters: {},
