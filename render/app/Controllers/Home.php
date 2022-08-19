@@ -56,8 +56,19 @@ class Home extends BaseController
     }
     public function login()
     {
-        $view = \Config\Services::renderer();
-        echo $view->render("Contenido/login");
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
+        if (!isset($id)) {
+            $view = \Config\Services::renderer();
+             echo $view->render("Contenido/login");
+        } else {
+            $view = \Config\Services::renderer();
+            $view->setVar('one', $id)
+                ->setVar('pagina', "Salpicadero")
+                ->setVar('titulo', "Dashboard");
+            echo $view->render("Contenido/contenidoDashboard");
+        }
+        
     }
 
     public function guardar()
@@ -95,14 +106,15 @@ class Home extends BaseController
         $user = $this->request->getVar("Usuario");
         $db = \Config\Database::connect();
         $builder = $db->table('users');
-        $data_array = array('Usuario' => $user, 'Identificacion ' => $id);
+        $data_array = array('Identificacion' => $id,'Usuario'=> '');
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         if (count($datos) > 0) {
             $pass =  password_hash($this->request->getVar("password"), PASSWORD_DEFAULT);
             $data_pass = array(
-                'Password' => $pass
+                'Password' => $pass,
+                'Usuario' => $user
             );
-            $builder->where('Usuario', $user);
+            $builder->where('Identificacion', $id);
             $builder->update($data_pass);
             return $this->response->redirect(site_url('/'));
         } else {
@@ -227,7 +239,6 @@ class Home extends BaseController
             'Correo' => $Correo,
             'Ciudad' => $Ciudad,
             'Pais' => $Pais,
-            'Usuario' => $Usuario,
             'Referenciado' => $id,
         ]);
 
@@ -238,7 +249,6 @@ class Home extends BaseController
             'Correo' => $Correo,
             'Ciudad' => $Ciudad,
             'Pais' => $Pais,
-            'Usuario' => $Usuario,
             'Referenciado' => $id,
         ];
         echo json_encode($dato);

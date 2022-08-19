@@ -116,16 +116,6 @@
                         </div>
                     </div>
                     </div>
-                    <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">Informacion para Inicio de session</p>
-                <div class="row">
-                <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Usuario</label>
-                                <input class="form-control" type="text" required id="Usuario" name="Usuario" >
-                            </div>
-                        </div>
-                        </div>
                 <hr class="horizontal dark">
                 <button class="btn btn-success" onclick="AgregarCliente()" value="hgsd">Agregar</button>
                 </form>

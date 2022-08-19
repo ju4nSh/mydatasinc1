@@ -41,7 +41,19 @@ $(document).ready(function() {
         },
         methods: {
             deleteItem(item) {
-                this.articulos.splice(this.articulos.indexOf(item), 1);
+                swal({
+                    title: "¿Estás seguro?",
+                    text: "Una vez eliminado, no podrá recuperar este archivo",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.articulos.splice(this.articulos.indexOf(item), 1);
+                    }
+                });
+                
             },
         }
     })
