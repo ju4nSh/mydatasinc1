@@ -26,6 +26,7 @@
     <?= $this->renderSection("navArriba"); ?>
     <!-- End Navbar -->
 
+   
     <?= $this->renderSection("contenido"); ?>
 
   </main>
@@ -217,4 +218,7 @@
 </body>
 <?= $this->include("Partes/pie") ?>
 
+
 </html>
+
+
