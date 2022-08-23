@@ -32,32 +32,38 @@
 					<div class="card-body px-0 pt-0 pb-2">
 						<div class="table-responsive p-0">
 							<table id="productos" class="table align-items-center mb-0">
-									<div data-app="true" class="v-application v-application--is-ltr theme--light">
-										<v-main>
-											<v-spacer></v-spacer>
-											<div class="row">
-												<div class="container">
-													<div class="col-4" class="mover">
-														<v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
-													</div>
-												</div>
-
-											</div>
-											<br>
+								<div data-app="true" class="v-application v-application--is-ltr theme--light">
+									<v-main>
+										<v-spacer></v-spacer>
+										<div class="row">
 											<div class="container">
-												<v-data-table :headers="columnas" :items="productos" class="elevation-19" :search="search">
-													<template v-slot:item.actions="{ item }">
-														<v-icon small data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);">
-															mdi-pencil
-														</v-icon>
-														<v-icon small @click="deleteItem(item)">
-															mdi-delete
-														</v-icon>
-													</template>
-												</v-data-table>
+												<div class="col-4" class="mover">
+													<v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+												</div>
 											</div>
-										</v-main>
-									</div>
+
+										</div>
+										<br>
+										<div class="container">
+											<v-data-table :headers="columnas" :items="productos" class="elevation-19" :search="search">
+												<template v-slot:item.imagen="{ item }">
+													<img height="50px" style="object-fit: contain; border-radius: 100%;" width="50px" :src="JSON.parse(item.imagen)[0]" :alt="JSON.parse(item.imagen)[0]">
+												</template>
+												<template v-slot:item.link="{ item }">
+													<a :href="item.link" target="_blank" style="text-decoration: none;">
+														visitar
+													</a>
+												</template>
+												<template v-slot:item.actions="{ item }">
+													<v-icon small data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);">
+														mdi-pencil
+													</v-icon>
+													
+												</template>
+											</v-data-table>
+										</div>
+									</v-main>
+								</div>
 								</tbody>
 							</table>
 						</div>
@@ -153,6 +159,10 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					<div v-if="camposVacios" class="alert alert-danger" role="alert">
+						<h4 class="alert-heading">Campos Vacios</h4>
+						Rellena todos los campos
+					</div>
 					<form>
 						<input id="codigoPaActualizar" type="hidden" name="" value="">
 						<input id="codigoProductoAC" type="hidden" name="" value="">

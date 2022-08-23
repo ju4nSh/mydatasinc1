@@ -1,7 +1,7 @@
 <script>
     $(document).ready(data => {
-        
-       
+
+
 
         var subCategory = Vue.component("sub-category", {
             template: `
@@ -56,8 +56,16 @@
                 childrenCategories: [],
                 camposRequeridos: [],
                 inputImagen: [],
+                camposVacios: false,
                 search: '',
                 columnas: [{
+                        text: 'IMAGEN',
+                        value: 'imagen',
+                        // src: 'imagen[0]',
+                        sortable: false,
+                        class: 'blue accent-2'
+                    },
+                    {
                         text: 'NOMBRE',
                         value: 'nombre',
                         class: 'blue accent-2'
@@ -67,6 +75,7 @@
                         value: 'codigo',
                         class: 'blue accent-2'
                     },
+
                     {
                         text: 'CATEGORIA',
                         value: 'categoria',
@@ -87,7 +96,8 @@
                     {
                         text: 'LINK',
                         value: 'link',
-                        class: 'blue accent-2'
+                        sortable: false,
+                        class: "blue accent-2"
                     },
                     {
                         text: 'Actions',
@@ -95,6 +105,7 @@
                         sortable: false,
                         class: 'blue accent-2'
                     }
+
                 ],
                 productos: [],
             },
@@ -116,6 +127,9 @@
 
             filters: {},
             methods: {
+                buscar: function(url) {
+                    window.open(url, "_blank")
+                },
                 crearInputImagen: function() {
                     app.inputImagen.push({
                         clase: "input",
@@ -203,9 +217,13 @@
                         dataType: "json",
                         success: function(response) {
                             // console.log(response)
-                            if (response.result) {
+                            if (response.result == 1) {
                                 swal("Bien", "producto actualizado!", "success");
+                                app.camposVacios = false;
                                 $("#cerrarAC").click();
+                            }else if (response.result == 30) {
+                                app.camposVacios = true;
+                                console.log(response.data)
                             } else {
                                 swal("Error", "No se pudo Actualizar", "info");
                                 console.log(response)
@@ -236,10 +254,10 @@
                         dataType: "json",
                         success: function(response) {
                             console.log(response)
-                            if (response.result) {
+                            if (response.result == 1) {
                                 swal("Bien", "producto publicado!", "success");
                                 $("#cerrarPN").click();
-                            } else {
+                            }  else {
                                 swal("Error", "No se pudo Publicar", "info");
                                 console.log(response.data)
                             }
@@ -250,23 +268,33 @@
             watch: {}
         });
         $('#modalActualizarProductos').on('show.bs.modal', function(event) {
-            alert(21)
+
             var button = $(event.relatedTarget)
-            console.log(button)
-            // console.log(button[0].parentElement.parentElement.childNodes)
-            let nombre = button[0].parentElement.parentElement.childNodes[0].innerText;
+            let nombre = button[0].parentElement.parentElement.childNodes[1].innerText;
             let codigoMercadolibre = button[0].parentElement.parentElement.childNodes[2].innerText;
-            let cantidad = button[0].parentElement.parentElement.childNodes[6].innerText;
-            let precio = button[0].parentElement.parentElement.childNodes[8].innerText;
-            let descripcion = button[0].parentElement.parentElement.childNodes[14].firstChild.value;
-            let codigoBD = button[0].parentElement.parentElement.childNodes[16].firstChild.value;
-        
+            let cantidad = button[0].parentElement.parentElement.childNodes[4].innerText;
+            let precio = button[0].parentElement.parentElement.childNodes[5].innerText;
+            let descripcion = '';
+            let codigoBD = '';
+
+            $.ajax({
+                async: false,
+                type: 'post',
+                url: "<?= base_url("/obtenercategoriaId") ?>",
+                dataType: "json",
+                data: "codigo=" + codigoMercadolibre,
+                success: function(response) {
+                    console.log(response)
+                    descripcion = response.data.descripcion
+                    codigoBD = response.data.id
+                }
+            });
             var modal = $(this)
             modal.find('#nombreAC').val(nombre)
             modal.find('#precioAC').val(precio)
             modal.find('#cantidadAC').val(cantidad)
-            modal.find('#descripcionAC').val(descripcion)
             modal.find("#codigoPaActualizar").val(codigoMercadolibre)
+            modal.find('#descripcionAC').val(descripcion)
             modal.find("#codigoProductoAC").val(codigoBD)
         })
     })

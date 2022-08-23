@@ -66,6 +66,8 @@ $routes->post('guardar', 'Home::guardar');
 $routes->get('salir', 'Home::salir');
 $routes->get('productos', 'Home::productos');
 $routes->get('obtenerproductos', 'Productos::getProduct');
+$routes->post('obtenercategoriaId', 'Productos::getCategory_Id');
+
 $routes->get('obtenercategoria', 'Productos::obtenerCategoria');
 $routes->get('obtenerdetallescategoria/(:any)', 'Productos::obtenerDetallesCategoria/$1');
 $routes->get('attributesCategory/(:any)', 'Productos::attributesCategory/$1');

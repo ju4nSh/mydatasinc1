@@ -17,7 +17,11 @@ class Productos extends Controller
 
     public function getProduct()
     {
-        return  json_encode(["data" => $this->producto->findAll()]) ;
+        return  json_encode(["data" => $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll() ]) ;
+    }
+    public function getCategory_Id()
+    {
+        return  json_encode(["data" => $this->producto->select("id, descripcion")->where("codigo", $this->request->getVar("codigo"))->get()->getFirstRow() ]) ;
     }
 
     public function obtenerCategoria()
@@ -63,7 +67,7 @@ class Productos extends Controller
                 echo json_encode(["result" => 20, "data" => $descripcion]);
             }
         } else {
-            echo json_encode(["result" => 20]);
+            echo json_encode(["result" => 30]);
         }
     }
 
