@@ -9,56 +9,7 @@ $(document).ready(function() {
     });
 });
 
-function AgregarCliente() {
-    var Id = document.getElementById("Id").value;
-    var Nombre = document.getElementById("Nombre").value;
-    var Apellido = document.getElementById("Apellido").value;
-    var Correo = document.getElementById("Correo").value;
-    var Ciudad = document.getElementById("Ciudad").value;
-    var Pais = document.getElementById("Pais").value;
-   
-    var respuesta= validar(Id,Nombre,Apellido,Correo,Ciudad,Pais);
-    if(respuesta===true){
-        $.ajax({
-        type: "post",
-        url: '<?= base_url("/agregarClienteRef") ?>',
-        data: {
-            "Id": Id,
-            "Nombre": Nombre,
-            "Apellido": Apellido,
-            "Correo": Correo,
-            "Ciudad": Ciudad,
-            "Pais": Pais,
-        },
-        error: function(response) {
-            alert("response");
-        },
-        success: function(response) {
-            if(response === "agregado"){
-                swal("Agregado Correctamente", {
-                            icon: "success",
-                        });
-            
-           
-            q.clienteRef.push({
-                "Identificacion": Id,
-                "Apellido": Apellido,
-                "Ciudad": Ciudad,
-                "Correo": Correo,
-                "Nombre": Nombre,
-                "Pais": Pais
-            });
-            limpiar();
-            }else{
-                swal("Verfique la informacion enviada", {
-                            icon: "warning",
-        });
-            }
-            
-        }
-    });
-    };
-}
+
 
 function limpiar() {
     document.getElementsByTagName("input")[0].value = "";
@@ -115,4 +66,29 @@ var q = new Vue({
         }
     }
 })
+</script>
+<script type="text/javascript">
+$('#formulario').submit(function (ev) {
+  $.ajax({
+    type: 'post', 
+    url: '<?= base_url("/agregarClienteRef") ?>',
+    data: $('#formulario').serialize(),
+    success: function (data) { 
+        var json = JSON.parse(data);
+        if(json.error){
+            swal("Verfique llenar todos los campos", {
+                            icon: "warning",
+        });
+        }else{
+            q.clienteRef.push(eval(json));
+            swal("Agregado Correctamente", {
+                            icon: "success",
+                        });
+                        limpiar();
+        }
+      
+    } 
+  });
+  ev.preventDefault();
+});
 </script>

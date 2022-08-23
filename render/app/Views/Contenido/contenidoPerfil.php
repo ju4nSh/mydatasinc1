@@ -25,8 +25,8 @@
                 </div>
                 <div class="card-body">
                     <p class="text-uppercase text-sm">User Information</p>
-                    <div class="row">
-                        <form method="post" id="formulario">
+                    <form method="post" id="formulario">
+                        <div class="row">
                             <template v-for="variable in datos">
                                 <div class="row">
 
@@ -53,49 +53,52 @@
                                             name="Correo" minlength="9" maxlength="30" required>
                                     </div>
                                 </div>
-                    </div>
-                    <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">Contact Information</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Address</label>
-                                <input class="form-control" type="text" :value="variable.Direccion" id="Direccion"
-                                    name="Direccion" minlength="9" maxlength="40" required>
+                        </div>
+                        <hr class="horizontal dark">
+                        <p class="text-uppercase text-sm">Contact Information</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Address</label>
+                                    <input class="form-control" type="text" :value="variable.Direccion" id="Direccion"
+                                        name="Direccion" minlength="9" maxlength="40" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">City</label>
+                                    <input class="form-control" type="text" :value="variable.Ciudad" id="Ciudad"
+                                        name="Ciudad" minlength="3" maxlength="20" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Country</label>
+                                    <input class="form-control" type="text" minlength="4" maxlength="20"
+                                        :value="variable.Pais" id="Pais" name="Pais" required>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">City</label>
-                                <input class="form-control" type="text" :value="variable.Ciudad" id="Ciudad"
-                                    name="Ciudad" minlength="3" maxlength="20" required> 
+                        <hr class="horizontal dark">
+                        <p class="text-uppercase text-sm">About me</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">About me</label>
+                                    <input class="form-control" type="text" :value="variable.SobreMi" minlength="10"
+                                        maxlength="250" id="SobreMi" name="SobreMi" required>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Foto Url</label>
+                                    <input class="form-control" type="text" :value="variable.Foto" minlength="15"
+                                        maxlength="255" id="Foto" name="Foto" required>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Country</label>
-                                <input class="form-control" type="text" minlength="4" maxlength="20" :value="variable.Pais" id="Pais" name="Pais" required>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">About me</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">About me</label>
-                                <input class="form-control" type="text" :value="variable.SobreMi" minlength="10" maxlength="250" id="SobreMi"
-                                    name="SobreMi" required>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Foto Url</label>
-                                <input class="form-control" type="text" :value="variable.Foto" minlength="15" maxlength="255" id="Foto" name="Foto" required>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" onclick="Actualizar()" class="btn btn-success">Actualizar</button>
+                        <button type="button" onclick="Actualizar(); return false"
+                            class="btn btn-success">Actualizar</button>
                     </form>
                     </template>
                 </div>
@@ -110,8 +113,7 @@
                     <div class="col-4 col-lg-4 order-lg-2">
                         <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
                             <a href="javascript:;">
-                                <img :src="variable.Foto"
-                                    class="rounded-circle img-fluid border border-2 border-white">
+                                <img :src="variable.Foto" class="rounded-circle img-fluid border border-2 border-white">
                             </a>
                         </div>
                     </div>

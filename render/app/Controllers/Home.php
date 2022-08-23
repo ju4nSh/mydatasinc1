@@ -251,10 +251,13 @@ class Home extends BaseController
                 'Pais' => $Pais,
                 'Referenciado' => $id,
             ];
-            echo "agregado";
+            
         }catch(\Exception $e){
-            exit($e->getMessage());
+            $dato = [
+                'error' => $e->getMessage(),
+            ];
         }
+        echo json_encode($dato);
         
     }
     public function eliminarClienteRef()

@@ -47,8 +47,9 @@
                                         <td>{{variable.Ciudad}}</td>
                                         <td>{{variable.Pais}}</td>
                                         <td class="align-middle">
-                                            <a @click="elimiarClienteRef(variable.Identificacion,p)" class="text-secondary font-weight-bold text-xs"
-                                                data-toggle="tooltip" data-original-title="Edit user">
+                                            <a @click="elimiarClienteRef(variable.Identificacion,p)"
+                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                                data-original-title="Edit user">
                                                 Eliminar
                                             </a>
                                         </td>
@@ -69,57 +70,64 @@
                     <hr class="horizontal dark">
                 </div>
                 <div class="container">
-                <div class="card-body px-0 pt-0 pb-2">
-                    <form id="forms">
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <form id="formulario">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="example-text-input"
+                                            class="form-control-label">Identificacion</label>
+                                        <input class="form-control" type="number" id="Id" name="Id" min="10000000"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">First name</label>
+                                        <input class="form-control" type="text" id="Nombre" name="Nombre" minlength="3"
+                                            maxlength="15" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">Last name</label>
+                                        <input class="form-control" type="text" id="Apellido" name="Apellido"
+                                            minlength="3" maxlength="20" required>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                    
+                    <p class="text-uppercase text-sm">Contact Information</p>
                     <div class="row">
-                    <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Identificacion</label>
-                                <input class="form-control" type="text" required id="Id" name="Id" minlength="8">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">First name</label>
-                                <input class="form-control" type="text" required id="Nombre" name="Nombre" >
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Last name</label>
-                                <input class="form-control" type="text" required id="Apellido" name="Apellido" >
-                            </div>
-                        </div>
-                      </div>
-                </div>
-                <hr class="horizontal dark">
-                <p class="text-uppercase text-sm">Contact Information</p>
-                <div class="row">
-                <div class="col-md-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Email address</label>
-                                <input class="form-control" type="email" required id="Correo" name="Correo" >
+                                <input class="form-control" type="email" id="Correo" name="Correo" minlength="11"
+                                    maxlength="30" required>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">City</label>
+                                <input class="form-control" type="text" id="Ciudad" name="Ciudad" minlength="3"
+                                    maxlength="20" required>
+                            </div>
                         </div>
-                        <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">City</label>
-                            <input class="form-control" type="text" required id="Ciudad" name="Ciudad" >
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Country</label>
+                                <input class="form-control" type="text" id="Pais" name="Pais" minlength="3"
+                                    maxlength="20" required>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Country</label>
-                            <input class="form-control" type="text" required id="Pais" name="Pais" >
-                        </div>
-                    </div>
-                    </div>
-                <hr class="horizontal dark">
-                <button class="btn btn-success" onclick="AgregarCliente()" value="hgsd">Agregar</button>
-                </form>
-            </div>
+                    <hr class="horizontal dark">
+                    <button class="btn btn-success" type="submit" value="hgsd">Agregar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
