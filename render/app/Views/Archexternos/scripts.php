@@ -7,27 +7,36 @@ $(document).ready(function() {
             q.datos = eval(response)
         }
     });
-  });
+});
 
-  function Actualizar(){
+function Actualizar() {
     swal({
-                    title: "¿Desea Actualizar la informacion?",
-                    text: "Una vez actualizada, no podrá recuperar dicha informacion",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                      var formulario = document.getElementById("formulario");
-                      formulario.submit();
+            title: "¿Desea Actualizar la informacion?",
+            text: "Una vez actualizada, no podrá recuperar dicha informacion",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",
+                    url: '<?= base_url("/ModificarPerfil") ?>',
+                    data: $('#formulario').serialize(),
+                    success: function(response) {
+                        swal("Actualizado Correctamente", {
+                            icon: "success",
+                        });
+                        q.datos = eval(response)
                     }
                 });
-  }
-  var q = new Vue({
-        el: '#app',
-        data: {
-            datos: [],
-        }
-    })
+            }
+        });
+}
+var q = new Vue({
+    el: '#app',
+    data: {
+        datos: [],
+    }
+})
 </script>

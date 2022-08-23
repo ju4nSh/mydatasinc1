@@ -174,13 +174,7 @@ class Home extends BaseController
         );
         $builder->where('Usuario', $id);
         $builder->update($data_array);
-        $view = \Config\Services::renderer();
-
-            $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil")
-                ->setVar('titulo', "Perfil");
-            echo $view->render("Contenido/contenidoPerfil");
-
+        $this->llenarPerfil();
     }
     public function llenarPerfil()
     {
