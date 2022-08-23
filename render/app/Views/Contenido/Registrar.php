@@ -203,15 +203,15 @@
               </div>
             </div>
             <div class="card-body">
-              <form role="form" method="post" action="<?= base_url('')?>/registrar">
+              <form role="form" id="form1" onsubmit="Actualizar(); return false">
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Identificacion" aria-label="Identificacion" name="Id" id="Id">
+                  <input type="number" class="form-control" placeholder="Identificacion" aria-label="Identificacion" name="Id" id="Id"  maxlength="10">
                 </div>
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" name="Usuario" id="Usuario">
+                  <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" required name="Usuario" id="Usuario" minlength="3" maxlength="15">
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password" id="password">
+                  <input type="password" class="form-control" placeholder="Password" aria-label="Password" required name="password" id="password" minlength="3" maxlength="15">
                 </div>
                 <div class="form-check form-check-info text-start">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
@@ -302,6 +302,26 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <script>
+    function Actualizar(){
+      $.ajax({
+        type: "post",
+        url: '<?= base_url("/registrar") ?>',
+        data: $('#form1').serialize(),
+        success: function (response) {
+          if(response ==="registrado"){
+            location.replace('<?= base_url("/index") ?>');
+          }else{
+            swal("Verifique la informacion suministrada", {
+                            icon: "warning",
+                        });
+          }
+          
+        }
+      });
+  }
+   
+  </script>
 </body>
 
 </html>

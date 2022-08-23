@@ -54,8 +54,19 @@ class Home extends BaseController
     }
     public function login()
     {
-        $view = \Config\Services::renderer();
-        echo $view->render("Contenido/login");
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
+        if (empty($id)) {
+            $view = \Config\Services::renderer();
+             echo $view->render("Contenido/login");
+        } else {
+            $view = \Config\Services::renderer();
+            $view->setVar('one', $id)
+                ->setVar('pagina', "Salpicadero")
+                ->setVar('titulo', "Dashboard");
+            echo $view->render("Contenido/contenidoDashboard");
+        }
+        
     }
 
     public function guardar()
@@ -92,19 +103,25 @@ class Home extends BaseController
         $id = $this->request->getVar("Id");
         $user = $this->request->getVar("Usuario");
         $db = \Config\Database::connect();
+        $ssesion = \Config\Services::session();
         $builder = $db->table('users');
-        $data_array = array('Usuario' => $user, 'Identificacion ' => $id);
+        $data_array = array('Identificacion' => $id,'Usuario'=> '');
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         if (count($datos) > 0) {
             $pass =  password_hash($this->request->getVar("password"), PASSWORD_DEFAULT);
             $data_pass = array(
-                'Password' => $pass
+                'Password' => $pass,
+                'Usuario' => $user
             );
-            $builder->where('Usuario', $user);
+            $builder->where('Identificacion', $id);
             $builder->update($data_pass);
-            return $this->response->redirect(site_url('/'));
+            $var = [
+                'user' => $user
+            ];
+            $ssesion->set($var);
+            echo "registrado";
         } else {
-            return $this->response->redirect(site_url('/'));
+           echo "Verifique la informacion suministrada";
         }
     }
     public function mostrarRegistrar()
@@ -155,12 +172,7 @@ class Home extends BaseController
         );
         $builder->where('Usuario', $id);
         $builder->update($data_array);
-        $view = \Config\Services::renderer();
-
-        $view->setVar('one', $id)
-            ->setVar('pagina', "Perfil")
-            ->setVar('titulo', "Perfil");
-        echo $view->render("Contenido/contenidoPerfil");
+        $this->llenarPerfil();
     }
     public function llenarPerfil()
     {
@@ -217,28 +229,34 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $compra = new Usuarios();
-        $compra->insert([
-            'Identificacion' => $Identificacion,
-            'Nombre' => $Nombre,
-            'Apellido' => $Apellido,
-            'Correo' => $Correo,
-            'Ciudad' => $Ciudad,
-            'Pais' => $Pais,
-            'Usuario' => $Usuario,
-            'Referenciado' => $id,
-        ]);
-
-        $dato[] = [
-            'Identificacion' => $Identificacion,
-            'Nombre' => $Nombre,
-            'Apellido' => $Apellido,
-            'Correo' => $Correo,
-            'Ciudad' => $Ciudad,
-            'Pais' => $Pais,
-            'Usuario' => $Usuario,
-            'Referenciado' => $id,
-        ];
+        try{
+            $compra->insert([
+                'Identificacion' => $Identificacion,
+                'Nombre' => $Nombre,
+                'Apellido' => $Apellido,
+                'Correo' => $Correo,
+                'Ciudad' => $Ciudad,
+                'Pais' => $Pais,
+                'Referenciado' => $id,
+            ]);
+    
+            $dato = [
+                'Identificacion' => $Identificacion,
+                'Nombre' => $Nombre,
+                'Apellido' => $Apellido,
+                'Correo' => $Correo,
+                'Ciudad' => $Ciudad,
+                'Pais' => $Pais,
+                'Referenciado' => $id,
+            ];
+            
+        }catch(\Exception $e){
+            $dato = [
+                'error' => $e->getMessage(),
+            ];
+        }
         echo json_encode($dato);
+        
     }
     public function eliminarClienteRef()
     {

@@ -9,49 +9,7 @@ $(document).ready(function() {
     });
 });
 
-function AgregarCliente() {
-    var Id = document.getElementById("Id").value;
-    var Nombre = document.getElementById("Nombre").value;
-    var Apellido = document.getElementById("Apellido").value;
-    var Correo = document.getElementById("Correo").value;
-    var Ciudad = document.getElementById("Ciudad").value;
-    var Pais = document.getElementById("Pais").value;
-    var Usuario = document.getElementById("Usuario").value;
-    var respuesta= validar(Id,Nombre,Apellido,Correo,Ciudad,Pais,Usuario);
-    if(respuesta===true){
-        $.ajax({
-        type: "post",
-        url: '<?= base_url("/agregarClienteRef") ?>',
-        data: {
-            "Id": Id,
-            "Nombre": Nombre,
-            "Apellido": Apellido,
-            "Correo": Correo,
-            "Ciudad": Ciudad,
-            "Pais": Pais,
-            "Usuario": Usuario
-        },
-        error: function() {
-            alert('No pudo ser agregado este cliente, verifique la informacion');
-        },
-        success: function(response) {
-            swal("Agregado Correctamente", {
-                            icon: "success",
-                        });
-            limpiar();
-            var js = eval(response);
-            q.clienteRef.push({
-                "Identificacion": Id,
-                "Apellido": Apellido,
-                "Ciudad": Ciudad,
-                "Correo": Correo,
-                "Nombre": Nombre,
-                "Pais": Pais
-            });
-        }
-    });
-    };
-}
+
 
 function limpiar() {
     document.getElementsByTagName("input")[0].value = "";
@@ -61,11 +19,10 @@ function limpiar() {
     document.getElementById("Correo").value = "";
     document.getElementById("Ciudad").value = "";
     document.getElementById("Pais").value = "";
-    document.getElementById("Usuario").value = "";
 }
 
 function validar(Id,Nombre,Apellido,Correo,Ciudad,Pais,Usuario) {
-  if (Id.length == 0 || Nombre.length == 0 || Apellido.length == 0 || Correo.length == 0 || Ciudad.length == 0 || Pais.length == 0 || Usuario.length == 0) {
+  if (Id.length == 0 || Nombre.length == 0 || Apellido.length == 0 || Correo.length == 0 || Ciudad.length == 0 || Pais.length == 0) {
     swal("Verfique llenar todos los campos", {
                             icon: "warning",
         });
@@ -109,4 +66,29 @@ var q = new Vue({
         }
     }
 })
+</script>
+<script type="text/javascript">
+$('#formulario').submit(function (ev) {
+  $.ajax({
+    type: 'post', 
+    url: '<?= base_url("/agregarClienteRef") ?>',
+    data: $('#formulario').serialize(),
+    success: function (data) { 
+        var json = JSON.parse(data);
+        if(json.error){
+            swal("Verfique llenar todos los campos", {
+                            icon: "warning",
+        });
+        }else{
+            q.clienteRef.push(eval(json));
+            swal("Agregado Correctamente", {
+                            icon: "success",
+                        });
+                        limpiar();
+        }
+      
+    } 
+  });
+  ev.preventDefault();
+});
 </script>
