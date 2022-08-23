@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     var url = "https://jsonplaceholder.typicode.com/comments";
     new Vue({
-        el: '#app',
+        el: '#app1',
         vuetify: new Vuetify(),
         data() {
             return {

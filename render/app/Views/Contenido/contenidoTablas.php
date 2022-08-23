@@ -75,7 +75,7 @@
                     <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Identificacion</label>
-                                <input class="form-control" type="text" required id="Id" name="Id" >
+                                <input class="form-control" type="text" required id="Id" name="Id" minlength="8">
                             </div>
                         </div>
                         <div class="col-md-3">

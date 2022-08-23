@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <p class="text-uppercase text-sm">User Information</p>
                     <div class="row">
-                        <form method="post" action="<?= base_url('')?>/ModificarPerfil">
+                        <form method="post" id="formulario" action="<?= base_url('')?>/ModificarPerfil">
                             <template v-for="variable in datos">
                                 <div class="row">
 
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Actualizar</button>
+                    <button type="button" onclick="Actualizar()" class="btn btn-success">Actualizar</button>
                     </form>
                     </template>
                 </div>
@@ -154,7 +154,7 @@
                             <i class="ni location_pin mr-2"></i>{{variable.Ciudad}}, {{variable.Pais}}
                         </div>
                         <div class="h6 mt-4">
-                            <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+                            <i class="ni business_briefcase-24 mr-2"></i>{{variable.SobreMi}}
                         </div>
                         <div>
                             <i class="ni education_hat mr-2"></i>University of Computer Science

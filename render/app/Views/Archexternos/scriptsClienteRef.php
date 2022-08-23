@@ -30,15 +30,16 @@ function AgregarCliente() {
             "Ciudad": Ciudad,
             "Pais": Pais,
         },
-        error: function() {
-            alert('No pudo ser agregado este cliente, verifique la informacion');
+        error: function(response) {
+            alert("response");
         },
         success: function(response) {
-            swal("Agregado Correctamente", {
+            if(response === "agregado"){
+                swal("Agregado Correctamente", {
                             icon: "success",
                         });
-            limpiar();
-            var js = eval(response);
+            
+           
             q.clienteRef.push({
                 "Identificacion": Id,
                 "Apellido": Apellido,
@@ -47,6 +48,13 @@ function AgregarCliente() {
                 "Nombre": Nombre,
                 "Pais": Pais
             });
+            limpiar();
+            }else{
+                swal("Verfique la informacion enviada", {
+                            icon: "warning",
+        });
+            }
+            
         }
     });
     };

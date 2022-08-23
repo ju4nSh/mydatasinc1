@@ -58,7 +58,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
-        if (!isset($id)) {
+        if (empty($id)) {
             $view = \Config\Services::renderer();
              echo $view->render("Contenido/login");
         } else {
@@ -105,6 +105,7 @@ class Home extends BaseController
         $id = $this->request->getVar("Id");
         $user = $this->request->getVar("Usuario");
         $db = \Config\Database::connect();
+        $ssesion = \Config\Services::session();
         $builder = $db->table('users');
         $data_array = array('Identificacion' => $id,'Usuario'=> '');
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
@@ -116,9 +117,13 @@ class Home extends BaseController
             );
             $builder->where('Identificacion', $id);
             $builder->update($data_pass);
-            return $this->response->redirect(site_url('/'));
+            $var = [
+                'user' => $user
+            ];
+            $ssesion->set($var);
+            echo "registrado";
         } else {
-            return $this->response->redirect(site_url('/'));
+           echo "Verifique la informacion suministrada";
         }
     }
     public function mostrarRegistrar()
@@ -232,26 +237,31 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $compra = new Usuarios();
-        $compra->insert([
-            'Identificacion' => $Identificacion,
-            'Nombre' => $Nombre,
-            'Apellido' => $Apellido,
-            'Correo' => $Correo,
-            'Ciudad' => $Ciudad,
-            'Pais' => $Pais,
-            'Referenciado' => $id,
-        ]);
-
-        $dato[] = [
-            'Identificacion' => $Identificacion,
-            'Nombre' => $Nombre,
-            'Apellido' => $Apellido,
-            'Correo' => $Correo,
-            'Ciudad' => $Ciudad,
-            'Pais' => $Pais,
-            'Referenciado' => $id,
-        ];
-        echo json_encode($dato);
+        try{
+            $compra->insert([
+                'Identificacion' => $Identificacion,
+                'Nombre' => $Nombre,
+                'Apellido' => $Apellido,
+                'Correo' => $Correo,
+                'Ciudad' => $Ciudad,
+                'Pais' => $Pais,
+                'Referenciado' => $id,
+            ]);
+    
+            $dato = [
+                'Identificacion' => $Identificacion,
+                'Nombre' => $Nombre,
+                'Apellido' => $Apellido,
+                'Correo' => $Correo,
+                'Ciudad' => $Ciudad,
+                'Pais' => $Pais,
+                'Referenciado' => $id,
+            ];
+            echo "agregado";
+        }catch(\Exception $e){
+            exit($e->getMessage());
+        }
+        
     }
     public function eliminarClienteRef()
     {

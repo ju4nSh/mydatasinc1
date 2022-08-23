@@ -26,6 +26,21 @@
   <link href="../public//css/nucleo-svg.css" rel="stylesheet" />
 
 
+<!-- Nucleo sin internet -->
+  <link href="../public/xinternet/bootstrap.min.css" rel="stylesheet" />
+  <link href="../public/xinternet/css.css" rel="stylesheet" />
+  <link href="../public/xinternet/materialdesignicons.min.css" rel="stylesheet" />
+  <link href="../public/xinternet/vuetify.min.css" rel="stylesheet" />
+
+  <script src="../public/xinternet/bootstrap.min.js"></script>
+  <script src="../public/xinternet/datatable.js"></script>
+  <script src="../public/xinternet/jquery-3.6.0.min.js"></script>
+  <script src="../public/xinternet/popper.min.js"></script>
+  <script src="../public/xinternet/sweetalert.min.js"></script>
+  <script src="../public/xinternet/vue.js"></script>
+<!-- Fin sin internet -->
+
+
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="./css/nucleo-svg.css" rel="stylesheet" />
