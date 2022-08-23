@@ -17,7 +17,11 @@ class Productos extends Controller
 
     public function getProduct()
     {
-        return $this->producto->findAll();
+        return  json_encode(["data" => $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll() ]) ;
+    }
+    public function getCategory_Id()
+    {
+        return  json_encode(["data" => $this->producto->select("id, descripcion")->where("codigo", $this->request->getVar("codigo"))->get()->getFirstRow() ]) ;
     }
 
     public function obtenerCategoria()
@@ -31,34 +35,39 @@ class Productos extends Controller
     }
     public function actualizarProducto()
     {
-        $id = $this->request->getVar("codigo");
-        $codigo = $this->request->getVar("id");
-        $data = [
-            "nombre" => $this->request->getVar("nombre"),
-            "precio" => $this->request->getVar("precio"),
-            "descripcion" => $this->request->getVar("descripcion"),
-            "cantidad" => $this->request->getVar("cantidad"),
-        ];
-        $datos = [
-            "title" => $data["nombre"],
-            "price" => $data["precio"],
-            "available_quantity" => $data["cantidad"],
-        ];
-        // agregar descripcion al producto
-        $descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
+        if ($this->request->getVar("codigo") != "" && $this->request->getVar("id") != "" && $this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("descripcion") != "" && $this->request->getVar("cantidad") != "") {
 
-        if ($descripcion) {
-            if ($this->producto->update($id, $data)) {
-                //actualizar productos en mercadolibre
-                if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
-                    echo json_encode(["result" => 1]);
-                else
-                    echo json_encode(["result" => 0]);
+            $id = $this->producto->escapeString($this->request->getVar("codigo"));
+            $codigo = $this->producto->escapeString($this->request->getVar("id"));
+            $data = [
+                "nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
+                "precio" => $this->producto->escapeString($this->request->getVar("precio")),
+                "descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
+                "cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+            ];
+            $datos = [
+                "title" => $data["nombre"],
+                "price" => $data["precio"],
+                "available_quantity" => $data["cantidad"],
+            ];
+            // agregar descripcion al producto
+            $descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
+
+            if ($descripcion) {
+                if ($this->producto->update($id, $data)) {
+                    //actualizar productos en mercadolibre
+                    if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
+                        echo json_encode(["result" => 1]);
+                    else
+                        echo json_encode(["result" => 0]);
+                } else {
+                    echo json_encode(["result" => 10]);
+                }
             } else {
-                echo json_encode(["result" => 10]);
+                echo json_encode(["result" => 20, "data" => $descripcion]);
             }
         } else {
-            echo json_encode(["result" => 20, "data" => $descripcion]);
+            echo json_encode(["result" => 30]);
         }
     }
 
@@ -69,58 +78,62 @@ class Productos extends Controller
 
     public function publicarMercadolibre()
     {
-        $data = [
-            "nombre" => $this->request->getVar("nombre"),
-            "precio" => $this->request->getVar("precio"),
-            "categoria" => $this->request->getVar("categoria"),
-            "cantidad" => $this->request->getVar("cantidad"),
-            "imagen" => json_decode($this->request->getVar("imagen")),
-            "attributes" => json_decode($this->request->getVar("attributes")),
-        ];
-        $imagen = $data["imagen"];
-        foreach ($imagen as $key => $img) {
-            $imagen[$key] = array("source" => $img);
-        }
-        $datos = [
-            "title" => $data["nombre"],
-            "category_id" => $data["categoria"],
-            "price" => $data["precio"],
-            "currency_id" => "COP",
-            "available_quantity" => $data["cantidad"],
-            "condition" => "new",
-            "listing_type_id" => "gold_pro",
-            "pictures" => $imagen,
-            "attributes" => $data["attributes"],
-        ];
-
-        $respuesta = $this->mercadolibre->postMercadolibre($datos);
-
-        // INSERTAR EN LA BASE DE DATOS
-        if ($respuesta) {
-            $idP = '';
-            $categoryP = '';
-            $linkP = '';
-            $response = json_decode($respuesta);
-            $idP = $response->id;
-            $categoryP = $response->category_id;
-            $linkP = $response->permalink;
-            $dataProduct = [
-                "nombre" => $data["nombre"],
-                "precio" => $data["precio"],
-                "categoria" => $categoryP,
-                "codigo"  => $idP,
-                "imagen" => json_encode($data["imagen"]),
-                "link" => $linkP,
-                "cantidad" => $data["cantidad"]
+        if ($this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("categoria") != "" && $this->request->getVar("cantidad") != "" && $this->request->getVar("imagen") != "" && $this->request->getVar("attributes") != "") {
+            $data = [
+                "nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
+                "precio" => $this->producto->escapeString($this->request->getVar("precio")),
+                "categoria" => $this->producto->escapeString($this->request->getVar("categoria")),
+                "cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+                "imagen" => json_decode($this->request->getVar("imagen")),
+                "attributes" => json_decode($this->request->getVar("attributes")),
             ];
-            $res = $this->producto->save($dataProduct);
-            if ($res) {
-                echo json_encode(["result" => 1]);
+            $imagen = $data["imagen"];
+            foreach ($imagen as $key => $img) {
+                $imagen[$key] = array("source" => $img);
+            }
+            $datos = [
+                "title" => $data["nombre"],
+                "category_id" => $data["categoria"],
+                "price" => $data["precio"],
+                "currency_id" => "COP",
+                "available_quantity" => $data["cantidad"],
+                "condition" => "new",
+                "listing_type_id" => "gold_pro",
+                "pictures" => $imagen,
+                "attributes" => $data["attributes"],
+            ];
+
+            $respuesta = $this->mercadolibre->postMercadolibre($datos);
+
+            // INSERTAR EN LA BASE DE DATOS
+            if ($respuesta) {
+                $idP = '';
+                $categoryP = '';
+                $linkP = '';
+                $response = json_decode($respuesta);
+                $idP = $response->id;
+                $categoryP = $response->category_id;
+                $linkP = $response->permalink;
+                $dataProduct = [
+                    "nombre" => $data["nombre"],
+                    "precio" => $data["precio"],
+                    "categoria" => $categoryP,
+                    "codigo"  => $idP,
+                    "imagen" => json_encode($data["imagen"]),
+                    "link" => $linkP,
+                    "cantidad" => $data["cantidad"]
+                ];
+                $res = $this->producto->save($dataProduct);
+                if ($res) {
+                    echo json_encode(["result" => 1]);
+                } else {
+                    echo json_encode(["result" => 0]);
+                }
             } else {
-                echo json_encode(["result" => 0]);
+                echo json_encode(["result" => 0, "data" => $respuesta]);
             }
         } else {
-            echo json_encode(["result" => 0, "data" => $respuesta]);
+            echo json_encode(["result" => 0]);
         }
     }
 }

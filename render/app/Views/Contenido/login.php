@@ -12,6 +12,7 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -103,7 +104,7 @@
                 <div class="card-body">
                   <form role="form" method="post" action="<?= base_url('')?>/guardar">
                     <div class="mb-3">
-                      <input type="text" class="form-control form-control-lg" placeholder="Email" aria-label="Email" id="Usuario" name="Usuario">
+                      <input type="text" class="form-control form-control-lg" placeholder="User" aria-label="user" id="Usuario" name="Usuario">
                     </div>
                     <div class="mb-3">
                       <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" id="password" name="password">

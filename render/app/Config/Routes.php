@@ -65,6 +65,9 @@ $routes->get('tablas', 'Home::tablas');
 $routes->post('guardar', 'Home::guardar');
 $routes->get('salir', 'Home::salir');
 $routes->get('productos', 'Home::productos');
+$routes->get('obtenerproductos', 'Productos::getProduct');
+$routes->post('obtenercategoriaId', 'Productos::getCategory_Id');
+
 $routes->get('obtenercategoria', 'Productos::obtenerCategoria');
 $routes->get('obtenerdetallescategoria/(:any)', 'Productos::obtenerDetallesCategoria/$1');
 $routes->get('attributesCategory/(:any)', 'Productos::attributesCategory/$1');
@@ -78,7 +81,8 @@ $routes->post('eliminarClienteRef', 'Home::eliminarClienteRef');
 $routes->get('generateClient', 'Clientes::llenarClientes');
 $routes->get('usuarios', 'Clientes::index');
 $routes->get('listarClientes', 'Clientes::listarClientes');
+$routes->post('listarClientesnavegacion', 'Clientes::listarClientesNavegacion');
+$routes->post('listarClientesOffset', 'Clientes::listarClientesOffset');
 
 $routes->get('mostrarDatosApi', 'Home::mostrarDatosApi');
 $routes->get('datosApi', 'Home::datosApi');
-

@@ -21,53 +21,37 @@
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between align-content-center">
                         <h4 class="mb-2">Mis clientes</h4>
-
                     </div>
                 </div>
                 <div class="container">
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table id="usuarios" class="align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">identifiación</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">correo</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">dirección</th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    foreach ($clientes as $value) {
-                                    ?>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-y2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"><?= $value["nombre"] ?></h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0"><?= $value["identificacion"] ?></p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class=""><?= $value["correo"] ?></span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold"><?= $value["direccion"] ?></span>
-                                            </td>
-                                            <td v-if="usuarioActivo" class="align-middle text-center">
-                                                <a data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-original-title="Edit user">
-                                                    Editar
-                                                </a>
-                                            </td>
-                                        </tr><?php
-                                            }
-                                                ?>
-                                </tbody>
-                            </table>
+                            <div data-app="true" class="v-application v-application--is-ltr theme--light">
+                                <v-main>
+                                    <v-spacer></v-spacer>
+                                    <div class="row">
+                                        <div class="container">
+                                            <div class="col-4" class="mover">
+                                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="container">
+                                        <v-data-table :headers="columnas" :items="articulos" class="elevation-19" :search="search">
+                                            <template v-slot:item.actions="{ item }">
+                                                <v-icon small @click="editItem(item)">
+                                                    mdi-pencil
+                                                </v-icon>
+                                                <v-icon  small @click="deleteItem(item)">
+                                                    mdi-delete
+                                                </v-icon>
+                                            </template>
+                                        </v-data-table>
+                                    </div>
+                                </v-main>
+                            </div>
                         </div>
                     </div>
                 </div>

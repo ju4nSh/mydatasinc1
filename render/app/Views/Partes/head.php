@@ -4,16 +4,11 @@
   <link rel="apple-touch-icon" sizes="76x76" href="./img/apple-icon.png">
   <link rel="icon" type="image/png" href="./img/favicon.png">
   <title>
-    <?= $titulo?> &nbsp; - &nbsp; MyDataSinc S.A.S
+    <?= $titulo ?> &nbsp; - &nbsp; MyDataSinc S.A.S
 
   </title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- LINK CSS PRODUCTO -->
-  <link rel="stylesheet" href="./css/producto.css">
-  <!-- LINK CSS PRODUCTO -->
-  <!-- LINK CSS USUARIOS LISTAR -->
-  <link rel="stylesheet" href="./css/listarUsuarios.css">
-  <!-- LINK CSS USUARIOS LISTAR -->
+
 
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -82,6 +77,14 @@
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <!--FIN VUE VEATIFUL -->
+
+  <!-- LINK CSS PRODUCTO -->
+  <link rel="stylesheet" href="./css/producto.css">
+  <!-- LINK CSS PRODUCTO -->
+  <!-- LINK CSS USUARIOS LISTAR -->
+  <link rel="stylesheet" href="./css/listarUsuarios.css">
+  <!-- LINK CSS USUARIOS LISTAR -->
+
 
 
 </head>

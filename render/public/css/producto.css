@@ -1,3 +1,45 @@
+* estilos del datatable */
+
+div.dataTables_paginate>span>a {
+    border-radius: 100% !important;
+    borer: 1px solid black !important;
+    padding: 0 !important;
+    width: 30px !important;
+    text-align: center;
+    line-height: 30px;
+    height: 30px !important;
+    font-size: 14px !important;
+
+}
+
+div.dataTables_length>label,
+div.dataTables_length>label>select {
+    color: #8392ab !important
+}
+
+div#productos_filter {
+    display: none !important;
+}
+
+
+div.dataTables_paginate>a {
+    padding: 0 !important;
+    border-radius: 100% !important;
+    text-align: center !important;
+}
+
+div.dataTables_paginate>span>a:hover {
+    background-color: var(--bs-primary) !important;
+}
+
+div.dataTables_info {
+    color: #8392ab !important;
+    font-size: 14px !important;
+}
+
+/* fin estilos del datatable */
+
+
 a.addProductBoton {
     display: flex;
     justify-content: center;
@@ -26,36 +68,42 @@ div.categoriesDetail>.form-group {
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar,
-div.fieldInput::-webkit-scrollbar {
-    -webkit-appearance: none;
+div.fieldInput::-webkit-scrollbar ,
+div#productos_wrapper::-webkit-scrollbar {
+    -webkit-appearance: none !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar:vertical,
-div.fieldInput::-webkit-scrollbar:vertical {
-    width: 6px;
+div.fieldInput::-webkit-scrollbar:vertical ,
+div#productos_wrapper::-webkit-scrollbar:vertical {
+    width: 6px !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-button:increment,
 .contenedor::-webkit-scrollbar-button,
-div.fieldInput::-webkit-scrollbar-button:increment {
-    display: none;
+div.fieldInput::-webkit-scrollbar-button:increment ,
+div#productos_wrapper::-webkit-scrollbar-button:increment {
+    display: none !important;
 }
 
 div.categoriesDetail>.form-groupcontenedor::-webkit-scrollbar:horizontal,
-div.fieldInput::-webkit-scrollbar:horizontal {
-    height: 10px;
+div.fieldInput::-webkit-scrollbar:horizontal ,
+div#productos_wrapper::-webkit-scrollbar:horizontal {
+    height: 10px !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-thumb,
-div.fieldInput::-webkit-scrollbar-thumb {
-    background-color: #5e72e4;
-    border-radius: 20px;
-    border: 1px solid #5e72e4;
+div.fieldInput::-webkit-scrollbar-thumb ,
+div#productos_wrapper::-webkit-scrollbar-thumb {
+    background-color: #5e72e4 !important;
+    border-radius: 20px !important;
+    border: 1px solid #5e72e4 !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-track,
-div.fieldInput::-webkit-scrollbar-track {
-    border-radius: 6px;
+div.fieldInput::-webkit-scrollbar-track ,
+div#productos_wrapper::-webkit-scrollbar-track {
+    border-radius: 6px !important;
 }
 
 div.fieldInput {
@@ -63,6 +111,9 @@ div.fieldInput {
     overflow: auto;
 }
 
+#app {
+    margin-left: 20rem !important;
+}
 /* estilos del datatable */
 
 div.dataTables_paginate>span>a {
@@ -86,9 +137,6 @@ div#productos_filter {
     display: none !important;
 }
 
-div#productos_wrapper {
-    overflow: hidden !important;
-}
 
 div.dataTables_paginate>a {
     padding: 0 !important;
