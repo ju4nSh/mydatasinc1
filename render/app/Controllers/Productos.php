@@ -17,7 +17,11 @@ class Productos extends Controller
 
     public function getProduct()
     {
-        return  json_encode(["data" => $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll() ]) ;
+        $respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll();
+        foreach ($respuesta as $key => $value) {
+            $respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+        }
+        return  json_encode(["data" =>  $respuesta]) ;
     }
     public function getCategory_Id()
     {
