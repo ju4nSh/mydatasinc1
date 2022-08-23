@@ -1,0 +1,92 @@
+CRITICAL - 2022-08-22 07:44:08 --> 6 : Could not resolve host: api.mercadolibre.com
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('6', 'Could not resolve host: api.mercadolibre.com')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('GET', 'https://api.mercadolibre.com/sites/MCO/categories')
+ 4 APPPATH\Controllers\Mercadolibre.php(23): CodeIgniter\HTTP\CURLRequest->request('GET', 'https://api.mercadolibre.com/sites/MCO/categories')
+ 5 APPPATH\Controllers\Productos.php(25): App\Controllers\Mercadolibre->getAllCategories()
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->obtenerCategoria()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-22 08:51:01 --> Call to undefined method App\Controllers\Clientes::request()
+in APPPATH\Controllers\Clientes.php on line 22.
+ 1 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->listarClientesPost()
+ 2 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 3 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-22 09:07:41 --> Argument 1 passed to CodeIgniter\BaseModel::findAll() must be of the type int, null given, called in C:\xampp\htdocs\mydatasinc1\render\app\Controllers\Clientes.php on line 24
+in SYSTEMPATH\BaseModel.php on line 567.
+ 1 APPPATH\Controllers\Clientes.php(24): CodeIgniter\BaseModel->findAll(null, 0)
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->listarClientesPost()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-22 09:09:46 --> Argument 1 passed to CodeIgniter\BaseModel::findAll() must be of the type int, null given, called in C:\xampp\htdocs\mydatasinc1\render\app\Controllers\Clientes.php on line 24
+in SYSTEMPATH\BaseModel.php on line 567.
+ 1 APPPATH\Controllers\Clientes.php(24): CodeIgniter\BaseModel->findAll(null, 0)
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->listarClientesPost()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-22 10:37:24 --> Array to string conversion
+in APPPATH\Controllers\Clientes.php on line 25.
+ 1 APPPATH\Controllers\Clientes.php(25): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string conversion', 'APPPATH\\Controllers\\Clientes.php', 25, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->listarClientesPost()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2022-08-22 11:24:03 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-10, 10' at line 3
+CRITICAL - 2022-08-22 11:24:03 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-10, 10' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *
+FROM `clientes`
+ LIMIT -10, 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `clientes`
+ LIMIT -10, 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `clientes`
+ LIMIT -10, 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `clientes`
+ LIMIT -10, 10', [], false)
+ 5 SYSTEMPATH\Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(10, -10)
+ 7 APPPATH\Controllers\Clientes.php(24): CodeIgniter\BaseModel->findAll(10, -10)
+ 8 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->listarClientesPost()
+ 9 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+10 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2022-08-22 11:30:03 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-10, 10' at line 3
+CRITICAL - 2022-08-22 11:30:04 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-10, 10' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *
+FROM `clientes`
+ LIMIT -10, 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `clientes`
+ LIMIT -10, 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `clientes`
+ LIMIT -10, 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `clientes`
+ LIMIT -10, 10', [], false)
+ 5 SYSTEMPATH\Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(10, -10)
+ 7 APPPATH\Controllers\Clientes.php(24): CodeIgniter\BaseModel->findAll(10, -10)
+ 8 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Clientes->listarClientesPost()
+ 9 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Clientes))
+10 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2022-08-22 11:38:22 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-25, 25' at line 3
+CRITICAL - 2022-08-22 16:02:38 --> Call to a member function remove() on string
+in APPPATH\Views\Contenido\login.php on line 16.
+ 1 SYSTEMPATH\View\View.php(213): include()
+ 2 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 APPPATH\Controllers\Home.php(60): CodeIgniter\View\View->render('Contenido/login')
+ 4 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->login()
+ 5 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

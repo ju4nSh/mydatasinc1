@@ -5,11 +5,11 @@
 <?= $this->endSection() ?>
 
 <?= $this->section("navLateral"); ?>
-<?= $this->include("Partes/navLateral");?>
+<?= $this->include("Partes/navLateral"); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section("navArriba"); ?>
-<?= $this->include("Partes/navArriba");?>
+<?= $this->include("Partes/navArriba"); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
@@ -22,33 +22,28 @@
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
-                        <div id="app">
-                            <v-app>
-                                <v-main>
-                                    <v-spacer></v-spacer>
-                                    <div class="row">
-                                        <div class="container">
-                                            <div class="col-4" class="mover">
-                                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Search"
-                                                    single-line hide-details></v-text-field>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <br>
+                        <div data-app="true" class="v-application v-application--is-ltr theme--light">
+                            <v-main>
+                                <v-spacer></v-spacer>
+                                <div class="row">
                                     <div class="container">
-                                    <v-data-table :headers="columnas" :items="articulos" class="elevation-19"
-                                        :search="search">
+                                        <div class="col-4" class="mover">
+                                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="container">
+                                    <v-data-table :headers="columnas" :items="articulos" class="elevation-19" :search="search">
                                         <template v-slot:item.actions="{ item }">
                                             <v-icon small @click="deleteItem(item)">
                                                 mdi-delete
                                             </v-icon>
                                         </template>
-                                        </template>
                                     </v-data-table>
-                                    </div>
-                                </v-main>
-                            </v-app>
+                                </div>
+                            </v-main>
                         </div>
 
                     </div>
@@ -60,5 +55,5 @@
 <?= $this->endSection("contenido") ?>
 
 <?= $this->section("funciones"); ?>
-<?= $this->include("Archexternos/scriptsTablaApi")?>
+<?= $this->include("Archexternos/scriptsTablaApi") ?>
 <?= $this->endSection() ?>

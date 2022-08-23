@@ -14,7 +14,8 @@
 <?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
-<div class="row mt-3">
+
+<div class="row mt-3" id="contenidoProducto">
 	<div class="col-lg-12 mb-lg-0 mb-4">
 		<div class="row p-3">
 			<div class="card col-md-auto m-1 d-flex justify-content-between">
@@ -31,79 +32,32 @@
 					<div class="card-body px-0 pt-0 pb-2">
 						<div class="table-responsive p-0">
 							<table id="productos" class="table align-items-center mb-0">
-								<thead>
-									<tr>
-										<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-										<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">codigo</th>
-										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">categoria</th>
-										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">stock</th>
-										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">precio</th>
-										<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">link</th>
-										<th class="text-secondary opacity-7"></th>
-										<th hidden class="text-secondary opacity-7"></th>
-										<th hidden class="text-secondary opacity-7"></th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-									// var_dump($productos)
-									foreach ($productos as $value) {
-									?>
-										<tr>
-											<td>
-												<div class="d-flex px-2 py-1">
-													<div>
-														<img src="<?= json_decode($value["imagen"])[0] ?>" class="avatar avatar-sm me-3" alt="user1">
-													</div>
-													<div class="d-flex flex-column justify-content-center">
-														<h6 class="mb-0 text-sm"><?= $value["nombre"] ?></h6>
+									<div data-app="true" class="v-application v-application--is-ltr theme--light">
+										<v-main>
+											<v-spacer></v-spacer>
+											<div class="row">
+												<div class="container">
+													<div class="col-4" class="mover">
+														<v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
 													</div>
 												</div>
-											</td>
-											<td>
-												<p class="text-xs font-weight-bold mb-0"><?= $value["codigo"] ?></p>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="badge badge-sm bg-gradient-success"><?= $value["categoria"] ?></span>
-											</td>
-											<td class="align-middle text-center">
-												<span class="text-secondary text-xs font-weight-bold"><?= $value["cantidad"] ?></span>
-											</td>
-											<td class="align-middle text-center">
-												<span class="text-secondary text-xs font-weight-bold"><?= $value["precio"] ?></span>
-											</td>
-											<td class="align-middle text-center">
-												<a target="_blank" href="<?= $value["link"] ?>" class="text-secondary text-xs font-weight-bold">Visitar</a>
-											</td>
-											<td class="align-middle text-center">
-												<?php
-												if ($value["estado"]) {
-												?>
-													<a data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);" class="text-light font-weight-bold text-xs badge badge-sm bg-info" data-original-title="Edit user">
-														Editar
-													</a> <?php
-														} else {
-															?>
-													<a href="javascript:;" class="text-light font-weight-bold text-xs badge badge-sm bg-warning">
-														Activar
-													</a>
 
-												<?php
-														}
-												?>
-
-											</td>
-											<td hidden class="align-middle text-center">
-												<input  type="text" value="<?= $value["descripcion"] ?>">
-											</td>
-											<td hidden class="align-middle text-center">
-												<input  type="text" value="<?= $value["id"] ?>">
-											</td>
-										</tr>
-
-									<?php
-									}
-									?>
+											</div>
+											<br>
+											<div class="container">
+												<v-data-table :headers="columnas" :items="productos" class="elevation-19" :search="search">
+													<template v-slot:item.actions="{ item }">
+														<v-icon small data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);">
+															mdi-pencil
+														</v-icon>
+														<v-icon small @click="deleteItem(item)">
+															mdi-delete
+														</v-icon>
+													</template>
+												</v-data-table>
+											</div>
+										</v-main>
+									</div>
 								</tbody>
 							</table>
 						</div>

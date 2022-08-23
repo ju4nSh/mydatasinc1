@@ -11,7 +11,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
-        if (!isset($id)) {
+        if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         } else {
             $view = \Config\Services::renderer();
@@ -26,7 +26,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
-        if (!isset($id)) {
+        if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         } else {
             $view = \Config\Services::renderer();
@@ -45,12 +45,10 @@ class Home extends BaseController
             return $this->response->redirect(site_url('/'));
         } else {
             $producto = new Productos();
-            $respuesta = $producto->getProduct();
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-            ->setVar('pagina', "Productos")
-            ->setVar("productos", $respuesta)
-            ->setVar('titulo', "Productos");
+                ->setVar('pagina', "Productos")
+                ->setVar('titulo', "Productos");
             echo $view->render("Contenido/contenidoProducto");
         }
     }
@@ -119,7 +117,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
-        if (!isset($id)) {
+        if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         } else {
             $view = \Config\Services::renderer();
@@ -133,14 +131,14 @@ class Home extends BaseController
 
     public function ModificarPerfil()
     {
-        $Nombre=$this->request->getVar("Nombre");
-        $Foto=$this->request->getVar("Foto");
-        $Apellido=$this->request->getVar("Apellido");
-        $Correo=$this->request->getVar("Correo");
-        $Direccion=$this->request->getVar("Direccion");
-        $Ciudad=$this->request->getVar("Ciudad");
-        $Pais=$this->request->getVar("Pais");
-        $SobreMi=$this->request->getVar("SobreMi");
+        $Nombre = $this->request->getVar("Nombre");
+        $Foto = $this->request->getVar("Foto");
+        $Apellido = $this->request->getVar("Apellido");
+        $Correo = $this->request->getVar("Correo");
+        $Direccion = $this->request->getVar("Direccion");
+        $Ciudad = $this->request->getVar("Ciudad");
+        $Pais = $this->request->getVar("Pais");
+        $SobreMi = $this->request->getVar("SobreMi");
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $db = \Config\Database::connect();
@@ -159,11 +157,10 @@ class Home extends BaseController
         $builder->update($data_array);
         $view = \Config\Services::renderer();
 
-            $view->setVar('one', $id)
-                ->setVar('pagina', "Perfil")
-                ->setVar('titulo', "Perfil");
-            echo $view->render("Contenido/contenidoPerfil");
-
+        $view->setVar('one', $id)
+            ->setVar('pagina', "Perfil")
+            ->setVar('titulo', "Perfil");
+        echo $view->render("Contenido/contenidoPerfil");
     }
     public function llenarPerfil()
     {
@@ -174,7 +171,7 @@ class Home extends BaseController
         $data_array = array('Usuario' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
-            $array []= [
+            $array[] = [
                 'Nombre' => $variable['Nombre'],
                 'Apellido' => $variable['Apellido'],
                 'Correo' => $variable['Correo'],
@@ -256,10 +253,10 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $view = \Config\Services::renderer();
-            $view->setVar('one', $id)
-                ->setVar('pagina', "Tabla Api")
-                ->setVar('titulo', "Tabla Api");
-            echo $view->render("Contenido/contenidoTablaApi");
+        $view->setVar('one', $id)
+            ->setVar('pagina', "Tabla Api")
+            ->setVar('titulo', "Tabla Api");
+        echo $view->render("Contenido/contenidoTablaApi");
     }
     public function info()
     {

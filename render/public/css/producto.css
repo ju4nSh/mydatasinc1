@@ -111,6 +111,9 @@ div.fieldInput {
     overflow: auto;
 }
 
+#app {
+    margin-left: 20rem !important;
+}
 /* estilos del datatable */
 
 div.dataTables_paginate>span>a {
