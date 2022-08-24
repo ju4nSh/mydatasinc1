@@ -1,0 +1,106 @@
+CRITICAL - 2022-08-24 10:24:28 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(88): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(63): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:26:43 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(88): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(63): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:28:10 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(88): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(63): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:36:48 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(107): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(66): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:37:59 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(107): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(66): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:41:34 --> 22 : The requested URL returned error: 405 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 405 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('POST', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(107): CodeIgniter\HTTP\CURLRequest->request('POST', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(66): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:43:23 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(108): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(66): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:49:03 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(108): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(66): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 10:52:44 --> 22 : The requested URL returned error: 400 
+in SYSTEMPATH\HTTP\CURLRequest.php on line 655.
+ 1 SYSTEMPATH\HTTP\CURLRequest.php(655): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('22', 'The requested URL returned error: 400 ')
+ 2 SYSTEMPATH\HTTP\CURLRequest.php(363): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH\HTTP\CURLRequest.php(136): CodeIgniter\HTTP\CURLRequest->send('PUT', 'https://api.mercadolibre.com/items/MCO945953244')
+ 4 APPPATH\Controllers\Mercadolibre.php(108): CodeIgniter\HTTP\CURLRequest->request('PUT', 'https://api.mercadolibre.com/items/MCO945953244', [...])
+ 5 APPPATH\Controllers\Productos.php(66): App\Controllers\Mercadolibre->updateMercadolibre('MCO945953244', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->actualizarProducto()
+ 7 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 11:47:31 --> Undefined property: stdClass::$id
+in APPPATH\Controllers\Productos.php on line 121.
+ 1 APPPATH\Controllers\Productos.php(121): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined property: stdClass::$id', 'APPPATH\\Controllers\\Productos.php', 121, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->publicarMercadolibre()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

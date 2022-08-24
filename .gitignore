@@ -1,0 +1,9 @@
+render/writable/debugbar/*
+render/writable/debugbar/*.json
+render/writable/cache/*
+render/writable/logs/*
+render/writable/session/*
+render/writable/uploads/*
+render/writable/*
+vendor/*
+php_errors.log

@@ -8,7 +8,7 @@ class Mercadolibre extends Controller
 {
     private $baseUri = '';
     private $users = [
-        "token" => "APP_USR-4332857485021545-081908-ea1191c951cbb9af5a4c07f0cfcfae9f-833930674",
+        "token" => "APP_USR-4332857485021545-082408-4c6a6f028a814c48030539ef292a7a0b-833930674",
         "user" => "TEST0DZEHY3B",
         "userId" => "833930674",
     ];
@@ -76,6 +76,25 @@ class Mercadolibre extends Controller
         curl_close($conexion);
         return $r;
     }
+    public function addDescriptionMercadolibrePUT($code, $descripcion)
+    {
+        $uri = $this->baseUri .  "/items/$code/description";
+
+        $descripcion = [
+            "plain_text" => $descripcion
+        ];
+        $conexion = curl_init();
+        $token = $this->users["token"];
+        curl_setopt($conexion, CURLOPT_URL, $uri);
+        curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($conexion, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json', "Authorization: Bearer $token"));
+        curl_setopt($conexion, CURLOPT_POSTFIELDS, json_encode($descripcion));
+        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+
+        $r = curl_exec($conexion);
+        curl_close($conexion);
+        return $r;
+    }
     public function updateMercadolibre($code, $datos)
     {
         $client = \Config\Services::curlrequest();
@@ -84,6 +103,7 @@ class Mercadolibre extends Controller
         $response = $client->request('PUT', $uri, [
             "json" => $datos,
             "headers" => [
+                "Content-Type" => "application/json",
                 "Accept" => "application/json",
                 "Authorization" => "Bearer " . $this->users['token']
             ],

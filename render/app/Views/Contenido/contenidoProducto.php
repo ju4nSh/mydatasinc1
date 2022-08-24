@@ -26,30 +26,37 @@
 					<div class="row">
 						<h4 class="mb-2">Mis productos</h4>
 						<div class="productosCargados">
-							<div class="shadow-lg" v-for="(p, index) in productos">
+							<div class="shadow-lg rounded-3" v-for="(p, index) in productos">
 								<div :id="p.codigo" class="carousel slide " data-ride="carousel">
 									<div class="carousel-inner">
-										<div class="carousel-item" :class="{ 'active' : index == 0}" v-for="(img, index) in p.imagen">
-											<img :src="img" class="d-block w-100" alt="...">
+										<div class="carousel-item " :class="{ 'active' : index == 0}" v-for="(img, index) in p.imagen">
+											<img :src="img" class="d-block w-100 rounded-top" alt="...">
 										</div>
 									</div>
-									<button class="carousel-control-prev" type="button" :data-target=`#${p.codigo}` data-slide="prev">
-										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-										<span class="sr-only">Previous</span>
-									</button>
-									<button class="carousel-control-next" type="button" :data-target=`#${p.codigo}` data-slide="next">
-										<span class="carousel-control-next-icon" aria-hidden="true"></span>
-										<span class="sr-only">Next</span>
-									</button>
-									<div class="cantidadProducto shadow">
-										<i></i>
-										<span>{{p.cantidad}}</span>
+									<template v-if="p.imagen.length > 1">
+										<button class="carousel-control-prev" type="button" :data-target=`#${p.codigo}` data-slide="prev">
+											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="sr-only">Previous</span>
+										</button>
+										<button class="carousel-control-next" type="button" :data-target=`#${p.codigo}` data-slide="next">
+											<span class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="sr-only">Next</span>
+										</button>
+									</template>
+									<div class="p-1 detallesProductos">
+										<label for="">{{p.nombre}}</label>
+										<div class="cantidadProducto">
+											<label>Stock: {{p.cantidad}}</label>
+											<label> {{new Intl.NumberFormat("es-CO", {style:"currency", currency: "COP", minimumFractionDigits:0}).format(p.precio)}}</label>
+										</div>
+										<div class="categoria">
+											<label>Categoria: {{p.categoria}}</label>
+										</div>
 									</div>
 								</div>
-								<label for="">{{p.nombre}}</label>
 								<div class="btn-group col-md-12" role="group" aria-label="Button group">
-									<button class="btn btn-light" type="button"><i class="far fa-copy"></i></button>
-									<button class="btn btn-primary" type="button"><i class="fas fa-edit"></i></button>
+									<a :href="p.link" target="_blank" class="btn btn-light" type="button"><i class="fas fa-location-arrow"></i></a>
+									<button class="btn btn-primary " type="button" data-target="#modalActualizarProductos" data-toggle="modal"><i class="fas fa-edit"></i></button>
 									<button class="btn btn-info" type="button"><i class="fas fa-pause"></i></button>
 									<button class="btn btn-danger" type="button"><i class="fas fa-trash-alt"></i></button>
 								</div>
@@ -154,6 +161,11 @@
 						<div v-if="camposVacios" class="alert alert-danger" role="alert">
 							<h4 class="alert-heading">Campos Vacios</h4>
 							Rellena todos los campos
+						</div>
+						<div class="text-center">
+							<div id="spinnerActualizarProducto" class="" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
 						</div>
 						<form>
 							<input id="codigoPaActualizar" type="hidden" name="" value="">
