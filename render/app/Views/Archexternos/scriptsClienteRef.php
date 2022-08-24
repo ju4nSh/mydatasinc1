@@ -1,12 +1,69 @@
 <script type="application/javascript">
 $(document).ready(function() {
-    $.ajax({
+   var q =new Vue({
+        el: '#app1',
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                search: '',
+                columnas: [{
+                        text: 'Nombre',
+                        value: 'Nombre',
+                        class: 'blue accent-2'
+                    },
+                    {
+                        text: 'Correo',
+                        value: 'Correo',
+                        class: 'blue accent-2'
+                    },
+                    {
+                        text: 'Ciudad',
+                        value: 'Ciudad',
+                        class: 'blue accent-2'
+                    },
+                    {
+                        text: 'Pais',
+                        value: 'Pais',
+                        class: 'blue accent-2'
+                    },
+                    {
+                        text: 'Actions',
+                        value: 'actions',
+                        sortable: false,
+                        class: 'blue accent-2'
+                    }
+                ],
+                articulos: [],
+            }
+        },
+        created() {
+            $.ajax({
         type: "GET",
         url: '<?= base_url("/mostrarClientesReferenciados") ?>',
         success: function(response) {
-            q.clienteRef = eval(response)
+            var json = JSON.parse(response);
+            q.articulos = json
         }
     });
+        },
+        methods: {
+            deleteItem(item) {
+                swal({
+                    title: "¿Estás seguro?",
+                    text: "Una vez eliminado, no podrá recuperar este archivo",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.articulos.splice(this.articulos.indexOf(item), 1);
+                    }
+                });
+                
+            },
+        }
+    })
 });
 
 
@@ -32,40 +89,7 @@ function validar(Id,Nombre,Apellido,Correo,Ciudad,Pais,Usuario) {
   }
 }
 
-var q = new Vue({
-    el: '#app',
-    data: {
-        clienteRef: [],
-    },
-    methods: {
-        elimiarClienteRef(identificacion, posicion) {
-            swal({
-                    title: "¿Estás seguro?",
-                    text: "Una vez eliminado, no podrá recuperar este archivo",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                type: "post",
-                url: '<?= base_url("/eliminarClienteRef") ?>',
-                data: {
-                    "identificacion": identificacion
-                },
-                success: function(response) {
-                    swal("Eliminado Correctamente", {
-                            icon: "success",
-                        });
-                    q.clienteRef.splice(posicion, 1);
-                }
-            });
-                    }
-                });
-        }
-    }
-})
+
 </script>
 <script type="text/javascript">
 $('#formulario').submit(function (ev) {
