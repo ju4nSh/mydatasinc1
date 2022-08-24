@@ -9,10 +9,20 @@ class Productos extends Controller
 {
 	private $mercadolibre;
 	private $producto;
+	// variables paginación
+	private $_limit;
+	private $_page;
+	private $_total;
+	// fin
 	public function __construct()
 	{
 		$this->mercadolibre = new Mercadolibre();
 		$this->producto = new Producto();
+		$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll();
+		foreach ($respuesta as $key => $value) {
+			$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+		}
+		$this->_total = count($respuesta);
 	}
 
 	public function getProduct()
@@ -21,7 +31,75 @@ class Productos extends Controller
 		foreach ($respuesta as $key => $value) {
 			$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
 		}
-		return  json_encode(["data" =>  $respuesta]);
+		$this->_total = count($respuesta);
+	}
+	public function getData($limit, $page = 1)
+	{
+
+		$this->_limit   = $limit;
+		$this->_page    = $page;
+
+		if ($this->_limit == 'all') {
+			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll();
+			foreach ($respuesta as $key => $value) {
+				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+			}
+		} else {
+			$offset = (($this->_page - 1) * $this->_limit);
+			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll($this->_limit, $offset);
+			foreach ($respuesta as $key => $value) {
+				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+			}
+		}
+
+		$result         = [
+			"page" => $this->_page,
+			"limit" => $this->_limit,
+			"total" => $this->_total,
+			"data" => $respuesta
+		];
+
+		return json_encode($result);
+	}
+	// TODO MEJORAR LA FUNCIONALIDAD DE UX
+	public function createLinks($links, $limit)
+	{
+		$this->_limit = $limit;
+		if ($this->_limit == 'all') {
+			return '';
+		}
+
+		$last       = ceil($this->_total / $this->_limit);
+
+		$start      = (($this->_page - $links) > 0) ? $this->_page - $links : 1;
+		$end        = (($this->_page + $links) < $last) ? $this->_page + $links : $last;
+
+		$html       = '<ul>';
+
+		$class      = ($this->_page == 1) ? "disabled" : "";
+		// $html       .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit .', ' . ($this->_page - 1) .')" href="javascript: void(0)">&laquo;</a></li>';
+
+		if ($start > 1) {
+			$html   .= '<li><a onclick="buscarNuevo(' . $this->_limit . ', 1)" href=javascript: void(0)">1</a></li>';
+			$html   .= '<li class="disabled"><span>...</span></li>';
+		}
+
+		for ($i = $start; $i <= $end; $i++) {
+			$class  = ($this->_page == $i) ? "active" : "";
+			$html   .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit .', ' . $i . ')" href="javascript: void(0)">' . $i . '</a></li>';
+		}
+
+		if ($end < $last) {
+			$html   .= '<li class="disabled"><span>...</span></li>';
+			$html   .= "<li><a onclick='buscarNuevo(" . $this->_limit . ", " . $last . ")' href='javascript: void(0)'>" . $last . "</a></li>";
+		}
+
+		$class      = ($this->_page == $last) ? "disabled" : "";
+		// $html       .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit . ', ' . ($this->_page + 1) . ')" href="javascript: void(0)">&raquo;</a></li>';
+
+		$html       .= '</ul>';
+
+		return $html;
 	}
 	public function getCategory_Id()
 	{
@@ -112,16 +190,17 @@ class Productos extends Controller
 
 			$respuesta = $this->mercadolibre->postMercadolibre($datos);
 
-			$respuesta = json_decode($respuesta);
-			if ($respuesta->status != 400) {
+			$respuesta = (array) json_decode($respuesta);
+			
+			if (in_array("id", $respuesta)) {
 				// INSERTAR EN LA BASE DE DATOS
 				$idP = '';
 				$categoryP = '';
 				$linkP = '';
-				$response = json_decode($respuesta);
-				$idP = $response->id;
-				$categoryP = $response->category_id;
-				$linkP = $response->permalink;
+				$response = $respuesta;
+				$idP = $response["id"];
+				$categoryP = $response["category_id"];
+				$linkP = $response["permalink"];
 				$dataProduct = [
 					"nombre" => $data["nombre"],
 					"precio" => $data["precio"],
@@ -137,8 +216,9 @@ class Productos extends Controller
 				} else {
 					echo json_encode(["result" => 0]);
 				}
-			} else {
-				echo json_encode(["result" => 0, "data" => $respuesta->cause]);
+			} else if (in_array("status", $respuesta)) {
+				if ($respuesta["status"] != 400 && $respuesta["status"] != 401)
+					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
 			}
 		} else {
 			echo json_encode(["result" => 0]);

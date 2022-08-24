@@ -104,3 +104,113 @@ in APPPATH\Controllers\Productos.php on line 121.
  3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
  4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 13:47:06 --> json_decode() expects parameter 1 to be string, object given
+in APPPATH\Controllers\Productos.php on line 121.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'json_decode() expects parameter 1 to be string, object given', 'APPPATH\\Controllers\\Productos.php', 121, [...])
+ 2 APPPATH\Controllers\Productos.php(121): json_decode(Object(stdClass))
+ 3 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->publicarMercadolibre()
+ 4 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 5 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 14:47:11 --> Undefined property: App\Controllers\Paginador::$producto
+in APPPATH\Controllers\Paginador.php on line 21.
+ 1 APPPATH\Controllers\Paginador.php(21): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined property: App\\Controllers\\Paginador::$producto', 'APPPATH\\Controllers\\Paginador.php', 21, [])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Paginador->index()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Paginador))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 15:36:46 --> json_decode() expects parameter 1 to be string, object given
+in APPPATH\Controllers\Productos.php on line 197.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'json_decode() expects parameter 1 to be string, object given', 'APPPATH\\Controllers\\Productos.php', 197, [...])
+ 2 APPPATH\Controllers\Productos.php(197): json_decode(Object(stdClass))
+ 3 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->publicarMercadolibre()
+ 4 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 5 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 16:11:47 --> Division by zero
+in APPPATH\Controllers\Productos.php on line 69.
+ 1 APPPATH\Controllers\Productos.php(69): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Division by zero', 'APPPATH\\Controllers\\Productos.php', 69, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->createLinks('7')
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 16:18:00 --> Division by zero
+in APPPATH\Controllers\Productos.php on line 70.
+ 1 APPPATH\Controllers\Productos.php(70): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Division by zero', 'APPPATH\\Controllers\\Productos.php', 70, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->createLinks('7', '0')
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-08-24 16:21:51 --> A non-numeric value encountered
+in APPPATH\Controllers\Productos.php on line 70.
+ 1 APPPATH\Controllers\Productos.php(70): CodeIgniter\Debug\Exceptions->errorHandler(2, 'A non-numeric value encountered', 'APPPATH\\Controllers\\Productos.php', 70, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->createLinks('7', 'undefined')
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2022-08-24 17:25:28 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-4, 2' at line 3
+CRITICAL - 2022-08-24 17:25:28 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-4, 2' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2')
+ 3 SYSTEMPATH\Database\BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2', [], false)
+ 5 SYSTEMPATH\Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(2, -4)
+ 7 APPPATH\Controllers\Productos.php(49): CodeIgniter\BaseModel->findAll(2, -4)
+ 8 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->getData('2', '-1')
+ 9 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+10 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2022-08-24 17:25:52 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-4, 2' at line 3
+CRITICAL - 2022-08-24 17:25:53 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-4, 2' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2')
+ 3 SYSTEMPATH\Database\BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2', [], false)
+ 5 SYSTEMPATH\Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(2, -4)
+ 7 APPPATH\Controllers\Productos.php(49): CodeIgniter\BaseModel->findAll(2, -4)
+ 8 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->getData('2', '-1')
+ 9 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+10 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2022-08-24 17:31:48 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-4, 2' at line 3
+CRITICAL - 2022-08-24 17:31:49 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-4, 2' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2')
+ 3 SYSTEMPATH\Database\BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT `nombre`, `cantidad`, `codigo`, `precio`, `imagen`, `link`, `categoria`
+FROM `productos`
+ LIMIT -4, 2', [], false)
+ 5 SYSTEMPATH\Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(2, -4)
+ 7 APPPATH\Controllers\Productos.php(49): CodeIgniter\BaseModel->findAll(2, -4)
+ 8 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Productos->getData('2', '-1')
+ 9 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Productos))
+10 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

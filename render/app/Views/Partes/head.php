@@ -21,7 +21,7 @@
   <link href="../public//css/nucleo-svg.css" rel="stylesheet" />
 
 
-<!-- Nucleo sin internet -->
+  <!-- Nucleo sin internet -->
   <!-- <link href="../public/xinternet/bootstrap.min.css" rel="stylesheet" />
   <link href="../public/xinternet/css.css" rel="stylesheet" />
   <link href="../public/xinternet/materialdesignicons.min.css" rel="stylesheet" />
@@ -33,7 +33,7 @@
   <script src="../public/xinternet/popper.min.js"></script>
   <script src="../public/xinternet/sweetalert.min.js"></script>
   <script src="../public/xinternet/vue.js"></script> -->
-<!-- Fin sin internet -->
+  <!-- Fin sin internet -->
 
 
   <!-- Font Awesome Icons -->
@@ -85,6 +85,8 @@
   <link rel="stylesheet" href="./css/listarUsuarios.css">
   <!-- LINK CSS USUARIOS LISTAR -->
 
-
+  <!-- ANIMATED CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <!-- FIN ANIMATED -->
 
 </head>
