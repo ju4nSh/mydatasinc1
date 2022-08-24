@@ -1,26 +1,9 @@
 render/writable/debugbar/*
+render/writable/debugbar/*.json
 render/writable/cache/*
 render/writable/logs/*
 render/writable/session/*
 render/writable/uploads/*
 render/writable/*
 vendor/*
-vendor/*
-
-# render/render/writable/*
-# *.json
-# render/writable/cache/*
-# !render/writable/cache/index.html
-
-# render/writable/logs/*
-# !render/writable/logs/index.html
-
-# render/writable/session/*
-# !render/writable/session/index.html
-
-# render/writable/uploads/*
-# !render/writable/uploads/index.html
-
-# render/writable/debugbar/*
-
 php_errors.log
