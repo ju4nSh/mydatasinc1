@@ -69,6 +69,11 @@
 						</div>
 					</div>
 				</div>
+				<template>
+					<div id="botonNavegacion">
+
+					</div>
+				</template>
 			</div>
 		</div>
 
@@ -84,6 +89,11 @@
 					</div>
 					<div class="modal-body">
 						<form>
+							<div class="text-center">
+								<div id="spinnerAgregarProducto" class="" role="status">
+									<span class="visually-hidden">Loading...</span>
+								</div>
+							</div>
 							<input id="codigoPaPublicar" type="hidden" name="" value="">
 							<div class="row categoriesDetail">
 								<div class="form-group col-md-auto">
@@ -105,13 +115,13 @@
 							<div class="row">
 								<div class="form-group col-md-12">
 									<label for="recipient-name" class="col-form-label">Nombre:</label>
-									<input type="text" class="form-control col-md-11" id="nombrePN">
+									<input type="text" class="form-control col-md-11 " id="nombrePN">
 								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col-md-6">
 									<label for="message-text" class="col-form-label">Categoria:</label>
-									<input class="form-control" type="text" name="" id="categoriaPN">
+									<input class="form-control animate__animated" type="text" name="" id="categoriaPN">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="message-text" class="col-form-label">Precio:</label>

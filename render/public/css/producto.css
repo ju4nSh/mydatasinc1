@@ -73,6 +73,24 @@ div.fieldInput {
     margin-left: 20rem !important;
 }
 
+/* ESTILOS DEL SWEETALERT */
+
+div.swal-overlay {
+    z-index: 10002 !important;
+}
+
+div#spinnerAgregarProducto {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 10002 !important;
+    top: 110px;
+    left: 40%;
+}
+
+/* FIN ESTILOS DEL SWEETALERT */
+
+
 /* ESTILOS DEL CARD PRODUCTOS */
 div.productosCargados {
     box-sizing: border-box !important;
@@ -105,6 +123,23 @@ div.carousel>div.detallesProductos>div.cantidadProducto {
     display: flex !important;
     justify-content: space-between;
 }
+
+/* estilos del nav paginacion */
+div#botonNavegacion > ul {
+    list-style: none !important;
+    display: flex !important;
+    gap: 10px;
+}
+div#botonNavegacion > ul > li {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+}
+/* fin estilos paginacion */
 
 
 @media (max-width: 575px) {

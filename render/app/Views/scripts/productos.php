@@ -1,6 +1,6 @@
 <script>
+	var app;
 	$(document).ready(data => {
-
 
 
 		var subCategory = Vue.component("sub-category", {
@@ -43,7 +43,7 @@
 			props: ["typedata", "name", "data", "id", "allowed_units", "hint"]
 
 		});
-		var app = new Vue({
+		app = new Vue({
 			el: '#app',
 			vuetify: new Vuetify(),
 			components: {
@@ -62,21 +62,34 @@
 			mounted: function() {
 
 			},
-			created: function() {
-				var url = "<?= base_url("/obtenerproductos") ?>";
+			created: async function() {
+				var url = "<?= base_url("getData") ?>/" + 2 + "/" + 1;
 				// this.articulos = JSON.parse(response);
-				$.ajax({
+				let limite = '';
+				await $.ajax({
 					url: url,
 					dataType: "json",
 					success: function(response) {
 						console.log(response)
+						limite = response.limit
 						app.productos = response.data
+					}
+				});
+				// generar los primeros links
+				let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
+				await $.ajax({
+					url: url2,
+					success: function(response) {
+						console.log(response)
+						$("#botonNavegacion").html(response)
+
 					}
 				});
 			},
 
 			filters: {},
 			methods: {
+
 				buscar: function(url) {
 					window.open(url, "_blank")
 				},
@@ -86,6 +99,7 @@
 					})
 				},
 				subcategory: function(id, index) {
+					$("#spinnerAgregarProducto").addClass("spinner-border")
 					$.ajax({
 						url: "<?= base_url("obtenerdetallescategoria") ?>/" + id,
 						dataType: "json",
@@ -93,6 +107,7 @@
 							if (response.children_categories.length) {
 								app.delete = app.childrenCategories.splice((index + 1))
 								app.childrenCategories.push(response.children_categories)
+								$("#spinnerAgregarProducto").removeClass("spinner-border")
 							} else {
 
 
@@ -109,7 +124,9 @@
 					});
 				},
 				atributesCategory: function(param) {
+					$("#spinnerAgregarProducto").addClass("spinner-border")
 					$("#categoriaPN").val(param)
+					$("#categoriaPN").addClass("animate__rubberBand");
 					// tipos de datos
 					// string
 					// number_unit
@@ -134,27 +151,34 @@
 									})
 								}
 							});
+							$("#spinnerAgregarProducto").removeClass("spinner-border")
+							$("#categoriaPN").removeClass("animate__rubberBand");
 						}
 					});
 				},
 				categoriasProductos: function(param) {
+					$("#spinnerAgregarProducto").addClass("spinner-border")
+
 					$.ajax({
 						url: "<?= base_url("/obtenercategoria") ?>",
 						dataType: "json",
 						success: function(response) {
 							// console.log(response)
 							app.categoriasEncontradas = response;
+							$("#spinnerAgregarProducto").removeClass("spinner-border")
 
 						}
 					});
 				},
 				detallesCategoria: function(param, i) {
+					$("#spinnerAgregarProducto").addClass("spinner-border")
 					$.ajax({
 						url: "<?= base_url("obtenerdetallescategoria") ?>/" + param,
 						dataType: "json",
 						success: function(response) {
 							app.childrenCategories.splice(0)
 							app.detallesEncontrados = response.children_categories
+							$("#spinnerAgregarProducto").removeClass("spinner-border")
 						}
 					});
 				},
@@ -206,10 +230,13 @@
 								swal("Bien", "producto publicado!", "success");
 								$("#cerrarPN").click();
 							} else {
-								$.each(response.data, function (indexInArray, valueOfElement) { 
-									 console.log(valueOfElement.message)
+								let error = [];
+								$.each(response.cause, function(indexInArray, valueOfElement) {
+									console.log(valueOfElement.message)
+									error.push(valueOfElement.message)
 								});
-								// swal("Error", "No se pudo Publicar", "info");
+								error.push(response.mensaje)
+								swal("Error", JSON.stringify(error), "info");
 								// console.log(response.data)
 							}
 						}
@@ -262,5 +289,32 @@
 			modal.find('#descripcionAC').val(descripcion)
 			modal.find("#codigoProductoAC").val(codigoBD)
 		})
+
+
 	})
+
+	async function buscarNuevo(limit, offset) {
+		var url = "<?= base_url("getData") ?>/" + limit + "/" + offset;
+		// this.articulos = JSON.parse(response);
+		let limite = '';
+		await $.ajax({
+			url: url,
+			dataType: "json",
+			success: function(response) {
+				console.log(response)
+				limite = response.limit
+				app.productos = response.data
+			}
+		});
+		// generar los primeros links
+		let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
+		await $.ajax({
+			url: url2,
+			success: function(response) {
+				console.log(response)
+				$("#botonNavegacion").html(response)
+
+			}
+		});
+	}
 </script>
