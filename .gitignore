@@ -1,8 +1,10 @@
-render/render/writable/debugbar/*
-render/render/writable/cache/*
-render/render/writable/logs/*
-render/render/writable/session/*
-render/render/writable/uploads/*
+render/writable/debugbar/*
+render/writable/cache/*
+render/writable/logs/*
+render/writable/session/*
+render/writable/uploads/*
+render/writable/*
+vendor/*
 vendor/*
 
 # render/render/writable/*
