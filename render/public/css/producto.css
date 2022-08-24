@@ -26,32 +26,32 @@ div.categoriesDetail>.form-group {
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar,
-div.fieldInput::-webkit-scrollbar ,
+div.fieldInput::-webkit-scrollbar,
 div#productos_wrapper::-webkit-scrollbar {
     -webkit-appearance: none !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar:vertical,
-div.fieldInput::-webkit-scrollbar:vertical ,
+div.fieldInput::-webkit-scrollbar:vertical,
 div#productos_wrapper::-webkit-scrollbar:vertical {
     width: 6px !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-button:increment,
 .contenedor::-webkit-scrollbar-button,
-div.fieldInput::-webkit-scrollbar-button:increment ,
+div.fieldInput::-webkit-scrollbar-button:increment,
 div#productos_wrapper::-webkit-scrollbar-button:increment {
     display: none !important;
 }
 
 div.categoriesDetail>.form-groupcontenedor::-webkit-scrollbar:horizontal,
-div.fieldInput::-webkit-scrollbar:horizontal ,
+div.fieldInput::-webkit-scrollbar:horizontal,
 div#productos_wrapper::-webkit-scrollbar:horizontal {
     height: 10px !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-thumb,
-div.fieldInput::-webkit-scrollbar-thumb ,
+div.fieldInput::-webkit-scrollbar-thumb,
 div#productos_wrapper::-webkit-scrollbar-thumb {
     background-color: #5e72e4 !important;
     border-radius: 20px !important;
@@ -59,7 +59,7 @@ div#productos_wrapper::-webkit-scrollbar-thumb {
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-track,
-div.fieldInput::-webkit-scrollbar-track ,
+div.fieldInput::-webkit-scrollbar-track,
 div#productos_wrapper::-webkit-scrollbar-track {
     border-radius: 6px !important;
 }
@@ -77,27 +77,88 @@ div.fieldInput {
 div.productosCargados {
     box-sizing: border-box !important;
     display: grid !important;
-    grid-template: auto / repeat(2, 1fr) !important;
-    gap: 30px;
+    gap: 10px;
 }
+
+div.productosCargados>div.shadow-lg>div.btn-group>button {
+    color: white !important;
+}
+
 div.carousel {
     position: relative !important;
 }
-div.carousel > div.carousel-inner > div.carousel-item > img {
+
+div.carousel>div.carousel-inner>div.carousel-item>img {
     height: 300px !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
     width: 100% !important;
 }
 
-div.carousel > div.cantidadProducto {
+div.carousel>div.detallesProductos {
     display: grid !important;
+    grid-template: 50px auto / 100% !important;
     place-items: center;
-    grid-template: 10px 40x / 100%;
-    position: absolute !important;
-    right: 30px !important;
-    top: 0 !important;
-    background-color: whitesmoke !important;
-    width: 50px;
-    height: 50px;
 }
+
+div.carousel>div.detallesProductos>div.cantidadProducto {
+    width: 100%;
+    display: flex !important;
+    justify-content: space-between;
+}
+
+
+@media (max-width: 575px) {
+    div.productosCargados {
+        grid-template: auto / repeat(1, 1fr) !important;
+        gap: 30px;
+    }
+
+    #app {
+        margin-left: 0rem !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    div.productosCargados {
+        grid-template: auto / repeat(2, 1fr) !important;
+        gap: 30px;
+    }
+
+    #app {
+        margin-left: 0rem !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    div.productosCargados {
+        grid-template: auto / repeat(3, 1fr) !important;
+        gap: 30px;
+    }
+
+    #app {
+        margin-left: 0rem !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    div.productosCargados {
+        grid-template: auto / repeat(4, 1fr) !important;
+        gap: 30px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+    div.productosCargados {
+        grid-template: auto / repeat(4, 1fr) !important;
+        gap: 30px;
+    }
+}
+
+@media (min-width: 1400px) {
+    div.productosCargados {
+        grid-template: auto / repeat(5, 1fr) !important;
+        gap: 30px;
+    }
+}
+
 /* FIN ESTILOS DEL CARD PRODUCTOS */
