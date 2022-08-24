@@ -57,56 +57,56 @@
                 camposRequeridos: [],
                 inputImagen: [],
                 camposVacios: false,
-                search: '',
-                columnas: [{
-                        text: 'IMAGEN',
-                        value: 'imagen',
-                        // src: 'imagen[0]',
-                        sortable: false,
-                        class: 'blue accent-2'
-                    },
-                    {
-                        text: 'NOMBRE',
-                        value: 'nombre',
-                        class: 'blue accent-2'
-                    },
-                    {
-                        text: 'CODIGO',
-                        value: 'codigo',
-                        class: 'blue accent-2'
-                    },
+                // search: '',
+                // columnas: [{
+                //         text: 'IMAGEN',
+                //         value: 'imagen',
+                //         // src: 'imagen[0]',
+                //         sortable: false,
+                //         class: 'blue accent-2'
+                //     },
+                //     {
+                //         text: 'NOMBRE',
+                //         value: 'nombre',
+                //         class: 'blue accent-2'
+                //     },
+                //     {
+                //         text: 'CODIGO',
+                //         value: 'codigo',
+                //         class: 'blue accent-2'
+                //     },
 
-                    {
-                        text: 'CATEGORIA',
-                        value: 'categoria',
-                        class: 'blue accent-2'
-                    },
+                //     {
+                //         text: 'CATEGORIA',
+                //         value: 'categoria',
+                //         class: 'blue accent-2'
+                //     },
 
-                    {
-                        text: 'STOCK',
-                        value: 'cantidad',
-                        class: 'blue accent-2'
-                    },
-                    {
-                        text: 'PRECIO',
-                        value: 'precio',
-                        class: 'blue accent-2'
-                    },
+                //     {
+                //         text: 'STOCK',
+                //         value: 'cantidad',
+                //         class: 'blue accent-2'
+                //     },
+                //     {
+                //         text: 'PRECIO',
+                //         value: 'precio',
+                //         class: 'blue accent-2'
+                //     },
 
-                    {
-                        text: 'LINK',
-                        value: 'link',
-                        sortable: false,
-                        class: "blue accent-2"
-                    },
-                    {
-                        text: 'Actions',
-                        value: 'actions',
-                        sortable: false,
-                        class: 'blue accent-2'
-                    }
+                //     {
+                //         text: 'LINK',
+                //         value: 'link',
+                //         sortable: false,
+                //         class: "blue accent-2"
+                //     },
+                //     {
+                //         text: 'Actions',
+                //         value: 'actions',
+                //         sortable: false,
+                //         class: 'blue accent-2'
+                //     }
 
-                ],
+                // ],
                 productos: [],
             },
             mounted: function() {
@@ -267,6 +267,7 @@
             },
             watch: {}
         });
+        $('.carousel').carousel()
         $('#modalActualizarProductos').on('show.bs.modal', function(event) {
 
             var button = $(event.relatedTarget)

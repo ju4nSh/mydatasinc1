@@ -1,45 +1,3 @@
-* estilos del datatable */
-
-div.dataTables_paginate>span>a {
-    border-radius: 100% !important;
-    borer: 1px solid black !important;
-    padding: 0 !important;
-    width: 30px !important;
-    text-align: center;
-    line-height: 30px;
-    height: 30px !important;
-    font-size: 14px !important;
-
-}
-
-div.dataTables_length>label,
-div.dataTables_length>label>select {
-    color: #8392ab !important
-}
-
-div#productos_filter {
-    display: none !important;
-}
-
-
-div.dataTables_paginate>a {
-    padding: 0 !important;
-    border-radius: 100% !important;
-    text-align: center !important;
-}
-
-div.dataTables_paginate>span>a:hover {
-    background-color: var(--bs-primary) !important;
-}
-
-div.dataTables_info {
-    color: #8392ab !important;
-    font-size: 14px !important;
-}
-
-/* fin estilos del datatable */
-
-
 a.addProductBoton {
     display: flex;
     justify-content: center;
@@ -114,43 +72,32 @@ div.fieldInput {
 #app {
     margin-left: 20rem !important;
 }
-/* estilos del datatable */
 
-div.dataTables_paginate>span>a {
-    border-radius: 100% !important;
-    borer: 1px solid black !important;
-    padding: 0 !important;
-    width: 30px !important;
-    text-align: center;
-    line-height: 30px;
-    height: 30px !important;
-    font-size: 14px !important;
-
+/* ESTILOS DEL CARD PRODUCTOS */
+div.productosCargados {
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template: auto / repeat(2, 1fr) !important;
+    gap: 30px;
+}
+div.carousel {
+    position: relative !important;
+}
+div.carousel > div.carousel-inner > div.carousel-item > img {
+    height: 300px !important;
+    object-fit: contain !important;
+    width: 100% !important;
 }
 
-div.dataTables_length>label,
-div.dataTables_length>label>select {
-    color: #8392ab !important
+div.carousel > div.cantidadProducto {
+    display: grid !important;
+    place-items: center;
+    grid-template: 10px 40x / 100%;
+    position: absolute !important;
+    right: 30px !important;
+    top: 0 !important;
+    background-color: whitesmoke !important;
+    width: 50px;
+    height: 50px;
 }
-
-div#productos_filter {
-    display: none !important;
-}
-
-
-div.dataTables_paginate>a {
-    padding: 0 !important;
-    border-radius: 100% !important;
-    text-align: center !important;
-}
-
-div.dataTables_paginate>span>a:hover {
-    background-color: var(--bs-primary) !important;
-}
-
-div.dataTables_info {
-    color: #8392ab !important;
-    font-size: 14px !important;
-}
-
-/* fin estilos del datatable */
+/* FIN ESTILOS DEL CARD PRODUCTOS */

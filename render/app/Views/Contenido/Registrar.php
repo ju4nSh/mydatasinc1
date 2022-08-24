@@ -22,7 +22,6 @@
   <link rel="apple-touch-icon" sizes="76x76" href="./img/apple-icon.png">
   <link rel="icon" type="image/png" href="./img/favicon.png">
   <title>
-
     MyDataSinc S.A.S
 
   </title>

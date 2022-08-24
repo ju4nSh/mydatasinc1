@@ -22,7 +22,7 @@
 
 
 <!-- Nucleo sin internet -->
-  <link href="../public/xinternet/bootstrap.min.css" rel="stylesheet" />
+  <!-- <link href="../public/xinternet/bootstrap.min.css" rel="stylesheet" />
   <link href="../public/xinternet/css.css" rel="stylesheet" />
   <link href="../public/xinternet/materialdesignicons.min.css" rel="stylesheet" />
   <link href="../public/xinternet/vuetify.min.css" rel="stylesheet" />
@@ -32,7 +32,7 @@
   <script src="../public/xinternet/jquery-3.6.0.min.js"></script>
   <script src="../public/xinternet/popper.min.js"></script>
   <script src="../public/xinternet/sweetalert.min.js"></script>
-  <script src="../public/xinternet/vue.js"></script>
+  <script src="../public/xinternet/vue.js"></script> -->
 <!-- Fin sin internet -->
 
 

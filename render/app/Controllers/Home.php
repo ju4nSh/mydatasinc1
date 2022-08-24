@@ -172,9 +172,7 @@ class Home extends BaseController
         );
         $builder->where('Usuario', $id);
         $builder->update($data_array);
-
         $this->llenarPerfil();
-
     }
     public function llenarPerfil()
     {
