@@ -150,9 +150,9 @@
 							</div>
 						</form>
 					</div>
-					<div id="modalFooter" class="modal-footer">
+					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" id="cerrarPN" data-dismiss="modal">Cerrar</button>
-						<button  @click="publicarPN" class="btn btn-primary" type="button">
+						<button @click="publicarPN" class="btn btn-primary" type="button">
 							<span id="publicarProductoN" class="" role="status" aria-hidden="true"></span>
 							Publicar
 						</button>
@@ -211,7 +211,9 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" id="cerrarAC" data-dismiss="modal">Cerrar</button>
-						<button @click="publicarAC" type="button" class="btn btn-primary">Actualizar</button>
+						<button @click="publicarAC" type="button" class="btn btn-primary">
+							<span id="actualizarProductoN" class="" role="status" aria-hidden="true"></span>
+							Actualizar</button>
 					</div>
 				</div>
 			</div>

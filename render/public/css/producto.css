@@ -217,7 +217,7 @@ div#botonNavegacion > ul > li {
 
 
 /* ESTILOS MODAL AGREGAR PRODUCTOS FOOTER BOTONES */
-div#modalFooter > button {
+div.modal-footer > button {
     color: white !important;
 }
 

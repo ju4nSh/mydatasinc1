@@ -33,6 +33,7 @@ class Productos extends Controller
 		}
 		$this->_total = count($respuesta);
 	}
+
 	public function getData($limit, $page = 1, $numLinks = 3, $limite = "null")
 	{
 
@@ -105,6 +106,7 @@ class Productos extends Controller
 
 		return $html;
 	}
+
 	public function getCategory_Id()
 	{
 		return  json_encode(["data" => $this->producto->select("id, descripcion")->where("codigo", $this->request->getVar("codigo"))->get()->getFirstRow()]);
@@ -118,68 +120,6 @@ class Productos extends Controller
 	public function obtenerDetallesCategoria($id)
 	{
 		return $this->mercadolibre->getDetailsCategories($id);
-	}
-	public function actualizarProducto()
-	{
-		if ($this->request->getVar("codigo") != "" && $this->request->getVar("id") != "" && $this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("descripcion") != "" && $this->request->getVar("cantidad") != "") {
-
-			$id = $this->producto->escapeString($this->request->getVar("codigo"));
-			$codigo = $this->producto->escapeString($this->request->getVar("id"));
-			$data = [
-				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
-				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
-				"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
-				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
-			];
-			$datos = [
-				"title" => $data["nombre"],
-				"price" => $data["precio"],
-				"available_quantity" => $data["cantidad"],
-			];
-			// agregar descripcion al producto
-			$descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
-			$descripcion = (array) json_decode($descripcion);
-			// Item already has a description, use PUT instead
-			if (array_key_exists("plain_text", $descripcion)) {
-				if ($descripcion) {
-					if ($this->producto->update($id, $data)) {
-						//actualizar productos en mercadolibre
-						if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
-							echo json_encode(["result" => 1]);
-						else
-							echo json_encode(["result" => 0]);
-					} else {
-						echo json_encode(["result" => 10]);
-					}
-				} else {
-					echo json_encode(["result" => 20, "data" => $descripcion]);
-				}
-			} else {
-				if (array_key_exists("message", $descripcion)) {
-					$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
-					if ($descripcion) {
-						if ($this->producto->update($id, $data)) {
-							//actualizar productos en mercadolibre
-							if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
-								echo json_encode(["result" => 1]);
-							else
-								echo json_encode(["result" => 0]);
-						} else {
-							echo json_encode(["result" => 10]);
-						}
-					} else {
-						echo json_encode(["result" => 20, "data" => $descripcion]);
-					}
-				}
-			}
-		} else {
-			echo json_encode(["result" => 30]);
-		}
-	}
-
-	public function attributesCategory($id)
-	{
-		return $this->mercadolibre->attributesCategory($id);
 	}
 
 	public function publicarMercadolibre()
@@ -246,6 +186,70 @@ class Productos extends Controller
 			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
 		}
 	}
+
+	public function actualizarProducto()
+	{
+		if ($this->request->getVar("codigo") != "" && $this->request->getVar("id") != "" && $this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("descripcion") != "" && $this->request->getVar("cantidad") != "") {
+
+			$id = $this->producto->escapeString($this->request->getVar("codigo"));
+			$codigo = $this->producto->escapeString($this->request->getVar("id"));
+			$data = [
+				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
+				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
+				"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
+				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+			];
+			$datos = [
+				"title" => $data["nombre"],
+				"price" => $data["precio"],
+				"available_quantity" => $data["cantidad"],
+			];
+			// agregar descripcion al producto
+			$descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
+			$descripcion = (array) json_decode($descripcion);
+			// Item already has a description, use PUT instead
+			if (array_key_exists("plain_text", $descripcion)) {
+				if ($descripcion) {
+					if ($this->producto->update($id, $data)) {
+						//actualizar productos en mercadolibre
+						if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
+							echo json_encode(["result" => 1]);
+						else
+							echo json_encode(["result" => 0]);
+					} else {
+						echo json_encode(["result" => 10]);
+					}
+				} else {
+					echo json_encode(["result" => 20, "data" => $descripcion]);
+				}
+			} else {
+				if (array_key_exists("message", $descripcion)) {
+					$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
+					if ($descripcion) {
+						if ($this->producto->update($id, $data)) {
+							//actualizar productos en mercadolibre
+							if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
+								echo json_encode(["result" => 1]);
+							else
+								echo json_encode(["result" => 0]);
+						} else {
+							echo json_encode(["result" => 10]);
+						}
+					} else {
+						echo json_encode(["result" => 20, "data" => $descripcion]);
+					}
+				}
+			}
+		} else {
+			echo json_encode(["result" => 30]);
+		}
+	}
+
+	public function attributesCategory($id)
+	{
+		return $this->mercadolibre->attributesCategory($id);
+	}
+
 	public function pausarActivarEliminar($item, $value)
 	{
 		$respuesta = $this->mercadolibre->pausar_activar_eliminar($item, ["status" => $value]);

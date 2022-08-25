@@ -2,7 +2,7 @@
 	var app;
 	let limite = 0;
 	let numLinks = 1;
-	let limit = 12;
+	let limit = 15;
 	let offset = 1;
 	$(document).ready(data => {
 
@@ -83,11 +83,11 @@
 
 			filters: {},
 			methods: {
-				eliminarPublicacion: function(e) {
+				eliminarPublicacion:async function(e) {
 					let codigoMercadolibre = e.target.parentElement.parentElement.firstChild.getAttribute("id");
 					if (codigoMercadolibre != null) {
 						let status = 'closed'
-						swal({
+						await swal({
 								title: `Deseas eliminar la publicación?`,
 								icon: "warning",
 								button: {
@@ -95,11 +95,10 @@
 									closeModal: false,
 								},
 							})
-							.then(resp => {
+							.then(async resp => {
 								if (!resp) throw null;
 
-								$.ajax({
-									async: false,
+								await $.ajax({
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
@@ -125,7 +124,7 @@
 					} else {
 						codigoMercadolibre = e.target.parentElement.parentElement.parentElement.firstChild.getAttribute("id")
 						let status = 'closed'
-						swal({
+						await swal({
 								title: `Deseas eliminar la publicación?`,
 								icon: "warning",
 								button: {
@@ -133,11 +132,10 @@
 									closeModal: false,
 								},
 							})
-							.then(resp => {
+							.then(async resp => {
 								if (!resp) throw null;
 
-								$.ajax({
-									async: false,
+								await $.ajax({
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
@@ -169,11 +167,11 @@
 							});
 					}
 				},
-				pausarPublicacion: function(e) {
+				pausarPublicacion: async function(e) {
 					let codigoMercadolibre = e.target.parentElement.parentElement.firstChild.getAttribute("id");
 					if (codigoMercadolibre != null) {
 						let status = parseInt(e.target.getAttribute("data-estado")) ? 'paused' : 'active'
-						swal({
+						await swal({
 								title: `Deseas ${status == 'paused' ? 'pausar' : 'activar'} la publicación?`,
 								icon: "warning",
 								button: {
@@ -181,11 +179,10 @@
 									closeModal: false,
 								},
 							})
-							.then(resp => {
+							.then(async resp => {
 								if (!resp) throw null;
 
-								$.ajax({
-									async: false,
+								await $.ajax({
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
@@ -223,7 +220,7 @@
 					} else {
 						codigoMercadolibre = e.target.parentElement.parentElement.parentElement.firstChild.getAttribute("id")
 						let status = parseInt(e.target.parentElement.getAttribute("data-estado")) ? 'paused' : 'active'
-						swal({
+						await swal({
 								title: `Deseas ${status == 'paused' ? 'pausar' : 'activar'} la publicación?`,
 								icon: "warning",
 								button: {
@@ -231,11 +228,10 @@
 									closeModal: false,
 								},
 							})
-							.then(resp => {
+							.then(async resp => {
 								if (!resp) throw null;
 
-								$.ajax({
-									async: false,
+								await $.ajax({
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
@@ -365,9 +361,10 @@
 						}
 					});
 				},
-				publicarAC: function() {
-					$.ajax({
-						async: false,
+				publicarAC:async  function() {
+					($("#actualizarProductoN").parent()).addClass("disabled")
+					$("#actualizarProductoN").addClass("spinner-border spinner-border-sm");
+					await $.ajax({
 						type: "post",
 						url: "<?= base_url("actualizarproducto") ?>",
 						data: "id=" + $("#codigoPaActualizar").val() + "&codigo=" + $("#codigoProductoAC").val() + "&nombre=" + $("#nombreAC").val() + "&precio=" + $("#precioAC").val() + "&descripcion=" + $("#descripcionAC").val() + "&cantidad=" + $("#cantidadAC").val(),
@@ -386,6 +383,8 @@
 							}
 						}
 					});
+					$("#actualizarProductoN").removeClass("spinner-border spinner-border-sm");
+					($("#actualizarProductoN").parent()).removeClass("disabled")
 				},
 				publicarPN: async function(param) {
 					($("#publicarProductoN").parent()).addClass("disabled")
