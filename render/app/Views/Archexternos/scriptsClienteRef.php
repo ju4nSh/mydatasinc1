@@ -9,6 +9,7 @@ $(document).ready(function() {
                 snack: false,
                 snackColor: '',
                 snackText: '',
+                loading: true,
                 columnas: [{
                         text: 'Nombre',
                         value: 'fulname',
@@ -46,6 +47,7 @@ $(document).ready(function() {
                 success: function(response) {
                     var json = JSON.parse(response);
                     q.articulos = json
+                    q.loading = false
                 }
             });
         },
@@ -95,6 +97,7 @@ $(document).ready(function() {
                                 icon: "success",
                             });
                             limpiar();
+                            q.loading = false
                         }
                     }
                 });

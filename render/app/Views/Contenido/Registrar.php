@@ -219,13 +219,13 @@
             <div class="card-body">
               <form role="form" id="form1" onsubmit="Actualizar(); return false">
                 <div class="mb-3">
-                  <input type="number" class="form-control" placeholder="Identificacion" aria-label="Identificacion" name="Id" id="Id"  maxlength="10">
+                  <input type="number" class="form-control" placeholder="Identificacion" aria-label="Identificacion" name="Id" id="Id" min="10000000"  required>
                 </div>
                 <div class="mb-3">
                   <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" required name="Usuario" id="Usuario" minlength="3" maxlength="15">
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" placeholder="Password" aria-label="Password" required name="password" id="password" minlength="3" maxlength="15">
+                  <input type="password" class="form-control" placeholder="Password" aria-label="Password" required name="password" id="password" minlength="5" maxlength="20">
                 </div>
                 <div class="form-check form-check-info text-start">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>

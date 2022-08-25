@@ -79,18 +79,22 @@ class Home extends BaseController
         $pass =  $this->request->getVar("password");
         $data_array = array('Usuario' => $user);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
-        foreach ($datos as $variable) {
-            if (password_verify($pass, $variable['Password'])) {
-                $var = [
-                    'user' => $user
-                ];
-                $ssesion->set($var);
-                $this->index();
-            } else {
-                $view = \Config\Services::renderer();
-                echo $view->render("Contenido/login");
+        if(count($datos)>0){
+            foreach ($datos as $variable) {
+                if (password_verify($pass, $variable['Password'])) {
+                    $var = [
+                        'user' => $user
+                    ];
+                    $ssesion->set($var);
+                    echo"Bien";
+                } else {
+                    echo "Contraseña invalida";
+                }
             }
+        }else{
+            echo "Para el usuario digitado no existe una cuenta asociada";
         }
+        
     }
     public function salir()
     {
