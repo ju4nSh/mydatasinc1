@@ -94,3 +94,4 @@ $routes->get('createLinks/(:any)/(:any)', 'Productos::createLinks/$1/$2');
 
 //Graficos
 $routes->get('graficoCircular', 'Graficos::graficoCircular');
+$routes->get('graficoLineaProducto', 'Graficos::graficoLineaProducto');
