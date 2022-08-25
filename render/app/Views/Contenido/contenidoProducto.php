@@ -57,8 +57,8 @@
 								<div class="btn-group col-md-12" role="group" aria-label="Button group">
 									<a :href="p.link" target="_blank" class="btn btn-light" type="button"><i class="fas fa-location-arrow"></i></a>
 									<button id="editarProductos" class="btn btn-primary " type="button" data-target="#modalActualizarProductos" data-toggle="modal"><i class="fas fa-edit"></i></button>
-									<button @click="pausarPublicacion" :data-estado="p.estado" class="btn btn-info" type="button"><i class="fas fa-pause"></i></button>
-									<button class="btn btn-danger" type="button"><i class="fas fa-trash-alt"></i></button>
+									<button @click="pausarPublicacion" :data-estado="p.estado" class="btn" :class="{'btn-warning' : p.estado == 1 , 'btn-info' : p.estado == 0}" type="button"><i class="fas" :class="{'fa-pause' : p.estado == 1, 'fa-play': p.estado == 0}"></i></button>
+									<button @click="eliminarPublicacion" class="btn btn-danger" type="button"><i class="fas fa-trash-alt"></i></button>
 								</div>
 							</div>
 						</div>

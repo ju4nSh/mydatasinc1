@@ -93,7 +93,7 @@ $routes->get('getData/(:any)/(:any)', 'Productos::getData/$1/$2');
 $routes->get('createLinks/(:any)/(:any)', 'Productos::createLinks/$1/$2');
 
 // activar o descativar productos | eliminar productos
-$routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarOactivar/$1/$2');
+$routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar/$1/$2');
 
 
 

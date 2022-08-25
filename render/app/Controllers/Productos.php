@@ -138,22 +138,39 @@ class Productos extends Controller
 			];
 			// agregar descripcion al producto
 			$descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
+			$descripcion = (array) json_decode($descripcion);
 			// Item already has a description, use PUT instead
-			if (json_decode($descripcion)->message == "Item already has a description, use PUT instead") {
-				$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
-			}
-			if ($descripcion) {
-				if ($this->producto->update($id, $data)) {
-					//actualizar productos en mercadolibre
-					if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
-						echo json_encode(["result" => 1]);
-					else
-						echo json_encode(["result" => 0]);
+			if (array_key_exists("plain_text", $descripcion)) {
+				if ($descripcion) {
+					if ($this->producto->update($id, $data)) {
+						//actualizar productos en mercadolibre
+						if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
+							echo json_encode(["result" => 1]);
+						else
+							echo json_encode(["result" => 0]);
+					} else {
+						echo json_encode(["result" => 10]);
+					}
 				} else {
-					echo json_encode(["result" => 10]);
+					echo json_encode(["result" => 20, "data" => $descripcion]);
 				}
 			} else {
-				echo json_encode(["result" => 20, "data" => $descripcion]);
+				if (array_key_exists("message", $descripcion)) {
+					$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
+					if ($descripcion) {
+						if ($this->producto->update($id, $data)) {
+							//actualizar productos en mercadolibre
+							if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
+								echo json_encode(["result" => 1]);
+							else
+								echo json_encode(["result" => 0]);
+						} else {
+							echo json_encode(["result" => 10]);
+						}
+					} else {
+						echo json_encode(["result" => 20, "data" => $descripcion]);
+					}
+				}
 			}
 		} else {
 			echo json_encode(["result" => 30]);
@@ -229,15 +246,30 @@ class Productos extends Controller
 			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
 		}
 	}
-	public function pausarOactivar($item, $value)
+	public function pausarActivarEliminar($item, $value)
 	{
-		$respuesta = $this->mercadolibre->pausarOactivar($item, ["status" => $value]);
-		// actualizar estado en base de dato
+		$respuesta = $this->mercadolibre->pausar_activar_eliminar($item, ["status" => $value]);
 		$id = $this->producto->select("id")->where("codigo", $item)->find();
-		if($this->producto->where("codigo", $item)->update($id[0],["estado" => $value == "paused" ? 0 : 1])) {
-			echo json_encode(["result" => 1]);
-		} else {
-			echo json_encode(["result" => 0]);
+		$respuesta = (array) json_decode($respuesta);
+		if (array_key_exists("id", $respuesta)) {
+			// actualizar estado en base de dato
+			if ($value == "closed") {
+				// elimino de la base de datos
+				if ($this->producto->delete($id[0])) {
+					echo json_encode(["result" => 1]);
+				} else {
+					echo json_encode(["result" => 0]);
+				}
+			} else {
+				if ($this->producto->update($id[0], ["estado" => $value == "paused" ? 0 : 1])) {
+					echo json_encode(["result" => 1]);
+				} else {
+					echo json_encode(["result" => 0]);
+				}
+			}
+		} else if (array_key_exists("status", $respuesta)) {
+			if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
+				echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
 		}
 	}
 }
