@@ -79,21 +79,93 @@
 						$("#botonNavegacion").html(response.html)
 					}
 				});
-				// // generar los primeros links
-				// let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
-				// await $.ajax({
-				// 	url: url2,
-				// 	success: function(response) {
-				// 		console.log(response)
-				// 		$("#botonNavegacion").html(response)
-
-				// 	}
-				// });
 			},
 
 			filters: {},
 			methods: {
+				pausarPublicacion: function(e) {
+					let codigoMercadolibre = e.target.parentElement.parentElement.firstChild.getAttribute("id");
+					if (codigoMercadolibre != null) {
+						console.log(codigoMercadolibre)
+						let status = parseInt(e.target.getAttribute("data-estado")) ? 'paused' : 'active'
+						swal({
+								title: "Deseas pausar la publicación?",
+								icon: "warning",
+								buttons: {
+									text: "Pausar!",
+									closeModal: false,
+								},
+							})
+							.then(resp => {
+								if (!resp) throw null;
 
+								$.ajax({
+									async: false,
+									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
+									dataType: "json",
+									success: function(response) {
+										console.log(response)
+										if (response.result) {
+											e.target.setAttribute("data-estado", status == "paused" ? 0 : 1)
+											swal("Bien", "Estado cambiado", "success")
+										} else {
+											swal("Oh!", "Fallo la actualización", "error")
+										}
+									}
+								});
+							})
+							.catch(err => {
+								console.log(err)
+								if (err) {
+									swal("Fallo", "ocurrió un error", "error");
+								} else {
+									swal.stopLoading();
+									swal.close();
+
+								}
+							});
+					} else {
+						codigoMercadolibre = e.target.parentElement.parentElement.parentElement.firstChild.getAttribute("id")
+						let status = parseInt(e.target.getAttribute("data-estado")) ? 'paused' : 'active'
+						swal({
+								title: "Deseas pausar la publicación?",
+								icon: "warning",
+								buttons: {
+									text: "Pausar!",
+									closeModal: false,
+								},
+							})
+							.then(resp => {
+								if (!resp) throw null;
+
+								$.ajax({
+									async: false,
+									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
+									dataType: "json",
+									success: function(response) {
+										console.log(response)
+										if (response.result) {
+											e.target.setAttribute("data-estado", status == "paused" ? 0 : 1)
+
+											swal("Bien", "Estado cambiado", "success");
+										} else {
+											swal("Oh!", "Fallo la actualización", "error")
+										}
+									}
+								});
+							})
+							.catch(err => {
+								console.log(err)
+								if (err) {
+									swal("Fallo", "ocurrió un error", "error");
+								} else {
+									swal.stopLoading();
+									swal.close();
+
+								}
+							});
+					}
+				},
 				buscar: function(url) {
 					window.open(url, "_blank")
 				},
@@ -315,15 +387,5 @@
 				$("#botonNavegacion").html(response.html)
 			}
 		});
-		// generar los primeros links
-		// let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
-		// await $.ajax({
-		// 	url: url2,
-		// 	success: function(response) {
-		// 		console.log(response)
-		// 		$("#botonNavegacion").html(response)
-
-		// 	}
-		// });
 	}
 </script>

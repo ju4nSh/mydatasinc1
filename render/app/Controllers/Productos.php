@@ -27,7 +27,7 @@ class Productos extends Controller
 
 	public function getProduct()
 	{
-		$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll();
+		$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->findAll();
 		foreach ($respuesta as $key => $value) {
 			$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
 		}
@@ -40,13 +40,13 @@ class Productos extends Controller
 		$this->_page    = $page;
 
 		if ($this->_limit == 'all') {
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll();
+			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->findAll();
 			foreach ($respuesta as $key => $value) {
 				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
 			}
 		} else {
 			$offset = (($this->_page - 1) * $this->_limit);
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll($this->_limit, $offset);
+			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->findAll($this->_limit, $offset);
 			foreach ($respuesta as $key => $value) {
 				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
 			}
@@ -66,7 +66,6 @@ class Productos extends Controller
 		$result["html"] = $html;
 		return json_encode($result);
 	}
-	// TODO MEJORAR LA FUNCIONALIDAD DE UX
 	public function createLinks($links, $limit)
 	{
 		$this->_limit = $limit;
@@ -228,6 +227,17 @@ class Productos extends Controller
 			}
 		} else {
 			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
+		}
+	}
+	public function pausarOactivar($item, $value)
+	{
+		$respuesta = $this->mercadolibre->pausarOactivar($item, ["status" => $value]);
+		// actualizar estado en base de dato
+		$id = $this->producto->select("id")->where("codigo", $item)->find();
+		if($this->producto->where("codigo", $item)->update($id[0],["estado" => $value == "paused" ? 0 : 1])) {
+			echo json_encode(["result" => 1]);
+		} else {
+			echo json_encode(["result" => 0]);
 		}
 	}
 }

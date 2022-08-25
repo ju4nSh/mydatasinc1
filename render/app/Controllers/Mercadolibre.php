@@ -8,7 +8,7 @@ class Mercadolibre extends Controller
 {
     private $baseUri = '';
     private $users = [
-        "token" => "APP_USR-4332857485021545-082416-b0112bedcdbf325984cd89c71127dff8-833930674",
+        "token" => "APP_USR-4332857485021545-082510-db84053bf7e22ee55f8771f1e7601b59-833930674",
         "user" => "TEST0DZEHY3B",
         "userId" => "833930674",
     ];
@@ -102,6 +102,21 @@ class Mercadolibre extends Controller
         $uri = $this->baseUri . "items/" . $code;
         $response = $client->request('PUT', $uri, [
             "json" => $datos,
+            "headers" => [
+                "Content-Type" => "application/json",
+                "Accept" => "application/json",
+                "Authorization" => "Bearer " . $this->users['token']
+            ],
+        ]);
+        return $response;
+    }
+    public function pausarOactivar($item, $value)
+    {
+        $client = \Config\Services::curlrequest();
+
+        $uri = $this->baseUri . "items/" . $item;
+        $response = $client->request('PUT', $uri, [
+            "json" => $value,
             "headers" => [
                 "Content-Type" => "application/json",
                 "Accept" => "application/json",
