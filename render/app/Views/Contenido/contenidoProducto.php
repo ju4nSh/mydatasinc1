@@ -88,7 +88,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="form_agregar_producto">
 							<div class="text-center">
 								<div id="spinnerAgregarProducto">
 									<div id="spiner" role="status">
@@ -182,7 +182,7 @@
 								<span class="visually-hidden">Loading...</span>
 							</div>
 						</div>
-						<form>
+						<form id="form_actualizar_producto">
 							<input id="codigoPaActualizar" type="hidden" name="" value="">
 							<input id="codigoProductoAC" type="hidden" name="" value="">
 							<div class="row">

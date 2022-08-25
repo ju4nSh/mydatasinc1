@@ -67,6 +67,8 @@
 
 			},
 			created: async function() {
+
+
 				var url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
 				// this.articulos = JSON.parse(response);
 				await $.ajax({
@@ -77,13 +79,17 @@
 						limite = response.limit
 						app.productos = response.data
 						$("#botonNavegacion").html(response.html)
+						$('.carousel').carousel({
+							interval: 2000
+						})
 					}
 				});
+
 			},
 
 			filters: {},
 			methods: {
-				eliminarPublicacion:async function(e) {
+				eliminarPublicacion: async function(e) {
 					let codigoMercadolibre = e.target.parentElement.parentElement.firstChild.getAttribute("id");
 					if (codigoMercadolibre != null) {
 						let status = 'closed'
@@ -361,7 +367,7 @@
 						}
 					});
 				},
-				publicarAC:async  function() {
+				publicarAC: async function() {
 					($("#actualizarProductoN").parent()).addClass("disabled")
 					$("#actualizarProductoN").addClass("spinner-border spinner-border-sm");
 					await $.ajax({
@@ -372,6 +378,8 @@
 						success: function(response) {
 							// console.log(response)
 							if (response.result == 1) {
+								document.getElementById("form_actualizar_producto").reset();
+
 								swal("Bien", "producto actualizado!", "success");
 								app.camposVacios = false;
 								$("#cerrarAC").click();
@@ -410,6 +418,7 @@
 						success: function(response) {
 
 							if (response.result == 1) {
+								document.getElementById("form_agregar_producto").reset();
 								buscarNuevo(limit, offset)
 								swal("Bien", "producto publicado!", "success");
 								$("#cerrarPN").click();
@@ -432,7 +441,6 @@
 			},
 			watch: {}
 		});
-		$('.carousel').carousel()
 		$('#modalActualizarProductos').on('show.bs.modal', async function(event) {
 			var button = $(event.relatedTarget)
 			let nombre = ''
