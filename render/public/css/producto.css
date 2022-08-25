@@ -131,7 +131,6 @@ div#botonNavegacion > ul {
     display: flex !important;
     gap: 10px;
 }
-
 div#botonNavegacion > ul > li.active {
     background-color: var(--bs-info) !important;
 }
@@ -145,7 +144,6 @@ div#botonNavegacion > ul > li.disabled > *
 {
     pointer-events:none;
 }
-
 div#botonNavegacion > ul > li {
     width: 30px;
     height: 30px;

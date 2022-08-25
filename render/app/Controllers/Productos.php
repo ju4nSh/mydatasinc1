@@ -196,7 +196,6 @@ class Productos extends Controller
 			$respuesta = $this->mercadolibre->postMercadolibre($datos);
 
 			$respuesta = (array) json_decode($respuesta);
-
 			if (array_key_exists("id", $respuesta)) {
 				// INSERTAR EN LA BASE DE DATOS
 				$idP = '';
@@ -225,7 +224,7 @@ class Productos extends Controller
 				if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
 					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
 			} else {
-				echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
+				echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
 			}
 		} else {
 			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);

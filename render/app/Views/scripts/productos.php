@@ -299,8 +299,9 @@
 			modal.find('#descripcionAC').val(descripcion)
 			modal.find("#codigoProductoAC").val(codigoBD)
 		})
-	})
 
+
+	})
 	async function buscarNuevo(limit1, offset1) {
 		var url = "<?= base_url("getData") ?>/" + limit1 + "/" + offset1 + "/" + numLinks + "/" + limite;
 		// this.articulos = JSON.parse(response);
