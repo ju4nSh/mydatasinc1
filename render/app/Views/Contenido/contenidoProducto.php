@@ -56,9 +56,9 @@
 								</div>
 								<div class="btn-group col-md-12" role="group" aria-label="Button group">
 									<a :href="p.link" target="_blank" class="btn btn-light" type="button"><i class="fas fa-location-arrow"></i></a>
-									<button class="btn btn-primary " type="button" data-target="#modalActualizarProductos" data-toggle="modal"><i class="fas fa-edit"></i></button>
-									<button class="btn btn-info" type="button"><i class="fas fa-pause"></i></button>
-									<button class="btn btn-danger" type="button"><i class="fas fa-trash-alt"></i></button>
+									<button id="editarProductos" class="btn btn-primary " type="button" data-target="#modalActualizarProductos" data-toggle="modal"><i class="fas fa-edit"></i></button>
+									<button @click="pausarPublicacion" :data-estado="p.estado" class="btn" :class="{'btn-warning' : p.estado == 1 , 'btn-info' : p.estado == 0}" type="button"><i class="fas" :class="{'fa-pause' : p.estado == 1, 'fa-play': p.estado == 0}"></i></button>
+									<button @click="eliminarPublicacion" class="btn btn-danger" type="button"><i class="fas fa-trash-alt"></i></button>
 								</div>
 							</div>
 						</div>
@@ -88,10 +88,12 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="form_agregar_producto">
 							<div class="text-center">
-								<div id="spinnerAgregarProducto" class="" role="status">
-									<span class="visually-hidden">Loading...</span>
+								<div id="spinnerAgregarProducto">
+									<div id="spiner" role="status">
+										<span class="visually-hidden">Loading...</span>
+									</div>
 								</div>
 							</div>
 							<input id="codigoPaPublicar" type="hidden" name="" value="">
@@ -150,7 +152,10 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" id="cerrarPN" data-dismiss="modal">Cerrar</button>
-						<button @click="publicarPN" type="button" class="btn btn-primary">Publicar</button>
+						<button @click="publicarPN" class="btn btn-primary" type="button">
+							<span id="publicarProductoN" class="" role="status" aria-hidden="true"></span>
+							Publicar
+						</button>
 					</div>
 				</div>
 			</div>
@@ -177,7 +182,7 @@
 								<span class="visually-hidden">Loading...</span>
 							</div>
 						</div>
-						<form>
+						<form id="form_actualizar_producto">
 							<input id="codigoPaActualizar" type="hidden" name="" value="">
 							<input id="codigoProductoAC" type="hidden" name="" value="">
 							<div class="row">
@@ -206,7 +211,9 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" id="cerrarAC" data-dismiss="modal">Cerrar</button>
-						<button @click="publicarAC" type="button" class="btn btn-primary">Actualizar</button>
+						<button @click="publicarAC" type="button" class="btn btn-primary">
+							<span id="actualizarProductoN" class="" role="status" aria-hidden="true"></span>
+							Actualizar</button>
 					</div>
 				</div>
 			</div>

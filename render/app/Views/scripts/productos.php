@@ -1,5 +1,9 @@
 <script>
 	var app;
+	let limite = 0;
+	let numLinks = 1;
+	let limit = 15;
+	let offset = 1;
 	$(document).ready(data => {
 
 
@@ -63,9 +67,10 @@
 
 			},
 			created: async function() {
-				var url = "<?= base_url("getData") ?>/" + 2 + "/" + 1;
+
+
+				var url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
 				// this.articulos = JSON.parse(response);
-				let limite = '';
 				await $.ajax({
 					url: url,
 					dataType: "json",
@@ -73,23 +78,202 @@
 						console.log(response)
 						limite = response.limit
 						app.productos = response.data
+						$("#botonNavegacion").html(response.html)
+						$('.carousel').carousel({
+							interval: 2000
+						})
 					}
 				});
-				// generar los primeros links
-				let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
-				await $.ajax({
-					url: url2,
-					success: function(response) {
-						console.log(response)
-						$("#botonNavegacion").html(response)
 
-					}
-				});
 			},
 
 			filters: {},
 			methods: {
+				eliminarPublicacion: async function(e) {
+					let codigoMercadolibre = e.target.parentElement.parentElement.firstChild.getAttribute("id");
+					if (codigoMercadolibre != null) {
+						let status = 'closed'
+						await swal({
+								title: `Deseas eliminar la publicación?`,
+								icon: "warning",
+								button: {
+									text: `Eliminar!`,
+									closeModal: false,
+								},
+							})
+							.then(async resp => {
+								if (!resp) throw null;
 
+								await $.ajax({
+									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
+									dataType: "json",
+									success: function(response) {
+										console.log(response)
+										if (response.result) {
+											e.target.parentElement.parentElement.remove()
+											swal("Bien", `Producto eliminado`, "success");
+										} else {
+											swal("Oh!", "Fallo el borrado", "error")
+										}
+									}
+								});
+							})
+							.catch(err => {
+								if (err) {
+									swal("Fallo", "ocurrió un error", "error");
+								} else {
+									// swal.stopLoading();
+									// swal.close();
+
+								}
+							});
+					} else {
+						codigoMercadolibre = e.target.parentElement.parentElement.parentElement.firstChild.getAttribute("id")
+						let status = 'closed'
+						await swal({
+								title: `Deseas eliminar la publicación?`,
+								icon: "warning",
+								button: {
+									text: `Eliminar!`,
+									closeModal: false,
+								},
+							})
+							.then(async resp => {
+								if (!resp) throw null;
+
+								await $.ajax({
+									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
+									dataType: "json",
+									success: function(response) {
+										console.log(response)
+										if (response.result) {
+											e.target.parentElement.parentElement.parentElement.remove()
+
+											swal("Bien", `Producto eliminado`, "success");
+										} else {
+											let error = [];
+											$.each(response.cause, function(indexInArray, valueOfElement) {
+												console.log(valueOfElement.message)
+												error.push(valueOfElement.message)
+											});
+											error.push(response.mensaje)
+											swal("Error", JSON.stringify(error), "info");
+										}
+									}
+								});
+							})
+							.catch(err => {
+								if (err) {
+									swal("Fallo", "ocurrió un error", "error");
+								} else {
+									// swal.stopLoading();
+									// swal.close();
+
+								}
+							});
+					}
+				},
+				pausarPublicacion: async function(e) {
+					let codigoMercadolibre = e.target.parentElement.parentElement.firstChild.getAttribute("id");
+					if (codigoMercadolibre != null) {
+						let status = parseInt(e.target.getAttribute("data-estado")) ? 'paused' : 'active'
+						await swal({
+								title: `Deseas ${status == 'paused' ? 'pausar' : 'activar'} la publicación?`,
+								icon: "warning",
+								button: {
+									text: `${status == 'paused' ? 'Pausar!' : 'Activar!'}`,
+									closeModal: false,
+								},
+							})
+							.then(async resp => {
+								if (!resp) throw null;
+
+								await $.ajax({
+									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
+									dataType: "json",
+									success: function(response) {
+										console.log(response)
+										if (response.result) {
+											e.target.setAttribute("data-estado", status == "paused" ? 0 : 1)
+											// cambiando color al botón
+											e.target.classList.remove(status == "paused" ? 'btn-warning' : 'btn-info')
+											e.target.classList.add(status == "paused" ? 'btn-info' : 'btn-warning')
+											// cambiando el icono al botón
+											e.target.firstChild.classList.remove(status == "paused" ? 'fa-pause' : 'fa-play')
+											e.target.firstChild.classList.add(status == "paused" ? 'fa-play' : 'fa-pause')
+											swal("Bien", `Producto ${status == 'paused' ? 'pausado' : 'activado'}`, "success");
+										} else {
+											let error = [];
+											$.each(response.cause, function(indexInArray, valueOfElement) {
+												console.log(valueOfElement.message)
+												error.push(valueOfElement.message)
+											});
+											error.push(response.mensaje)
+											swal("Error", JSON.stringify(error), "info");
+										}
+									}
+								});
+							})
+							.catch(err => {
+								if (err) {
+									swal("Fallo", "ocurrió un error", "error");
+								} else {
+									// swal.stopLoading();
+									// swal.close();
+
+								}
+							});
+					} else {
+						codigoMercadolibre = e.target.parentElement.parentElement.parentElement.firstChild.getAttribute("id")
+						let status = parseInt(e.target.parentElement.getAttribute("data-estado")) ? 'paused' : 'active'
+						await swal({
+								title: `Deseas ${status == 'paused' ? 'pausar' : 'activar'} la publicación?`,
+								icon: "warning",
+								button: {
+									text: `${status == 'paused' ? 'Pausar!' : 'Activar!'}`,
+									closeModal: false,
+								},
+							})
+							.then(async resp => {
+								if (!resp) throw null;
+
+								await $.ajax({
+									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
+									dataType: "json",
+									success: function(response) {
+										console.log(response)
+										if (response.result) {
+											e.target.parentElement.setAttribute("data-estado", status == "paused" ? 0 : 1)
+											// cambiando color al botón
+											e.target.parentElement.classList.remove(status == "paused" ? 'btn-warning' : 'btn-info')
+											e.target.parentElement.classList.add(status == "paused" ? 'btn-info' : 'btn-warning')
+											e.target.classList.remove(status == "paused" ? 'fa-pause' : 'fa-play')
+											// cambiando el icono al botón
+											e.target.classList.add(status == "paused" ? 'fa-play' : 'fa-pause')
+											swal("Bien", `Producto ${status == 'paused' ? 'pausado' : 'activado'}`, "success");
+										} else {
+											let error = [];
+											$.each(response.cause, function(indexInArray, valueOfElement) {
+												console.log(valueOfElement.message)
+												error.push(valueOfElement.message)
+											});
+											error.push(response.mensaje)
+											swal("Error", JSON.stringify(error), "info");
+										}
+									}
+								});
+							})
+							.catch(err => {
+								if (err) {
+									swal("Fallo", "ocurrió un error", "error");
+								} else {
+									swal.stopLoading();
+									swal.close();
+
+								}
+							});
+					}
+				},
 				buscar: function(url) {
 					window.open(url, "_blank")
 				},
@@ -111,11 +295,7 @@
 							} else {
 
 
-								var altura = $(".modal-xl").height();
 
-								$("html, body").animate({
-									scrollTop: altura + "px"
-								});
 								app.childrenCategories.splice((index + 1))
 								app.camposRequeridos.splice(0)
 								app.atributesCategory(id);
@@ -153,6 +333,11 @@
 							});
 							$("#spinnerAgregarProducto").removeClass("spinner-border")
 							$("#categoriaPN").removeClass("animate__rubberBand");
+							var altura = $("#agregarProductoModal").height();
+
+							$("#agregarProductoModal").animate({
+								scrollTop: altura + "px"
+							});
 						}
 					});
 				},
@@ -182,9 +367,10 @@
 						}
 					});
 				},
-				publicarAC: function() {
-					$.ajax({
-						async: false,
+				publicarAC: async function() {
+					($("#actualizarProductoN").parent()).addClass("disabled")
+					$("#actualizarProductoN").addClass("spinner-border spinner-border-sm");
+					await $.ajax({
 						type: "post",
 						url: "<?= base_url("actualizarproducto") ?>",
 						data: "id=" + $("#codigoPaActualizar").val() + "&codigo=" + $("#codigoProductoAC").val() + "&nombre=" + $("#nombreAC").val() + "&precio=" + $("#precioAC").val() + "&descripcion=" + $("#descripcionAC").val() + "&cantidad=" + $("#cantidadAC").val(),
@@ -192,20 +378,25 @@
 						success: function(response) {
 							// console.log(response)
 							if (response.result == 1) {
+								document.getElementById("form_actualizar_producto").reset();
+
 								swal("Bien", "producto actualizado!", "success");
 								app.camposVacios = false;
 								$("#cerrarAC").click();
 							} else if (response.result == 30) {
-								app.camposVacios = true;
-								console.log(response.data)
+								swal("Error", "Rellene todos los datos", "info")
 							} else {
 								swal("Error", "No se pudo Actualizar", "info");
 								console.log(response)
 							}
 						}
 					});
+					$("#actualizarProductoN").removeClass("spinner-border spinner-border-sm");
+					($("#actualizarProductoN").parent()).removeClass("disabled")
 				},
-				publicarPN: function(param) {
+				publicarPN: async function(param) {
+					($("#publicarProductoN").parent()).addClass("disabled")
+					$("#publicarProductoN").addClass("spinner-border spinner-border-sm");
 					let attributes = [];
 					$.each(app.camposRequeridos, function(index, value) {
 						attributes.push({
@@ -219,14 +410,16 @@
 						if (valueOfElement.value !== "")
 							imagenes.push(valueOfElement.value)
 					});
-					$.ajax({
-						async: false,
+					await $.ajax({
 						type: "post",
 						url: "<?= base_url("publicarMercadolibre") ?>",
 						data: "nombre=" + $("#nombrePN").val() + "&categoria=" + $("#categoriaPN").val() + "&precio=" + $("#precioPN").val() + "&cantidad=" + $("#cantidadPN").val() + "&imagen=" + JSON.stringify(imagenes) + "&attributes=" + JSON.stringify(attributes),
 						dataType: "json",
 						success: function(response) {
+
 							if (response.result == 1) {
+								document.getElementById("form_agregar_producto").reset();
+								buscarNuevo(limit, offset)
 								swal("Bien", "producto publicado!", "success");
 								$("#cerrarPN").click();
 							} else {
@@ -241,11 +434,13 @@
 							}
 						}
 					});
+					$("#publicarProductoN").removeClass("spinner-border spinner-border-sm");
+					($("#publicarProductoN").parent()).removeClass("disabled")
+
 				},
 			},
 			watch: {}
 		});
-		$('.carousel').carousel()
 		$('#modalActualizarProductos').on('show.bs.modal', async function(event) {
 			var button = $(event.relatedTarget)
 			let nombre = ''
@@ -292,11 +487,9 @@
 
 
 	})
-
-	async function buscarNuevo(limit, offset) {
-		var url = "<?= base_url("getData") ?>/" + limit + "/" + offset;
+	async function buscarNuevo(limit1, offset1) {
+		var url = "<?= base_url("getData") ?>/" + limit1 + "/" + offset1 + "/" + numLinks + "/" + limite;
 		// this.articulos = JSON.parse(response);
-		let limite = '';
 		await $.ajax({
 			url: url,
 			dataType: "json",
@@ -304,16 +497,7 @@
 				console.log(response)
 				limite = response.limit
 				app.productos = response.data
-			}
-		});
-		// generar los primeros links
-		let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
-		await $.ajax({
-			url: url2,
-			success: function(response) {
-				console.log(response)
-				$("#botonNavegacion").html(response)
-
+				$("#botonNavegacion").html(response.html)
 			}
 		});
 	}

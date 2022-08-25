@@ -8,7 +8,7 @@ class Mercadolibre extends Controller
 {
     private $baseUri = '';
     private $users = [
-        "token" => "APP_USR-4332857485021545-082416-b0112bedcdbf325984cd89c71127dff8-833930674",
+        "token" => "APP_USR-4332857485021545-082516-f8bb0818257e5ea3a94d2b6d1c24fbd4-833930674",
         "user" => "TEST0DZEHY3B",
         "userId" => "833930674",
     ];
@@ -109,5 +109,20 @@ class Mercadolibre extends Controller
             ],
         ]);
         return $response;
+    }
+    public function pausar_activar_eliminar($item, $value)
+    {
+
+        $uri = $this->baseUri . "items/" . $item;
+        $conexion = curl_init();
+        $token = $this->users["token"];
+        curl_setopt($conexion, CURLOPT_URL, $uri);
+        curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($conexion, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json', "Authorization: Bearer $token"));
+        curl_setopt($conexion, CURLOPT_POSTFIELDS, json_encode($value));
+        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+
+        $r = curl_exec($conexion);
+        return $r;
     }
 }
