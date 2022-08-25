@@ -43,7 +43,7 @@
                                         
                                         <div class="container">
                                             <v-data-table :headers="columnas" :items="articulos" class="elevation-19"
-                                                :search="search">
+                                                :search="search" :loading="loading">
                                                 <template v-slot:item.fulname="{ item }">
                                                     {{item.Nombre}} {{item.Apellido}}
                                                 </template>

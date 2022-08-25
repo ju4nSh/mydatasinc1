@@ -94,6 +94,5 @@ $routes->get('createLinks/(:any)/(:any)', 'Productos::createLinks/$1/$2');
 
 // activar o descativar productos | eliminar productos
 $routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar/$1/$2');
-
-
-
+//Graficos
+$routes->get('graficoCircular', 'Graficos::graficoCircular');

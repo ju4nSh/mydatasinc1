@@ -102,12 +102,12 @@
                   <p class="mb-0">Enter your email and password to sign in</p>
                 </div>
                 <div class="card-body">
-                  <form role="form" method="post" action="<?= base_url('')?>/guardar">
+                  <form role="form" id="form" onsubmit="enviar()">
                     <div class="mb-3">
-                      <input type="text" class="form-control form-control-lg" placeholder="User" aria-label="user" id="Usuario" name="Usuario">
+                      <input type="text" class="form-control form-control-lg" placeholder="User" aria-label="user" id="Usuario" name="Usuario" minlength="3" maxlength="15" required>
                     </div>
                     <div class="mb-3">
-                      <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" id="password" name="password">
+                      <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" id="password" name="password" minlength="5" maxlength="20" required>
                     </div>
                     <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="rememberMe">
@@ -157,6 +157,7 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <?= $this->include("Archexternos/scriptsLogin")?>
 </body>
 
 </html>

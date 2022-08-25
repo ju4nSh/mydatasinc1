@@ -20,6 +20,12 @@
   <link href="../public//css/nucleo-icons.css" rel="stylesheet" />
   <link href="../public//css/nucleo-svg.css" rel="stylesheet" />
 
+  <!--charts js-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <!--charts js-->
+
+
+
 
   <!-- Nucleo sin internet -->
   <!-- <link href="../public/xinternet/bootstrap.min.css" rel="stylesheet" />
