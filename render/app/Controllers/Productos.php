@@ -33,7 +33,7 @@ class Productos extends Controller
 		}
 		$this->_total = count($respuesta);
 	}
-	public function getData($limit, $page = 1)
+	public function getData($limit, $page = 1, $numLinks = 3, $limite = "null")
 	{
 
 		$this->_limit   = $limit;
@@ -58,7 +58,12 @@ class Productos extends Controller
 			"total" => $this->_total,
 			"data" => $respuesta
 		];
+		if ($limite == "null")
+			$html = $this->createLinks($numLinks, $result["limit"]);
+		else
+			$html = $this->createLinks($numLinks, $limite);
 
+		$result["html"] = $html;
 		return json_encode($result);
 	}
 	// TODO MEJORAR LA FUNCIONALIDAD DE UX
@@ -77,7 +82,7 @@ class Productos extends Controller
 		$html       = '<ul>';
 
 		$class      = ($this->_page == 1) ? "disabled" : "";
-		// $html       .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit .', ' . ($this->_page - 1) .')" href="javascript: void(0)">&laquo;</a></li>';
+		$html       .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit . ', ' . ($this->_page - 1) . ')" href="javascript: void(0)">&laquo;</a></li>';
 
 		if ($start > 1) {
 			$html   .= '<li><a onclick="buscarNuevo(' . $this->_limit . ', 1)" href=javascript: void(0)">1</a></li>';
@@ -86,7 +91,7 @@ class Productos extends Controller
 
 		for ($i = $start; $i <= $end; $i++) {
 			$class  = ($this->_page == $i) ? "active" : "";
-			$html   .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit .', ' . $i . ')" href="javascript: void(0)">' . $i . '</a></li>';
+			$html   .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit . ', ' . $i . ')" href="javascript: void(0)">' . $i . '</a></li>';
 		}
 
 		if ($end < $last) {
@@ -95,7 +100,7 @@ class Productos extends Controller
 		}
 
 		$class      = ($this->_page == $last) ? "disabled" : "";
-		// $html       .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit . ', ' . ($this->_page + 1) . ')" href="javascript: void(0)">&raquo;</a></li>';
+		$html       .= '<li class="' . $class . '"><a onclick="buscarNuevo(' . $this->_limit . ', ' . ($this->_page + 1) . ')" href="javascript: void(0)">&raquo;</a></li>';
 
 		$html       .= '</ul>';
 
@@ -191,8 +196,8 @@ class Productos extends Controller
 			$respuesta = $this->mercadolibre->postMercadolibre($datos);
 
 			$respuesta = (array) json_decode($respuesta);
-			
-			if (in_array("id", $respuesta)) {
+
+			if (array_key_exists("id", $respuesta)) {
 				// INSERTAR EN LA BASE DE DATOS
 				$idP = '';
 				$categoryP = '';
@@ -216,12 +221,14 @@ class Productos extends Controller
 				} else {
 					echo json_encode(["result" => 0]);
 				}
-			} else if (in_array("status", $respuesta)) {
-				if ($respuesta["status"] != 400 && $respuesta["status"] != 401)
+			} else if (array_key_exists("status", $respuesta)) {
+				if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
 					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
+			} else {
+				echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
 			}
 		} else {
-			echo json_encode(["result" => 0]);
+			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
 		}
 	}
 }

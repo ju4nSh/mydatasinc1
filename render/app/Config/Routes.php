@@ -88,6 +88,6 @@ $routes->get('mostrarDatosApi', 'Home::mostrarDatosApi');
 $routes->get('datosApi', 'Home::datosApi');
 
 // paginacion de productos
-$routes->get('getData/(:any)/(:any)', 'Productos::getData/$1/$2');
+$routes->get('getData/(:any)/(:any)/(:any)/(:any)', 'Productos::getData/$1/$2/$3/$4');
 $routes->get('createLinks/(:any)/(:any)', 'Productos::createLinks/$1/$2');
 

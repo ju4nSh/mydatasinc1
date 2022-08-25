@@ -1,5 +1,9 @@
 <script>
 	var app;
+	let limite = 0;
+	let numLinks = 1;
+	let limit = 12;
+	let offset = 1;
 	$(document).ready(data => {
 
 
@@ -63,9 +67,8 @@
 
 			},
 			created: async function() {
-				var url = "<?= base_url("getData") ?>/" + 2 + "/" + 1;
+				var url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
 				// this.articulos = JSON.parse(response);
-				let limite = '';
 				await $.ajax({
 					url: url,
 					dataType: "json",
@@ -73,18 +76,19 @@
 						console.log(response)
 						limite = response.limit
 						app.productos = response.data
+						$("#botonNavegacion").html(response.html)
 					}
 				});
-				// generar los primeros links
-				let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
-				await $.ajax({
-					url: url2,
-					success: function(response) {
-						console.log(response)
-						$("#botonNavegacion").html(response)
+				// // generar los primeros links
+				// let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
+				// await $.ajax({
+				// 	url: url2,
+				// 	success: function(response) {
+				// 		console.log(response)
+				// 		$("#botonNavegacion").html(response)
 
-					}
-				});
+				// 	}
+				// });
 			},
 
 			filters: {},
@@ -111,11 +115,7 @@
 							} else {
 
 
-								var altura = $(".modal-xl").height();
 
-								$("html, body").animate({
-									scrollTop: altura + "px"
-								});
 								app.childrenCategories.splice((index + 1))
 								app.camposRequeridos.splice(0)
 								app.atributesCategory(id);
@@ -153,6 +153,11 @@
 							});
 							$("#spinnerAgregarProducto").removeClass("spinner-border")
 							$("#categoriaPN").removeClass("animate__rubberBand");
+							var altura = $("#agregarProductoModal").height();
+
+							$("#agregarProductoModal").animate({
+								scrollTop: altura + "px"
+							});
 						}
 					});
 				},
@@ -205,7 +210,9 @@
 						}
 					});
 				},
-				publicarPN: function(param) {
+				publicarPN: async function(param) {
+					($("#publicarProductoN").parent()).addClass("disabled")
+					$("#publicarProductoN").addClass("spinner-border spinner-border-sm");
 					let attributes = [];
 					$.each(app.camposRequeridos, function(index, value) {
 						attributes.push({
@@ -219,13 +226,13 @@
 						if (valueOfElement.value !== "")
 							imagenes.push(valueOfElement.value)
 					});
-					$.ajax({
-						async: false,
+					await $.ajax({
 						type: "post",
 						url: "<?= base_url("publicarMercadolibre") ?>",
 						data: "nombre=" + $("#nombrePN").val() + "&categoria=" + $("#categoriaPN").val() + "&precio=" + $("#precioPN").val() + "&cantidad=" + $("#cantidadPN").val() + "&imagen=" + JSON.stringify(imagenes) + "&attributes=" + JSON.stringify(attributes),
 						dataType: "json",
 						success: function(response) {
+
 							if (response.result == 1) {
 								swal("Bien", "producto publicado!", "success");
 								$("#cerrarPN").click();
@@ -241,6 +248,9 @@
 							}
 						}
 					});
+					$("#publicarProductoN").removeClass("spinner-border spinner-border-sm");
+					($("#publicarProductoN").parent()).removeClass("disabled")
+
 				},
 			},
 			watch: {}
@@ -289,14 +299,11 @@
 			modal.find('#descripcionAC').val(descripcion)
 			modal.find("#codigoProductoAC").val(codigoBD)
 		})
-
-
 	})
 
-	async function buscarNuevo(limit, offset) {
-		var url = "<?= base_url("getData") ?>/" + limit + "/" + offset;
+	async function buscarNuevo(limit1, offset1) {
+		var url = "<?= base_url("getData") ?>/" + limit1 + "/" + offset1 + "/" + numLinks + "/" + limite;
 		// this.articulos = JSON.parse(response);
-		let limite = '';
 		await $.ajax({
 			url: url,
 			dataType: "json",
@@ -304,17 +311,18 @@
 				console.log(response)
 				limite = response.limit
 				app.productos = response.data
+				$("#botonNavegacion").html(response.html)
 			}
 		});
 		// generar los primeros links
-		let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
-		await $.ajax({
-			url: url2,
-			success: function(response) {
-				console.log(response)
-				$("#botonNavegacion").html(response)
+		// let url2 = "<?= base_url("createLinks") ?>/" + 7 + "/" + limite;
+		// await $.ajax({
+		// 	url: url2,
+		// 	success: function(response) {
+		// 		console.log(response)
+		// 		$("#botonNavegacion").html(response)
 
-			}
-		});
+		// 	}
+		// });
 	}
 </script>

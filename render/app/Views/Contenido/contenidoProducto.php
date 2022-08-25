@@ -90,8 +90,10 @@
 					<div class="modal-body">
 						<form>
 							<div class="text-center">
-								<div id="spinnerAgregarProducto" class="" role="status">
-									<span class="visually-hidden">Loading...</span>
+								<div id="spinnerAgregarProducto">
+									<div id="spiner" role="status">
+										<span class="visually-hidden">Loading...</span>
+									</div>
 								</div>
 							</div>
 							<input id="codigoPaPublicar" type="hidden" name="" value="">
@@ -148,9 +150,12 @@
 							</div>
 						</form>
 					</div>
-					<div class="modal-footer">
+					<div id="modalFooter" class="modal-footer">
 						<button type="button" class="btn btn-secondary" id="cerrarPN" data-dismiss="modal">Cerrar</button>
-						<button @click="publicarPN" type="button" class="btn btn-primary">Publicar</button>
+						<button  @click="publicarPN" class="btn btn-primary" type="button">
+							<span id="publicarProductoN" class="" role="status" aria-hidden="true"></span>
+							Publicar
+						</button>
 					</div>
 				</div>
 			</div>

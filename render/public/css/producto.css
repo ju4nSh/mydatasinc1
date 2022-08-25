@@ -84,8 +84,9 @@ div#spinnerAgregarProducto {
     width: 60px;
     height: 60px;
     z-index: 10002 !important;
-    top: 110px;
-    left: 40%;
+    top: 50%;
+    z-index: 10003 !important;
+    left: 49%;
 }
 
 /* FIN ESTILOS DEL SWEETALERT */
@@ -130,6 +131,21 @@ div#botonNavegacion > ul {
     display: flex !important;
     gap: 10px;
 }
+
+div#botonNavegacion > ul > li.active {
+    background-color: var(--bs-info) !important;
+}
+
+div#botonNavegacion > ul > li.disabled 
+{
+    cursor: not-allowed;
+    background-color: rgb(229, 229, 229) !important;
+}
+div#botonNavegacion > ul > li.disabled > * 
+{
+    pointer-events:none;
+}
+
 div#botonNavegacion > ul > li {
     width: 30px;
     height: 30px;
@@ -177,14 +193,17 @@ div#botonNavegacion > ul > li {
 
 @media (min-width: 992px) and (max-width: 1199px) {
     div.productosCargados {
-        grid-template: auto / repeat(4, 1fr) !important;
+        grid-template: auto / repeat(3, 1fr) !important;
         gap: 30px;
+    }
+    #app {
+        margin-left: 2rem !important;
     }
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
     div.productosCargados {
-        grid-template: auto / repeat(4, 1fr) !important;
+        grid-template: auto / repeat(3, 1fr) !important;
         gap: 30px;
     }
 }
@@ -196,4 +215,11 @@ div#botonNavegacion > ul > li {
     }
 }
 
-/* FIN ESTILOS DEL CARD PRODUCTOS */
+/* FIN ESTILOS DEL CARD PRODUCTOS *
+
+
+/* ESTILOS MODAL AGREGAR PRODUCTOS FOOTER BOTONES */
+div#modalFooter > button {
+    color: white !important;
+}
+/* FIN ESTILOS MODAL */
