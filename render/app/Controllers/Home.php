@@ -37,6 +37,21 @@ class Home extends BaseController
         }
     }
 
+    public function tablaProductoHealth()
+    {
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
+        if (empty($id)) {
+            return $this->response->redirect(site_url('/'));
+        } else {
+            $view = \Config\Services::renderer();
+            $view->setVar('one', $id)
+                ->setVar('pagina', "DatoProducto")
+                ->setVar('titulo', "DatoProducto");
+            echo $view->render("Contenido/contenidoDatosProducto");
+        }
+    }
+
     public function productos()
     {
         $ssesion = \Config\Services::session();
@@ -68,6 +83,49 @@ class Home extends BaseController
         }
         
     }
+    public function obtenerDatosProducto()
+	{
+        $mercadolibre = new Mercadolibre();
+        $limit = 3;
+        $offset = $this->request->getVar("offset");
+        $calcular= ($offset-1)*$limit;
+        $array=[];
+        $data=[];
+        $arrayDatosProducto=[];
+        $arrayAccionesProducto=[];
+		$array=$mercadolibre->getProductosdelUsuario($limit,$calcular);
+        for($i =0; $i<count($array); $i++){
+          $arrayDatosProducto[]= $mercadolibre->getDatosProducto($array[$i]);
+          $arrayAccionesProducto[]= $mercadolibre->getAccionesProducto($array[$i]);
+        };
+        for($p =0; $p<count($array); $p++){
+            $data[]=[  
+                "Id" => $array[$p],
+                "Title" => $arrayDatosProducto[$p]["title"],
+                "Health" => ($arrayDatosProducto[$p]["health"]*100),
+                "Color" => $this->randomColor(),
+                "Acciones" => json_encode($arrayAccionesProducto[$p])
+            ];
+        }
+        echo json_encode($data);
+	}
+    function randomColor() {
+        $str = '#';
+        for($i = 0 ; $i < 6 ; $i++) {
+            $randNum = rand(0 , 15);
+            switch ($randNum) {
+                case 10: $randNum = 'A'; break;
+                case 11: $randNum = 'B'; break;
+                case 12: $randNum = 'C'; break;
+                case 13: $randNum = 'D'; break;
+                case 14: $randNum = 'E'; break;
+                case 15: $randNum = 'F'; break;
+            }
+            $str .= $randNum;
+        }
+        return $str;
+    }
+    
 
     public function guardar()
     {

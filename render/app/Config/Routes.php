@@ -35,7 +35,7 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::login');
+$routes->get('/', 'Home::index');
 
 /*
  * --------------------------------------------------------------------
@@ -97,4 +97,6 @@ $routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar
 //Graficos
 $routes->get('graficoCircular', 'Graficos::graficoCircular');
 $routes->get('graficoLineaProducto', 'Graficos::graficoLineaProducto');
-
+//TablaProductos
+$routes->post('obtenerDatosProducto', 'Home::obtenerDatosProducto');
+$routes->get('tablaProductoHealth', 'Home::tablaProductoHealth');
