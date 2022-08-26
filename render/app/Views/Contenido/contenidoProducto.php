@@ -142,6 +142,7 @@
 									<div class="fieldInput" class="form-control">
 										<input v-for="input in inputImagen" id="imagenPN" class="form-control" :class="input.clase" type="text" name="">
 									</div>
+
 								</div>
 							</div>
 							<div class="row">
@@ -220,12 +221,14 @@
 		<!-- FIN MODAL ACTUALIZAR PRODUCTO -->
 
 	</div>
-</div>
-<?= $this->endSection() ?>
+	<?= $this->endSection() ?>
 
-<?= $this->section("funciones"); ?>
-<?= $this->include("scripts/productos") ?>
-<?= $this->endSection() ?>
+	<?= $this->section("funciones"); ?>
+	<?= $this->include("scripts/productos") ?>
+	<?= $this->endSection() ?>
+
+
+	<!-- <div class="table-responsive p-0">
 							<table id="productos" class="table align-items-center mb-0">
 								<div data-app="true" class="v-application v-application--is-ltr theme--light">
 									<v-main>
