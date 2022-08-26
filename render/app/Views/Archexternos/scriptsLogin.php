@@ -7,7 +7,7 @@ function enviar() {
         data: $('#form').serialize(),
         success: function(data) {
             if (data==="Bien") {
-                location.replace('<?= base_url("/index") ?>');
+                window.location.replace('<?= base_url("/index") ?>');
             } else {
                 swal(data, {
                     icon: "warning",

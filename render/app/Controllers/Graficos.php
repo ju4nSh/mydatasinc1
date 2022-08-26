@@ -19,4 +19,16 @@ class Graficos extends Controller
         }
         echo json_encode($array);
     }
+    public function graficoLineaProducto(){
+        $db = \Config\Database::connect();
+        $builder = $db->table('productos');
+        $respuesta = $builder->select("codigo,cantidad")->get()->getResultArray();
+        foreach ($respuesta as $variable) {
+            $array[] = [
+                'codigo' => $variable['codigo'],
+                'cantidad' => $variable['cantidad'],
+            ];
+        }
+        echo json_encode($array);
+    }
 }
