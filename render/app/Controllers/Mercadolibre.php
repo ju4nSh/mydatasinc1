@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-// url para buscar productos  -- https://api.mercadolibre.com/users/833930674/items/search?search_type=scan 
 
 class Mercadolibre extends Controller
 {

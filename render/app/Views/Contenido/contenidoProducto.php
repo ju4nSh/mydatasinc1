@@ -154,6 +154,7 @@
 											<input class="form-control" :class="input" type="text" name="" v-model="input.valor">
 										</div>
 									</div>
+
 								</div>
 							</div>
 							<div class="row">
@@ -247,9 +248,7 @@
 		<!-- FIN MODAL ACTUALIZAR PRODUCTO -->
 
 	</div>
-</div>
-<?= $this->endSection() ?>
-
+	<?= $this->endSection() ?>
 <?= $this->section("funciones"); ?>
 <?= $this->include("scripts/productos") ?>
 <?= $this->endSection() ?>
