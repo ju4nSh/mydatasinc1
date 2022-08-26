@@ -9,6 +9,8 @@ class Productos extends Controller
 {
 	private $mercadolibre;
 	private $producto;
+	private $resultados = [];
+
 	// variables paginación
 	private $_limit;
 	private $_page;
@@ -41,13 +43,13 @@ class Productos extends Controller
 		$this->_page    = $page;
 
 		if ($this->_limit == 'all') {
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->findAll();
+			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->findAll();
 			foreach ($respuesta as $key => $value) {
 				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
 			}
 		} else {
 			$offset = (($this->_page - 1) * $this->_limit);
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->findAll($this->_limit, $offset);
+			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->findAll($this->_limit, $offset);
 			foreach ($respuesta as $key => $value) {
 				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
 			}
@@ -109,7 +111,9 @@ class Productos extends Controller
 
 	public function getCategory_Id()
 	{
-		return  json_encode(["data" => $this->producto->select("id, descripcion")->where("codigo", $this->request->getVar("codigo"))->get()->getFirstRow()]);
+		$res = $this->producto->select("id, descripcion, imagen")->where("codigo", $this->request->getVar("codigo"))->get()->getFirstRow();
+		$res->imagen = json_decode($res->imagen);
+		return  json_encode(["data" => $res]);
 	}
 
 	public function obtenerCategoria()
@@ -123,6 +127,216 @@ class Productos extends Controller
 	}
 
 	public function publicarMercadolibre()
+	{
+		if ($this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("categoria") != "" && $this->request->getVar("cantidad") != "" && $this->request->getVar("imagen") != "" && $this->request->getVar("attributes") != "") {
+			$data = [
+				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
+				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
+				"categoria" => $this->producto->escapeString($this->request->getVar("categoria")),
+				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+				"imagen" => json_decode($this->request->getVar("imagen")),
+				"descripcion" => $this->request->getVar("descripcion"),
+				"attributes" => json_decode($this->request->getVar("attributes")),
+			];
+			$imagen = $data["imagen"];
+			foreach ($imagen as $key => $img) {
+				$imagen[$key] = array("source" => $img);
+			}
+			$datos = [
+				"title" => $data["nombre"],
+				"category_id" => $data["categoria"],
+				"price" => $data["precio"],
+				"currency_id" => "COP",
+				"available_quantity" => $data["cantidad"],
+				"condition" => "new",
+				"listing_type_id" => "gold_pro",
+				"pictures" => $imagen,
+				"attributes" => $data["attributes"],
+			];
+
+			$respuesta = $this->mercadolibre->postMercadolibre($datos);
+
+			$respuesta = (array) json_decode($respuesta);
+			if (array_key_exists("id", $respuesta)) {
+				// INSERTAR EN LA BASE DE DATOS
+				$idP = '';
+				$categoryP = '';
+				$linkP = '';
+				$response = $respuesta;
+				$idP = $response["id"];
+				$categoryP = $response["category_id"];
+				$linkP = $response["permalink"];
+				$dataProduct = [
+					"nombre" => $data["nombre"],
+					"precio" => $data["precio"],
+					"categoria" => $categoryP,
+					"codigo"  => $idP,
+					"imagen" => json_encode($data["imagen"]),
+					"link" => $linkP,
+					"cantidad" => $data["cantidad"],
+					"descripcion" => $data["descripcion"]
+				];
+				$res = $this->producto->save($dataProduct);
+				if ($res) {
+					$this->mercadolibre->addDescriptionMercadolibre($idP, $data["descripcion"]);
+					echo json_encode(["result" => 1]);
+				} else {
+					echo json_encode(["result" => 0]);
+				}
+			} else if (array_key_exists("status", $respuesta)) {
+				if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
+					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
+			} else {
+				echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
+			}
+		} else {
+			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
+		}
+	}
+
+	public function actualizarProducto()
+	{
+		if ($this->request->getVar("codigo") != "" && $this->request->getVar("id") != "" && $this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("descripcion") != "" && $this->request->getVar("cantidad") != "") {
+
+			$id = $this->producto->escapeString($this->request->getVar("codigo"));
+			$codigo = $this->producto->escapeString($this->request->getVar("id"));
+			$data = [
+				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
+				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
+				"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
+				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+			];
+			$datos = [
+				"title" => $data["nombre"],
+				"price" => $data["precio"],
+				"available_quantity" => $data["cantidad"],
+			];
+			// agregar descripcion al producto
+			$descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
+			$descripcion = (array) json_decode($descripcion);
+			// Item already has a description, use PUT instead
+			if (array_key_exists("plain_text", $descripcion)) {
+				if ($descripcion) {
+					if ($this->producto->update($id, $data)) {
+						//actualizar productos en mercadolibre
+						if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
+							echo json_encode(["result" => 1]);
+						else
+							echo json_encode(["result" => 0]);
+					} else {
+						echo json_encode(["result" => 10]);
+					}
+				} else {
+					echo json_encode(["result" => 20, "data" => $descripcion]);
+				}
+			} else {
+				if (array_key_exists("message", $descripcion)) {
+					$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
+					if ($descripcion) {
+						if ($this->producto->update($id, $data)) {
+							//actualizar productos en mercadolibre
+							$re = $this->mercadolibre->updateMercadolibre($codigo, $datos);
+							$re = (array) json_decode($re);
+							if (array_key_exists("id", $re)) {
+								echo json_encode(["result" => 1]);
+							}
+							else if(array_key_exists("status", $re)) {
+								echo json_encode(["result" => 0 , "cause" => $re["cause"], "mensaje" => $re["message"]]);
+							}
+						} else {
+							echo json_encode(["result" => 10]);
+						}
+					} else {
+						echo json_encode(["result" => 20, "data" => $descripcion]);
+					}
+				}
+			}
+		} else {
+			echo json_encode(["result" => 30]);
+		}
+	}
+
+	public function attributesCategory($id)
+	{
+		return $this->mercadolibre->attributesCategory($id);
+	}
+
+	public function pausarActivarEliminar($item, $value)
+	{
+		$respuesta = $this->mercadolibre->pausar_activar_eliminar($item, ["status" => $value]);
+		$id = $this->producto->select("id")->where("codigo", $item)->find();
+		$respuesta = (array) json_decode($respuesta);
+		if (array_key_exists("id", $respuesta)) {
+			// actualizar estado en base de dato
+			if ($value == "closed") {
+				// elimino de la base de datos
+				if ($this->producto->delete($id[0])) {
+					echo json_encode(["result" => 1]);
+				} else {
+					echo json_encode(["result" => 0]);
+				}
+			} else {
+				if ($this->producto->update($id[0], ["estado" => $value == "paused" ? 0 : 1])) {
+					echo json_encode(["result" => 1]);
+				} else {
+					echo json_encode(["result" => 0]);
+				}
+			}
+		} else if (array_key_exists("status", $respuesta)) {
+			if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
+				echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
+		}
+	}
+
+	public function getAllProduct($scroll_id = '')
+	{
+		$respuesta = $this->mercadolibre->getAllProduct($scroll_id);
+		$respuesta = (array) json_decode($respuesta);
+		if (array_key_exists("status", $respuesta)) {
+			echo json_encode(["result" => 0, "mensaje" => $respuesta["message"]]);
+		} else if (array_key_exists("scroll_id", $respuesta) && count($respuesta["results"]) > 0) {
+			$this->resultados[] = $respuesta["results"];
+			$this->getAllProduct($respuesta["scroll_id"]);
+		} else {
+			$flag = false;
+			// proceso para buscar las caracteristicas de los productos por su codigo
+			foreach ($this->resultados as $value) {
+				foreach ($value as $pro) {
+					$imagenes = [];
+					$p = $this->mercadolibre->getInfoProduct($pro);
+					$p = json_decode($p);
+					if ($p->status != "closed" && $p->status != "paused") {
+						// guardo las imagenes
+						foreach ($p->pictures as $img) {
+							$imagenes[] = $img->url;
+						}
+						$dataProduct = [
+							"nombre" => $p->title,
+							"cantidad" =>  $p->available_quantity,
+							"precio" =>  $p->price,
+							"codigo" =>  $p->id,
+							"categoria" =>  $p->category_id,
+							"imagen" => json_encode($imagenes),
+							"link" =>  $p->permalink,
+							"descripcion" => json_encode($p->descriptions),
+						];
+						if ($this->producto->save($dataProduct)) {
+							$flag = true;
+						}
+					}
+				}
+			}
+			if ($flag)
+				echo json_encode(["result" => 1]);
+			else
+				echo json_encode(["result" => 1]);
+		}
+	}
+}
+
+
+/*
+public function publicarMercadolibre()
 	{
 		if ($this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("categoria") != "" && $this->request->getVar("cantidad") != "" && $this->request->getVar("imagen") != "" && $this->request->getVar("attributes") != "") {
 			$data = [
@@ -186,94 +400,4 @@ class Productos extends Controller
 			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
 		}
 	}
-
-	public function actualizarProducto()
-	{
-		if ($this->request->getVar("codigo") != "" && $this->request->getVar("id") != "" && $this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("descripcion") != "" && $this->request->getVar("cantidad") != "") {
-
-			$id = $this->producto->escapeString($this->request->getVar("codigo"));
-			$codigo = $this->producto->escapeString($this->request->getVar("id"));
-			$data = [
-				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
-				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
-				"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
-				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
-			];
-			$datos = [
-				"title" => $data["nombre"],
-				"price" => $data["precio"],
-				"available_quantity" => $data["cantidad"],
-			];
-			// agregar descripcion al producto
-			$descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
-			$descripcion = (array) json_decode($descripcion);
-			// Item already has a description, use PUT instead
-			if (array_key_exists("plain_text", $descripcion)) {
-				if ($descripcion) {
-					if ($this->producto->update($id, $data)) {
-						//actualizar productos en mercadolibre
-						if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
-							echo json_encode(["result" => 1]);
-						else
-							echo json_encode(["result" => 0]);
-					} else {
-						echo json_encode(["result" => 10]);
-					}
-				} else {
-					echo json_encode(["result" => 20, "data" => $descripcion]);
-				}
-			} else {
-				if (array_key_exists("message", $descripcion)) {
-					$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
-					if ($descripcion) {
-						if ($this->producto->update($id, $data)) {
-							//actualizar productos en mercadolibre
-							if ($this->mercadolibre->updateMercadolibre($codigo, $datos))
-								echo json_encode(["result" => 1]);
-							else
-								echo json_encode(["result" => 0]);
-						} else {
-							echo json_encode(["result" => 10]);
-						}
-					} else {
-						echo json_encode(["result" => 20, "data" => $descripcion]);
-					}
-				}
-			}
-		} else {
-			echo json_encode(["result" => 30]);
-		}
-	}
-
-	public function attributesCategory($id)
-	{
-		return $this->mercadolibre->attributesCategory($id);
-	}
-
-	public function pausarActivarEliminar($item, $value)
-	{
-		$respuesta = $this->mercadolibre->pausar_activar_eliminar($item, ["status" => $value]);
-		$id = $this->producto->select("id")->where("codigo", $item)->find();
-		$respuesta = (array) json_decode($respuesta);
-		if (array_key_exists("id", $respuesta)) {
-			// actualizar estado en base de dato
-			if ($value == "closed") {
-				// elimino de la base de datos
-				if ($this->producto->delete($id[0])) {
-					echo json_encode(["result" => 1]);
-				} else {
-					echo json_encode(["result" => 0]);
-				}
-			} else {
-				if ($this->producto->update($id[0], ["estado" => $value == "paused" ? 0 : 1])) {
-					echo json_encode(["result" => 1]);
-				} else {
-					echo json_encode(["result" => 0]);
-				}
-			}
-		} else if (array_key_exists("status", $respuesta)) {
-			if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
-				echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
-		}
-	}
-}
+*/

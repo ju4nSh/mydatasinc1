@@ -1,8 +1,8 @@
 <script>
 	var app;
 	let limite = 0;
-	let numLinks = 1;
-	let limit = 15;
+	let numLinks = 6;
+	let limit = 16;
 	let offset = 1;
 	$(document).ready(data => {
 
@@ -47,12 +47,31 @@
 			props: ["typedata", "name", "data", "id", "allowed_units", "hint"]
 
 		});
+		var imagenes = Vue.component("imagenes", {
+			template: `
+						<div class="form-group col-md-2 col-sm-3 col-4 shadow rounded">
+							<i style="cursor: pointer" @click="$emit(\'click\')" class="fas fa-trash"></i>
+							<img style="height: 140px; object-fit: cover"  class="img w-100" :src="src" :alt="src" />
+						</div>
+					`,
+			props: ["src"],
+		})
+		var inputImagenes = Vue.component("input-imagenes", {
+			template: `
+						<div class="col-md-12 col-sm-12 col-12">
+							<input class="form-control" :value="src" type="text" />
+						</div>
+					`,
+			props: ["src"],
+		})
 		app = new Vue({
 			el: '#app',
 			vuetify: new Vuetify(),
 			components: {
 				subCategory: subCategory,
-				campos: campos
+				campos: campos,
+				imagenes: imagenes,
+				inputImagenes: inputImagenes
 			},
 			data: {
 				categoriasEncontradas: [],
@@ -62,20 +81,34 @@
 				inputImagen: [],
 				camposVacios: false,
 				productos: [],
+				countInput: 0,
+				imagenesActualizar: [],
+				inputsActualizar: [],
 			},
-			mounted: function() {
+			mounted: async function() {
 
 			},
 			created: async function() {
 
+				// let url1 = "<?= base_url("getAllProduct") ?>";
+				// await $.ajax({
+				// 	type: "post",
+				// 	url: url1,
+				// 	dataType: "json",
+				// 	success: function (response) {
+				// 		if(response.result)
+				// 			console.log(response)	
+				// 		else 
+				// 			swal("Error", `ocurrió un error: ${response.mensaje}`, "error")
+				// 	}
+				// });
 
-				var url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
+				let url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
 				// this.articulos = JSON.parse(response);
 				await $.ajax({
 					url: url,
 					dataType: "json",
 					success: function(response) {
-						console.log(response)
 						limite = response.limit
 						app.productos = response.data
 						$("#botonNavegacion").html(response.html)
@@ -89,6 +122,19 @@
 
 			filters: {},
 			methods: {
+				/*
+				https:\/\/joyeriainter.com\/wp-content\/uploads\/2022\/06\/m50535-0002_modelpage_flagship_landscape.jpg
+				https:\/\/static3.depositphotos.com\/1000501\/122\/i\/600\/depositphotos_1223337-stock-photo-colombian-flag.jpg
+				https:\/\/www.motor.com.co\/__export\/1645199062631\/sites\/motor\/img\/2022\/02\/18\/20220218_094422465_615231d537e21_r_1632776804770_49-43-1121-578.jpeg_242310155.jpeg
+				*/
+				removeImagenModalActualizar: function () {
+				},
+				crearInputImagenActualizar: function () {
+					app.inputsActualizar.push("data")
+				},
+				removeImagen: function(param) {
+					app.inputImagen.splice(param, 1);
+				},
 				eliminarPublicacion: async function(e) {
 					let codigoMercadolibre = e.target.parentElement.parentElement.firstChild.getAttribute("id");
 					if (codigoMercadolibre != null) {
@@ -278,9 +324,10 @@
 					window.open(url, "_blank")
 				},
 				crearInputImagen: function() {
-					app.inputImagen.push({
-						clase: "input",
-					})
+					// app.inputImagen.push({
+					// 	valor: "input"+ ++app.countInput
+					// })
+					app.inputImagen.push({valor: ""})
 				},
 				subcategory: function(id, index) {
 					$("#spinnerAgregarProducto").addClass("spinner-border")
@@ -386,8 +433,13 @@
 							} else if (response.result == 30) {
 								swal("Error", "Rellene todos los datos", "info")
 							} else {
-								swal("Error", "No se pudo Actualizar", "info");
-								console.log(response)
+								let error = [];
+								$.each(response.cause, function(indexInArray, valueOfElement) {
+									console.log(valueOfElement.message)
+									error.push(valueOfElement.message)
+								});
+								error.push(response.mensaje)
+								swal("Error", JSON.stringify(error), "info")
 							}
 						}
 					});
@@ -413,13 +465,13 @@
 					await $.ajax({
 						type: "post",
 						url: "<?= base_url("publicarMercadolibre") ?>",
-						data: "nombre=" + $("#nombrePN").val() + "&categoria=" + $("#categoriaPN").val() + "&precio=" + $("#precioPN").val() + "&cantidad=" + $("#cantidadPN").val() + "&imagen=" + JSON.stringify(imagenes) + "&attributes=" + JSON.stringify(attributes),
+						data: "nombre=" + $("#nombrePN").val() + "&categoria=" + $("#categoriaPN").val() + "&descripcion=" + $("#descripcionPN").val() + "&precio=" + $("#precioPN").val() + "&cantidad=" + $("#cantidadPN").val() + "&imagen=" + JSON.stringify(imagenes) + "&attributes=" + JSON.stringify(attributes),
 						dataType: "json",
-						success: function(response) {
+						success: async function(response) {
 
 							if (response.result == 1) {
 								document.getElementById("form_agregar_producto").reset();
-								buscarNuevo(limit, offset)
+								await buscarNuevo(limit, offset)
 								swal("Bien", "producto publicado!", "success");
 								$("#cerrarPN").click();
 							} else {
@@ -460,6 +512,8 @@
 					console.log(response)
 					descripcion = response.data.descripcion
 					codigoBD = response.data.id
+					app.imagenesActualizar = [...response.data.imagen]
+					app.inputsActualizar = [...response.data.imagen]
 				}
 			});
 			$("#spinnerActualizarProducto").removeClass("spinner-border")
