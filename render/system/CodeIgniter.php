@@ -898,7 +898,6 @@ class CodeIgniter
 
         $this->benchmark->stop('controller');
 
-
         return $output;
     }
 

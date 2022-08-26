@@ -74,9 +74,9 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $db = \Config\Database::connect();
         $builder = $db->table('users');
-        $user = $this->validar_input($this->request->getVar("Usuario"));
-        $pass =  $this->validar_input($this->request->getVar("password"));
-        if($this->isValid($user)===true){
+        $user = $this->request->getVar("Usuario");
+
+        $pass =  $this->request->getVar("password");
         $data_array = array('Usuario' => $user);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         if(count($datos)>0){
@@ -94,11 +94,7 @@ class Home extends BaseController
         }else{
             echo "Para el usuario digitado no existe una cuenta asociada";
         }
-        }else{
-
-            echo "Verifique la informacion enviada";
-        }
-
+        
     }
     public function salir()
     {
@@ -156,16 +152,14 @@ class Home extends BaseController
 
     public function ModificarPerfil()
     {
-        $Nombre = $this->validar_input($this->request->getVar("Nombre"));
-        $Foto = $this->validar_input($this->request->getVar("Foto"));
-        $Apellido = $this->validar_input($this->request->getVar("Apellido"));
-        $Correo = $this->validar_input($this->request->getVar("Correo"));
-        $Direccion = $this->validar_input($this->request->getVar("Direccion"));
-        $Ciudad = $this->validar_input($this->request->getVar("Ciudad"));
-        $Pais = $this->validar_input($this->request->getVar("Pais"));
-        $SobreMi = $this->validar_input($this->request->getVar("SobreMi"));
-        if($this->isValidEspacio($Nombre) === true && $this->isValidEspacio($Apellido) === true && $this->isValidEspacio($Ciudad) === true
-        && $this->isValidEspacio($Pais) === true && $this->isValidEspacio($SobreMi) === true && $this->isValidUrl($Foto) === true && $this->isValidNumberText($Direccion) === true){
+        $Nombre = $this->request->getVar("Nombre");
+        $Foto = $this->request->getVar("Foto");
+        $Apellido = $this->request->getVar("Apellido");
+        $Correo = $this->request->getVar("Correo");
+        $Direccion = $this->request->getVar("Direccion");
+        $Ciudad = $this->request->getVar("Ciudad");
+        $Pais = $this->request->getVar("Pais");
+        $SobreMi = $this->request->getVar("SobreMi");
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $db = \Config\Database::connect();
@@ -183,13 +177,6 @@ class Home extends BaseController
         $builder->where('Usuario', $id);
         $builder->update($data_array);
         $this->llenarPerfil();
-        }else{
-            $array = [
-                'error' => 'Verifique la informacion enviada',
-            ];
-            echo json_encode($array);
-        }
-        
     }
     public function llenarPerfil()
     {
@@ -236,15 +223,13 @@ class Home extends BaseController
 
     public function agregarClienteRef()
     {
-        $Identificacion = $this->validar_input($this->request->getVar("Id"));
-        $Apellido = $this->validar_input($this->request->getVar("Apellido"));
-        $Nombre = $this->validar_input($this->request->getVar("Nombre"));
-        $Correo = $this->validar_input($this->request->getVar("Correo"));
-        $Ciudad = $this->validar_input($this->request->getVar("Ciudad"));
-        $Pais = $this->validar_input($this->request->getVar("Pais"));
-        $Usuario = $this->validar_input($this->request->getVar("Usuario"));
-        if($this->isValidNumber($Identificacion) === true && $this->isValidEspacio($Nombre) === true && $this->isValidEspacio($Apellido) === true && $this->isValidEspacio($Ciudad) === true
-         && $this->isValidEspacio($Pais) === true){
+        $Identificacion = $this->request->getVar("Id");
+        $Nombre = $this->request->getVar("Nombre");
+        $Apellido = $this->request->getVar("Apellido");
+        $Correo = $this->request->getVar("Correo");
+        $Ciudad = $this->request->getVar("Ciudad");
+        $Pais = $this->request->getVar("Pais");
+        $Usuario = $this->request->getVar("Usuario");
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         $compra = new Usuarios();
@@ -274,12 +259,6 @@ class Home extends BaseController
                 'error' => $e->getMessage(),
             ];
         }
-        }else{
-            $dato = [
-                'error' => 'Verifique la informacion enviada',
-            ];
-        }
-        
         echo json_encode($dato);
         
     }
@@ -303,60 +282,8 @@ class Home extends BaseController
             ->setVar('titulo', "Tabla Api");
         echo $view->render("Contenido/contenidoTablaApi");
     }
-    public function validar_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-        }
-
-        public function isValidEspacio($text){
-            $compara = "/^[a-zA-Z\sñáéíóúÁÉÍÓÚ]+$/";
-            if((preg_match($compara, $text))){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-
-        public function isValid($text){
-            $compara = '/^[a-zA-Z]+$/';
-            if((preg_match($compara, $text))){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-
-        public function isValidNumber($text){
-            $compara = "/^[0-9]+$/";
-            if((preg_match($compara, $text))){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        public function isValidUrl($text){
-            $compara = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|](\.)[a-z]{2}/i";
-            if((preg_match($compara, $text))){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        public function isValidNumberText($text){
-            $compara = '/^[a-z][a-z0-9_#*$]{3,}/i';
-            if((preg_match($compara, $text))){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        
-        
+    public function info()
+    {
+        echo phpinfo();
+    }
 }

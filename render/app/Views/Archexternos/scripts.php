@@ -24,18 +24,10 @@ function Actualizar() {
                     url: '<?= base_url("/ModificarPerfil") ?>',
                     data: $('#formulario').serialize(),
                     success: function(response) {
-                        var json = JSON.parse(response);
-                        if (json.error) {
-                            swal("Verfique llenar todos los campos", {
-                                icon: "warning",
-                            });
-                        } else {
-                            swal("Actualizado Correctamente", {
+                        swal("Actualizado Correctamente", {
                             icon: "success",
                         });
                         q.datos = eval(response)
-                        }
-                       
                     }
                 });
             }

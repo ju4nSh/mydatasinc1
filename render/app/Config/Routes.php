@@ -99,5 +99,3 @@ $routes->get('getAllProduct', 'Mercadolibre::getAllProduct');
 $routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar/$1/$2');
 //Graficos
 $routes->get('graficoCircular', 'Graficos::graficoCircular');
-$routes->get('graficoLineaProducto', 'Graficos::graficoLineaProducto');
-
