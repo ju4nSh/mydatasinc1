@@ -101,5 +101,9 @@ $routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar
 $routes->get('graficoCircular', 'Graficos::graficoCircular');
 $routes->get('graficoLineaProducto', 'Graficos::graficoLineaProducto');
 //TablaProductos
-$routes->post('obtenerDatosProducto', 'Home::obtenerDatosProducto');
+$routes->post('obtenerDatosProducto', 'Home::obtenerDProd');
 $routes->get('tablaProductoHealth', 'Home::tablaProductoHealth');
+//Paginacion
+$routes->post('obtenerPaginacion', 'DataProducto::obtenerPaginacion');
+// validar conexion
+$routes->get('validarConexionMerLi', 'Personas::validarConexionMerLi');

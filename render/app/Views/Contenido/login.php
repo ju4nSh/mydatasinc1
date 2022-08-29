@@ -107,7 +107,7 @@
                       <input type="text" class="form-control form-control-lg" placeholder="User" aria-label="user" id="Usuario" name="Usuario" minlength="3" maxlength="15" required>
                     </div>
                     <div class="mb-3">
-                      <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" id="password" name="password" minlength="5" maxlength="20" required>
+                      <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" id="password" name="password" minlength="4" maxlength="20" required>
                     </div>
                     <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="rememberMe">

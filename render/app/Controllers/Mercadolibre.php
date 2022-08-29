@@ -127,54 +127,10 @@ class Mercadolibre extends Controller
         return $r;
     }
 
-
-    public function getProductosdelUsuario($limit,$offset)
-    {
-        $client = \Config\Services::curlrequest();
-        $token = "APP_USR-4332857485021545-082614-0a6013052ed8f7f19e6c62ee55778896-833930674";
-        $user_id = "833930674";
-        $resp = $client->request('GET', 'https://api.mercadolibre.com/users/' . $user_id . '/items/search?offset='.$offset.'&limit='.$limit, [
-            "headers" => [
-                "Accept" => "application/json",
-                "Authorization" => "Bearer " . $token
-            ]
-        ]);
-        $array = $resp->getBody();
-        $products2 = json_decode($array, true);
-            $list = $products2['results'];
-        return $list;
-    }
-
-    public function getDatosProducto($producto)
-    {
-        $client = \Config\Services::curlrequest();
-        $token = "APP_USR-4332857485021545-082614-0a6013052ed8f7f19e6c62ee55778896-833930674";
-        $resp = $client->request('GET', 'https://api.mercadolibre.com/items/' . $producto, [
-            "headers" => [
-                "Accept" => "application/json",
-                "Authorization" => "Bearer " . $token
-            ]
-        ]);
-        $array = $resp->getBody();
-        $list=[];
-        $list2=[];
-        $products2 = json_decode($array, true);
-            $list= [$products2['health']];
-            $list2= [$products2['title']];
-            for($i=0;$i<count($list);$i++){
-                $dat=[
-                    "title"=> $list2[$i],
-                    "health"=> $list[$i]
-                ];
-            }
-            
-        return ($dat);
-    }
-
     public function getAccionesProducto($producto)
     {
         $client = \Config\Services::curlrequest();
-        $token = "APP_USR-4332857485021545-082614-0a6013052ed8f7f19e6c62ee55778896-833930674";
+        $token = "APP_USR-4332857485021545-082908-924200383e9adfe27ad8b87be2fb8dec-833930674";
         $resp = $client->request('GET', 'https://api.mercadolibre.com/items/' . $producto.'/health/actions', [
             "headers" => [
                 "Accept" => "application/json",
@@ -183,19 +139,19 @@ class Mercadolibre extends Controller
         ]);
         $array = $resp->getBody();
         $list=[];
+        $list2=[];
         $fotos = [];
         $products2 = json_decode($array, true);
             $list= $products2['actions'];
             foreach ($list as $key => $foto) {
                 $fotos[] = $foto["name"];
-                //   $array[]=[
-                //     'Id'=>$products2['id'],
-                //     'Titulo'=>$products2['title'],
-                //     'Precio'=>$products2['price'],
-                //     'Foto'=>json_encode($fotos)
-                // ];
             }
-        return $fotos;
+            $list2= $products2['health'];
+            $dato=[
+                "health" => $list2,
+                "name" => json_encode($fotos)
+            ];
+        return $dato;
     }
     public function getAllProduct()
     {

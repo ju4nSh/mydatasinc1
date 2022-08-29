@@ -1,16 +1,22 @@
 <script type="application/javascript">
 $(document).ready(function() {
-
-    var url = "https://jsonplaceholder.typicode.com/comments";
     var q = new Vue({
         el: '#app',
         vuetify: new Vuetify(),
         data() {
             return {
                 search: '',
-                count: 1,
                 Estado: false,
+                loading: true,
+                page: 1,
+                tamaño: 1,
+                limit: 4,
                 columnas: [{
+                        text: 'Imagen',
+                        value: 'foto',
+                        class: 'blue accent-2'
+                    },
+                    {
                         text: 'IDENTIFICACION',
                         value: 'Id',
                         class: 'blue accent-2'
@@ -30,6 +36,11 @@ $(document).ready(function() {
                         value: 'Acciones',
                         sortable: false,
                         class: 'blue accent-2'
+                    },
+                    {
+                        value: 'form',
+                        sortable: false,
+                        class: 'blue accent-2'
                     }
                 ],
                 articulos: [],
@@ -43,9 +54,11 @@ $(document).ready(function() {
                     'offset': 1
                 },
                 success: function(response) {
+                    console.log(response);
                     var json = JSON.parse(response);
                     q.articulos = json
-                    q.Estado=true;
+                    q.Estado = true;
+                    q.loading = false
                 }
             });
         },
@@ -65,42 +78,50 @@ $(document).ready(function() {
                     });
 
             },
-            Paginar(resultado) {
-                q.Estado=false;
-                if ("mas" === resultado) {
-                    q.count = q.count + 1;
-                    $.ajax({
-                        type: "post",
-                        url: '<?= base_url("/obtenerDatosProducto") ?>',
-                        data: {
-                            'offset': q.count
-                        },
-                        success: function(response) {
-                            var json = JSON.parse(response);
-                            q.articulos = json
-                            q.Estado=true;
-                        }
-                    });
+            next2() {
+                q.Estado = false;
+                q.loading = true;
 
-                } else {
-                    q.count = q.count - 1;
-                    $.ajax({
-                        type: "post",
-                        url: '<?= base_url("/obtenerDatosProducto") ?>',
-                        data: {
-                            'offset': q.count
-                        },
-                        success: function(response) {
-                            var json = JSON.parse(response);
-                            q.articulos = json
-                            q.Estado=true;
-                        }
-                    });
-                }
+
+                // if ("mas" === resultado) {
+                //     q.count = q.count + 1;
+                $.ajax({
+                    type: "post",
+                    url: '<?= base_url("/obtenerDatosProducto") ?>',
+                    data: {
+                        'offset': q.page
+                    },
+                    success: function(response) {
+                        var json = JSON.parse(response);
+                        q.articulos = json
+                        q.Estado = true;
+                        q.loading = false
+                    }
+                });
+
+                // } else {
+                //     q.count = q.count - 1;
+                //     $.ajax({
+                //         type: "post",
+                //         url: '<?= base_url("/obtenerDatosProducto") ?>',
+                //         data: {
+                //             'offset': q.count
+                //         },
+                //         success: function(response) {
+                //             var json = JSON.parse(response);
+                //             q.articulos = json
+                //             q.Estado=true;
+                //             q.loading = false
+                //         }
+                //     });
+                // }
 
             },
+
         }
     })
+
+    Llenar_Paginacion();
 
     function ajaxGrafLine(xValues, yValues) {
         var barColors = [
@@ -142,6 +163,19 @@ $(document).ready(function() {
             }
         });
 
+    }
+
+    function Llenar_Paginacion() {
+        $.ajax({
+            type: "post",
+            url: '<?= base_url("/obtenerPaginacion") ?>',
+            data: {
+                'limit': q.limit
+            },
+            success: function(response) {
+               q.tamaño=parseInt(response);
+            }
+        });
     }
 
 

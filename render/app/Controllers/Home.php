@@ -12,7 +12,7 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
         if (empty($id)) {
-            return $this->response->redirect(site_url('/'));
+            $this->login();
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
@@ -83,9 +83,10 @@ class Home extends BaseController
         }
         
     }
-    public function obtenerDatosProducto()
+    public function obtenerDProd()
 	{
         $mercadolibre = new Mercadolibre();
+        $product = new DataProducto();
         $limit = 3;
         $offset = $this->request->getVar("offset");
         $calcular= ($offset-1)*$limit;
@@ -93,18 +94,18 @@ class Home extends BaseController
         $data=[];
         $arrayDatosProducto=[];
         $arrayAccionesProducto=[];
-		$array=$mercadolibre->getProductosdelUsuario($limit,$calcular);
+		$array=$product->obtenerDatosProducto($limit,$calcular);
         for($i =0; $i<count($array); $i++){
-          $arrayDatosProducto[]= $mercadolibre->getDatosProducto($array[$i]);
-          $arrayAccionesProducto[]= $mercadolibre->getAccionesProducto($array[$i]);
+          $arrayAccionesProducto[]= $mercadolibre->getAccionesProducto($array[$i]["Codigo"]);
         };
         for($p =0; $p<count($array); $p++){
             $data[]=[  
-                "Id" => $array[$p],
-                "Title" => $arrayDatosProducto[$p]["title"],
-                "Health" => ($arrayDatosProducto[$p]["health"]*100),
+                "Id" => $array[$p]["Codigo"],
+                "Title" => $array[$p]["Nombre"],
+                "Imagen" => $array[$p]["Imagen"],
+                "Health" => round($arrayAccionesProducto[$p]["health"]*100),
                 "Color" => $this->randomColor(),
-                "Acciones" => json_encode($arrayAccionesProducto[$p])
+                "Acciones" => ($arrayAccionesProducto[$p]["name"])
             ];
         }
         echo json_encode($data);
@@ -141,7 +142,10 @@ class Home extends BaseController
             foreach ($datos as $variable) {
                 if (password_verify($pass, $variable['Password'])) {
                     $var = [
-                        'user' => $user
+                        'user' => $user,
+                        'id' => $variable["id"],
+                        'token' => $variable["token"],
+                        'rol' => $variable["Rol"]
                     ];
                     $ssesion->set($var);
                     echo"Bien";
@@ -222,6 +226,7 @@ class Home extends BaseController
         $Ciudad = $this->validar_input($this->request->getVar("Ciudad"));
         $Pais = $this->validar_input($this->request->getVar("Pais"));
         $SobreMi = $this->validar_input($this->request->getVar("SobreMi"));
+        $Pass = password_hash($this->request->getVar("Pass"),PASSWORD_DEFAULT);
         if($this->isValidEspacio($Nombre) === true && $this->isValidEspacio($Apellido) === true && $this->isValidEspacio($Ciudad) === true
         && $this->isValidEspacio($Pais) === true && $this->isValidEspacio($SobreMi) === true && $this->isValidUrl($Foto) === true && $this->isValidNumberText($Direccion) === true){
         $ssesion = \Config\Services::session();
@@ -236,7 +241,8 @@ class Home extends BaseController
             'Ciudad' => $Ciudad,
             'Pais' => $Pais,
             'SobreMi' => $SobreMi,
-            'Foto' => $Foto
+            'Foto' => $Foto,
+            'Password'=> $Pass
         );
         $builder->where('Usuario', $id);
         $builder->update($data_array);
@@ -267,6 +273,7 @@ class Home extends BaseController
                 'Pais' => $variable['Pais'],
                 'SobreMi' => $variable['SobreMi'],
                 'Foto' => $variable['Foto'],
+                'Password' => $variable['Password']
             ];
         }
         echo json_encode($array);

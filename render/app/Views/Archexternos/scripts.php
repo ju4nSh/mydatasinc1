@@ -40,6 +40,21 @@ function Actualizar() {
                 });
             }
         });
+} 
+function ConectarMerLi(){
+    $.ajax({
+                type: "GET",
+                url: '<?= base_url("/validarConexionMerLi") ?>',
+                success: function(response) {
+                    if(response==="Bien"){
+                        $('#exampleModalLong').modal('show');
+                    }else{
+                        swal("Esta funcion no se encuentra habilitada para usted", {
+                                        icon: "warning",
+                                    });
+                    }
+                }
+            });
 }
 var q = new Vue({
     el: '#app',

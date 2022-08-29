@@ -20,7 +20,7 @@
                 <div class="card-header pb-0">
                     <div class="d-flex align-items-center">
                         <p class="mb-0">Edit Profile</p>
-                        <button class="btn btn-primary btn-sm ms-auto">Settings</button>
+                        <button class="btn btn-primary btn-sm ms-auto" onclick="ConectarMerLi()">Settings</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -78,6 +78,13 @@
                                         :value="variable.Pais" id="Pais" name="Pais" required>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Contraseña</label>
+                                    <input class="form-control" type="password" minlength="4" maxlength="20"
+                                        :value="variable.Password" id="Pass" name="Pass" required>
+                                </div>
+                            </div>
                         </div>
                         <hr class="horizontal dark">
                         <p class="text-uppercase text-sm">About me</p>
@@ -101,6 +108,35 @@
                             class="btn btn-success">Actualizar</button>
                     </form>
                     </template>
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h5>Conectar con Mercadolibre</h5>
+                                    <br>
+                                    <form role="form" id="form">
+                                        <div class="mb-3">
+                                            <label for="">Secret Key</label>
+                                            <input type="text" class="form-control form-control-lg" placeholder="Secret Key"
+                                                aria-label="user" id="Usuario" name="Usuario" minlength="3"
+                                                maxlength="15" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">User Id</label>
+                                            <input type="text" class="form-control form-control-lg"
+                                                placeholder="User Id" aria-label="Password" id="password"
+                                                name="password" minlength="5" maxlength="20" required>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit"
+                                                class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
