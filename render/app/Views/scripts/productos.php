@@ -127,10 +127,11 @@
 				https:\/\/static3.depositphotos.com\/1000501\/122\/i\/600\/depositphotos_1223337-stock-photo-colombian-flag.jpg
 				https:\/\/www.motor.com.co\/__export\/1645199062631\/sites\/motor\/img\/2022\/02\/18\/20220218_094422465_615231d537e21_r_1632776804770_49-43-1121-578.jpeg_242310155.jpeg
 				*/
-				removeImagenModalActualizar: function () {
+				removeImagenModalActualizar: function (p) {
+					app.inputsActualizar.splice(p, 1)
 				},
 				crearInputImagenActualizar: function () {
-					app.inputsActualizar.push("data")
+					app.inputsActualizar.push({valor: ""})
 				},
 				removeImagen: function(param) {
 					app.inputImagen.splice(param, 1);
@@ -324,9 +325,6 @@
 					window.open(url, "_blank")
 				},
 				crearInputImagen: function() {
-					// app.inputImagen.push({
-					// 	valor: "input"+ ++app.countInput
-					// })
 					app.inputImagen.push({valor: ""})
 				},
 				subcategory: function(id, index) {

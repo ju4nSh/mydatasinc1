@@ -215,7 +215,7 @@
 							</div>
 							<div class="row">
 								<label for="recipient-name" class="col-form-label">Imagenes:</label>
-								<div @click="removeImagenModalActualizar($event)" v-for="(item, p) in imagenesActualizar" is="imagenes" v-bind:src="item"></div>
+								<div @click="removeImagenModalActualizar(p)" v-for="(item, p) in inputsActualizar" is="imagenes" v-bind:src="item" v-if="item.valor != ''"></div>
 							</div>
 							<div class="row">
 								<div class="form-group col-md-6">
@@ -224,7 +224,7 @@
 									<label class="col-form-label" for="my-input">Imagen url:</label>
 									<a @click="crearInputImagenActualizar" href="javascript:;" class="bg-info p-1"><i class="fas fa-plus"></i></a>
 									<div class="fieldInput col-md-12 shadow">
-										<div @click="removeImagenModalActualizar($event)" v-for="(item, p) in inputsActualizar" is="input-imagenes" v-bind:src="item"></div>
+										<div  v-for="(item, p) in inputsActualizar" is="input-imagenes" v-bind:src="item" v-model="item.valor"></div>
 									</div>
 								</div>
 							</div>
