@@ -93,7 +93,7 @@
 			},
 			created: async function() {
 
-				// let url1 = "<? #= base_url("getAllProduct") ?>";
+				// let url1 = "<?#= base_url("getAllProduct") ?>";
 				// await $.ajax({
 				// 	type: "post",
 				// 	url: url1,
@@ -393,9 +393,6 @@
 								app.childrenCategories.push(response.children_categories)
 								$("#spinnerAgregarProducto").removeClass("spinner-border")
 							} else {
-
-
-
 								app.childrenCategories.splice((index + 1))
 								app.camposRequeridos.splice(0)
 								app.atributesCategory(id);
