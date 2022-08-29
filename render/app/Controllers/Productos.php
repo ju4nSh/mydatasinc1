@@ -109,6 +109,46 @@ class Productos extends Controller
 		return $html;
 	}
 
+	public function createLinksProductsSearch($links, $limit)
+	{
+		$this->_limit = $limit;
+		if ($this->_limit == 'all') {
+			return '';
+		}
+
+		$last       = ceil($this->_total / $this->_limit);
+
+		$start      = (($this->_page - $links) > 0) ? $this->_page - $links : 1;
+		$end        = (($this->_page + $links) < $last) ? $this->_page + $links : $last;
+
+		$html       = '<ul>';
+
+		$class      = ($this->_page == 1) ? "disabled" : "";
+		$html       .= '<li class="' . $class . '"><a onclick="searchProductNew(' . $this->_limit . ', ' . ($this->_page - 1) . ')" href="javascript: void(0)">&laquo;</a></li>';
+
+		if ($start > 1) {
+			$html   .= '<li><a onclick="searchProductNew(' . $this->_limit . ', 1)" href=javascript: void(0)">1</a></li>';
+			$html   .= '<li class="disabled"><span>...</span></li>';
+		}
+
+		for ($i = $start; $i <= $end; $i++) {
+			$class  = ($this->_page == $i) ? "active" : "";
+			$html   .= '<li class="' . $class . '"><a onclick="searchProductNew(' . $this->_limit . ', ' . $i . ')" href="javascript: void(0)">' . $i . '</a></li>';
+		}
+
+		if ($end < $last) {
+			$html   .= '<li class="disabled"><span>...</span></li>';
+			$html   .= "<li><a onclick='searchProductNew(" . $this->_limit . ", " . $last . ")' href='javascript: void(0)'>" . $last . "</a></li>";
+		}
+
+		$class      = ($this->_page == $last) ? "disabled" : "";
+		$html       .= '<li class="' . $class . '"><a onclick="searchProductNew(' . $this->_limit . ', ' . ($this->_page + 1) . ')" href="javascript: void(0)">&raquo;</a></li>';
+
+		$html       .= '</ul>';
+
+		return $html;
+	}
+
 	public function getCategory_Id()
 	{
 		$res = $this->producto->select("id, descripcion, imagen")->where("codigo", $this->request->getVar("codigo"))->get()->getFirstRow();
@@ -346,15 +386,16 @@ class Productos extends Controller
 		}
 	}
 
-	public function searchProducts($product)
+	public function searchProducts($product, $limit = 3, $page = 1, $numLinks = 3)
 	{
 		if ($product != "") {
-			$this->_page  = 1;
-			$this->_limit = 16;
-			$numLinks = 3;
-
+			$this->_page  = $page;
+			$this->_limit = $limit;
+			$offset = (($this->_page - 1) * $this->_limit);
 			$response = $this->producto->like("nombre", $product)->findAll();
 			$this->_total = count($response);
+			$response = $this->producto->like("nombre", $product)->findAll($this->_limit, $offset);
+
 			foreach ($response as $key => $value) {
 				$response[$key]["imagen"] = json_decode($value["imagen"]);
 			}
@@ -367,7 +408,7 @@ class Productos extends Controller
 					"result" => 1
 				];
 
-				$html = $this->createLinks($numLinks, $this->_limit);
+				$html = $this->createLinksProductsSearch($numLinks, $this->_limit);
 
 				$result["html"] = $html;
 
