@@ -160,9 +160,9 @@ class Mercadolibre extends Controller
             ];
         return $dato;
     }
-    public function getAllProduct()
+    public function getAllProduct($scroll_id)
     {
-        $uri = $this->baseUri . "users/" . $this->users["userId"] . "/items/search?search_type=scan";
+        $uri = $this->baseUri . "users/" . $this->users["userId"] . "/items/search?search_type=scan&scroll_id=" . $scroll_id;
         $conexion = curl_init();
         $token = $this->users["token"];
         curl_setopt($conexion, CURLOPT_URL, $uri);

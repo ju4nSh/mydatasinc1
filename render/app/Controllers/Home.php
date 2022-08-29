@@ -57,21 +57,6 @@ class Home extends BaseController
 			echo $view->render("Contenido/contenidoProducto");
 		}
 	}
-	public function login()
-	{
-		$ssesion = \Config\Services::session();
-		$id = $ssesion->get("user");
-		if (empty($id)) {
-			$view = \Config\Services::renderer();
-			echo $view->render("Contenido/login");
-		} else {
-			$view = \Config\Services::renderer();
-			$view->setVar('one', $id)
-				->setVar('pagina', "Salpicadero")
-				->setVar('titulo', "Dashboard");
-			echo $view->render("Contenido/contenidoDashboard");
-		}
-	}
 
 	public function guardar()
 	{
@@ -108,22 +93,6 @@ class Home extends BaseController
                 ->setVar('pagina', "DatoProducto")
                 ->setVar('titulo', "DatoProducto");
             echo $view->render("Contenido/contenidoDatosProducto");
-        }
-    }
-
-    public function productos()
-    {
-        $ssesion = \Config\Services::session();
-        $id = $ssesion->get("user");
-        if (empty($id)) {
-            return $this->response->redirect(site_url('/'));
-        } else {
-            $producto = new Productos();
-            $view = \Config\Services::renderer();
-            $view->setVar('one', $id)
-                ->setVar('pagina', "Productos")
-                ->setVar('titulo', "Productos");
-            echo $view->render("Contenido/contenidoProducto");
         }
     }
     public function login()
@@ -257,8 +226,6 @@ class Home extends BaseController
 		// }
 	}
 
-
-
 	public function mostrarRegistrar()
 	{
 		$view = \Config\Services::renderer();
@@ -310,7 +277,7 @@ class Home extends BaseController
         $builder = $db->table('users');
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
-        $data_array = array('Usuario' => $id);
+        $data_array = array('id' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
             $array[] = [
@@ -362,77 +329,6 @@ class Home extends BaseController
 				->setVar('titulo', "Perfil");
 			echo $view->render("Contenido/contenidoPerfil");
 		}
-	}
-
-	public function ModificarPerfil()
-	{
-		$Nombre = $this->request->getVar("Nombre");
-		$Foto = $this->request->getVar("Foto");
-		$Apellido = $this->request->getVar("Apellido");
-		$Correo = $this->request->getVar("Correo");
-		$Direccion = $this->request->getVar("Direccion");
-		$Ciudad = $this->request->getVar("Ciudad");
-		$Pais = $this->request->getVar("Pais");
-		$SobreMi = $this->request->getVar("SobreMi");
-		$ssesion = \Config\Services::session();
-		$id = $ssesion->get("user");
-		$db = \Config\Database::connect();
-		$builder = $db->table('users');
-		$data_array = array(
-			'Nombre' => $Nombre,
-			'Apellido' => $Apellido,
-			'Correo' => $Correo,
-			'Direccion' => $Direccion,
-			'Ciudad' => $Ciudad,
-			'Pais' => $Pais,
-			'SobreMi' => $SobreMi,
-			'Foto' => $Foto
-		);
-		$builder->where('Usuario', $id);
-		$builder->update($data_array);
-		$this->llenarPerfil();
-	}
-	public function llenarPerfil()
-	{
-		$db = \Config\Database::connect();
-		$builder = $db->table('users');
-		$ssesion = \Config\Services::session();
-		$id = $ssesion->get("user");
-		$data_array = array('Usuario' => $id);
-		$datos = $builder->select('*')->where($data_array)->get()->getResultArray();
-		foreach ($datos as $variable) {
-			$array[] = [
-				'Nombre' => $variable['Nombre'],
-				'Apellido' => $variable['Apellido'],
-				'Correo' => $variable['Correo'],
-				'Direccion' => $variable['Direccion'],
-				'Ciudad' => $variable['Ciudad'],
-				'Pais' => $variable['Pais'],
-				'SobreMi' => $variable['SobreMi'],
-				'Foto' => $variable['Foto'],
-			];
-		}
-		echo json_encode($array);
-	}
-	public function mostrarClientesReferenciados()
-	{
-		$db = \Config\Database::connect();
-		$builder = $db->table('users');
-		$ssesion = \Config\Services::session();
-		$id = $ssesion->get("user");
-		$data_array = array('Referenciado' => $id);
-		$datos = $builder->select('*')->where($data_array)->get()->getResultArray();
-		foreach ($datos as $variable) {
-			$array[] = [
-				'Identificacion' => $variable['Identificacion'],
-				'Nombre' => $variable['Nombre'],
-				'Apellido' => $variable['Apellido'],
-				'Correo' => $variable['Correo'],
-				'Ciudad' => $variable['Ciudad'],
-				'Pais' => $variable['Pais']
-			];
-		}
-		echo json_encode($array);
 	}
 
 	public function agregarClienteRef()
