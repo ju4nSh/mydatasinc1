@@ -55,8 +55,11 @@ class Home extends BaseController
 				if (count($userExits) > 0) {
 					if (password_verify($pass, $userExits[0]["Password"])) {
 						$session = session();
-						$session->set("user", $userExits[0]["Usuario"]);
-						$session->set("rol", $userExits[0]["Rol"]);
+						$data=[
+                            "user"=> $userExits[0]["Usuario"], 
+                        "rol" => $userExits[0]["Rol"]
+                        ];
+                        $session->set($data);
 						echo json_encode(["result" => 1]);
 					} else {
 						echo json_encode(["result" => 2]);
