@@ -197,11 +197,6 @@ class Home extends BaseController
            echo "Verifique la informacion suministrada";
         }
     }
-    public function mostrarRegistrar()
-    {
-        $view = \Config\Services::renderer();
-        echo $view->render("Contenido/Registrar");
-    }
 
     public function perfil()
     {
@@ -380,33 +375,8 @@ class Home extends BaseController
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
-        }
-
-	public function agregarClienteRef()
-	{
-		$Identificacion = $this->request->getVar("Id");
-		$Nombre = $this->request->getVar("Nombre");
-		$Apellido = $this->request->getVar("Apellido");
-		$Correo = $this->request->getVar("Correo");
-		$Ciudad = $this->request->getVar("Ciudad");
-		$Pais = $this->request->getVar("Pais");
-		$Usuario = $this->request->getVar("Usuario");
-		$ssesion = \Config\Services::session();
-		$id = $ssesion->get("user");
-		$compra = new Usuarios();
-		try {
-			$compra->insert([
-				'Identificacion' => $Identificacion,
-				'Nombre' => $Nombre,
-				'Apellido' => $Apellido,
-				'Correo' => $Correo,
-				'Ciudad' => $Ciudad,
-				'Pais' => $Pais,
-				'Referenciado' => $id,
-			]);
-        
-        }
     }
+
     public function isValidEspacio($text){
         $compara = "/^[a-zA-Z\sñáéíóúÁÉÍÓÚ]+$/";
         if((preg_match($compara, $text))){
