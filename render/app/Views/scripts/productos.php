@@ -59,7 +59,7 @@
 		var inputImagenes = Vue.component("input-imagenes", {
 			template: `
 						<div class="col-md-12 col-sm-12 col-12">
-							<input class="form-control" :value="src" type="text" />
+							<input @change="$emit(\'change\')" class="form-control" :value="src" type="text" />
 						</div>
 					`,
 			props: ["src"],
@@ -82,15 +82,15 @@
 				camposVacios: false,
 				productos: [],
 				countInput: 0,
-				imagenesActualizar: [],
 				inputsActualizar: [],
+				inputsActualizarAux: [],
 			},
 			mounted: async function() {
 
 			},
 			created: async function() {
 
-				// let url1 = "<?= base_url("getAllProduct") ?>";
+				// let url1 = "<?#= base_url("getAllProduct") ?>";
 				// await $.ajax({
 				// 	type: "post",
 				// 	url: url1,
@@ -127,11 +127,12 @@
 				https:\/\/static3.depositphotos.com\/1000501\/122\/i\/600\/depositphotos_1223337-stock-photo-colombian-flag.jpg
 				https:\/\/www.motor.com.co\/__export\/1645199062631\/sites\/motor\/img\/2022\/02\/18\/20220218_094422465_615231d537e21_r_1632776804770_49-43-1121-578.jpeg_242310155.jpeg
 				*/
-				removeImagenModalActualizar: function (p) {
-					app.inputsActualizar.splice(p, 1)
+				
+				removeImagenModalActualizar: function (param) {
+					app.inputsActualizar.splice(param, 1);
 				},
 				crearInputImagenActualizar: function () {
-					app.inputsActualizar.push({valor: ""})
+					app.inputsActualizar.push({valor: ''})
 				},
 				removeImagen: function(param) {
 					app.inputImagen.splice(param, 1);
@@ -325,12 +326,17 @@
 					window.open(url, "_blank")
 				},
 				crearInputImagen: function() {
-					app.inputImagen.push({valor: ""})
+					
+					// app.inputImagen.push({
+					// 	valor: "input"+ ++app.countInput
+					// })
+					app.inputImagen.push({valor: "", clase:'input'})
 				},
 				subcategory: function(id, index) {
+					// <?#= base_url("obtenerdetallescategoria") ?>/
 					$("#spinnerAgregarProducto").addClass("spinner-border")
 					$.ajax({
-						url: "<?= base_url("obtenerdetallescategoria") ?>/" + id,
+						url: "https://api.mercadolibre.com/categories/" + id,
 						dataType: "json",
 						success: function(response) {
 							if (response.children_categories.length) {
@@ -388,9 +394,9 @@
 				},
 				categoriasProductos: function(param) {
 					$("#spinnerAgregarProducto").addClass("spinner-border")
-
+// <?#= base_url("/obtenercategoria") ?>
 					$.ajax({
-						url: "<?= base_url("/obtenercategoria") ?>",
+						url: "https://api.mercadolibre.com/sites/MCO/categories",
 						dataType: "json",
 						success: function(response) {
 							// console.log(response)
@@ -401,9 +407,10 @@
 					});
 				},
 				detallesCategoria: function(param, i) {
+					// <?#= base_url("obtenerdetallescategoria") ?>/
 					$("#spinnerAgregarProducto").addClass("spinner-border")
 					$.ajax({
-						url: "<?= base_url("obtenerdetallescategoria") ?>/" + param,
+						url: "https://api.mercadolibre.com/categories/" + param,
 						dataType: "json",
 						success: function(response) {
 							app.childrenCategories.splice(0)
@@ -415,10 +422,15 @@
 				publicarAC: async function() {
 					($("#actualizarProductoN").parent()).addClass("disabled")
 					$("#actualizarProductoN").addClass("spinner-border spinner-border-sm");
+					let imagenes = [];
+					$.each($(".inputAC"), function(indexInArray, valueOfElement) {
+						if (valueOfElement.value !== "")
+							imagenes.push(valueOfElement.value)
+					});
 					await $.ajax({
 						type: "post",
 						url: "<?= base_url("actualizarproducto") ?>",
-						data: "id=" + $("#codigoPaActualizar").val() + "&codigo=" + $("#codigoProductoAC").val() + "&nombre=" + $("#nombreAC").val() + "&precio=" + $("#precioAC").val() + "&descripcion=" + $("#descripcionAC").val() + "&cantidad=" + $("#cantidadAC").val(),
+						data: "id=" + $("#codigoPaActualizar").val() + "&codigo=" + $("#codigoProductoAC").val() + "&nombre=" + $("#nombreAC").val() + "&precio=" + $("#precioAC").val() + "&descripcion=" + $("#descripcionAC").val() + "&cantidad=" + $("#cantidadAC").val() + "&imagen=" + JSON.stringify(imagenes),
 						dataType: "json",
 						success: function(response) {
 							// console.log(response)
@@ -492,6 +504,7 @@
 			watch: {}
 		});
 		$('#modalActualizarProductos').on('show.bs.modal', async function(event) {
+			app.inputsActualizar = []
 			var button = $(event.relatedTarget)
 			let nombre = ''
 			let cantidad = ''
@@ -510,8 +523,10 @@
 					console.log(response)
 					descripcion = response.data.descripcion
 					codigoBD = response.data.id
-					app.imagenesActualizar = [...response.data.imagen]
-					app.inputsActualizar = [...response.data.imagen]
+					app.inputsActualizarAux = [...response.data.imagen]
+					$.each(app.inputsActualizarAux, function (indexInArray, valueOfElement) { 
+						 app.inputsActualizar.push({valor: valueOfElement})
+					});
 				}
 			});
 			$("#spinnerActualizarProducto").removeClass("spinner-border")
