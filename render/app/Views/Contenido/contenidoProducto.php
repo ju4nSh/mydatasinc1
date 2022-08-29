@@ -24,10 +24,19 @@
 			<div class="card col-md-12">
 				<div class="card-header pb-0">
 					<div class="row">
-						<h4 class="mb-2">Mis productos</h4>
+						<div class="row mb-2">
+							<h4 class="col-md-3">Mis productos</h4>
+							<div class="form-group col-md-6 p-3">
+								<input class="col-md-6 p-2 border" type="text" placeholder="Buscar productos" v-model="inputProducts">
+								<button @click="searchProduts" class="btn btn-outline-success col-md-4 p-2 m-0" type="button">
+									<span id="loadSearchProduts" class="" role="status" aria-hidden="true"></span>
+									Buscar
+								</button>
+							</div>
+						</div>
 						<div class="productosCargados">
 							<div class="shadow-lg rounded-3" v-for="(p, index) in productos">
-								<div :id="p.codigo" class="carousel slide " data-ride="carousel">
+								<div :id="p.codigo" class="carousel slide" data-ride="carousel">
 									<div class="carousel-inner">
 										<div class="carousel-item " :class="{ 'active' : index == 0}" v-for="(img, index) in p.imagen">
 											<img :src="img" class="d-block w-100 rounded-top" alt="...">
@@ -115,9 +124,19 @@
 
 							</div>
 							<div class="row">
+								<label for="recipient-name" class="col-form-label">Imagenes:</label>
+								<div @click="removeImagen(p)" v-for="(item, p) in inputImagen" :indice="p" is="imagenes" v-bind:src="item.valor" v-if="item.valor != ''"></div>
+							</div>
+							<div class="row">
 								<div class="form-group col-md-12">
 									<label for="recipient-name" class="col-form-label">Nombre:</label>
-									<input type="text" class="form-control col-md-11 " id="nombrePN">
+									<input type="text" class="form-control col-md-12 " id="nombrePN">
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label for="recipient-name" class="col-form-label">Descripción:</label>
+									<textarea class="form-control col-md-12" name="" id="descripcionPN" cols="30" rows="5"></textarea>
 								</div>
 							</div>
 							<div class="row">
@@ -140,7 +159,9 @@
 									<a @click="crearInputImagen" href="javascript:;" class="bg-info p-1"><i class="fas fa-plus"></i></a>
 
 									<div class="fieldInput" class="form-control">
-										<input v-for="input in inputImagen" id="imagenPN" class="form-control" :class="input.clase" type="text" name="">
+										<div v-for="input in inputImagen">
+											<input class="form-control" :class="input.clase" type="text" name="" v-model="input.valor">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -201,6 +222,21 @@
 								</div>
 							</div>
 							<div class="row">
+								<label for="recipient-name" class="col-form-label">Imagenes:</label>
+								<div @click="removeImagenModalActualizar(p)" v-for="(item, p) in inputsActualizar" is="imagenes" v-bind:src="item.valor" v-if="item.valor != ''"></div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+								</div>
+								<div class="form-group col-md-6">
+									<label class="col-form-label" for="my-input">Imagen url:</label>
+									<a @click="crearInputImagenActualizar" href="javascript:;" class="bg-info p-1"><i class="fas fa-plus"></i></a>
+									<div class="fieldInput">
+										<input v-for="i in inputsActualizar" class="form-control inputAC" type="text" name="" v-model="i.valor">
+									</div>
+								</div>
+							</div>
+							<div class="row">
 								<div class="form-group col-md-12">
 									<label for="my-input">Descripción:</label>
 									<textarea class="form-control" name="" id="descripcionAC" cols="30" rows="10"></textarea>
@@ -220,45 +256,7 @@
 		<!-- FIN MODAL ACTUALIZAR PRODUCTO -->
 
 	</div>
-</div>
-<?= $this->endSection() ?>
-
-<?= $this->section("funciones"); ?>
-<?= $this->include("scripts/productos") ?>
-<?= $this->endSection() ?>
-							<table id="productos" class="table align-items-center mb-0">
-								<div data-app="true" class="v-application v-application--is-ltr theme--light">
-									<v-main>
-										<v-spacer></v-spacer>
-										<div class="row">
-											<div class="container">
-												<div class="col-4" class="mover">
-													<v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
-												</div>
-											</div>
-
-										</div>
-										<br>
-										<div class="container">
-											<v-data-table :headers="columnas" :items="productos" class="elevation-19" :search="search">
-												<template v-slot:item.imagen="{ item }">
-													<img height="50px" style="object-fit: contain; border-radius: 100%;" width="50px" :src="JSON.parse(item.imagen)[0]" :alt="JSON.parse(item.imagen)[0]">
-												</template>
-												<template v-slot:item.link="{ item }">
-													<a :href="item.link" target="_blank" style="text-decoration: none;">
-														visitar
-													</a>
-												</template>
-												<template v-slot:item.actions="{ item }">
-													<v-icon small data-target="#modalActualizarProductos" data-toggle="modal" href="javascript:void(0);">
-														mdi-pencil
-													</v-icon>
-													
-												</template>
-											</v-data-table>
-										</div>
-									</v-main>
-								</div>
-								</tbody>
-							</table>
-						</div> -->
+	<?= $this->endSection() ?>
+	<?= $this->section("funciones"); ?>
+	<?= $this->include("scripts/productos") ?>
+	<?= $this->endSection() ?>

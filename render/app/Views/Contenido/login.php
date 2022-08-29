@@ -14,7 +14,7 @@
 -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8" />
@@ -102,9 +102,9 @@
                   <p class="mb-0">Enter your email and password to sign in</p>
                 </div>
                 <div class="card-body">
-                  <form role="form" id="form" onsubmit="enviar()">
+                  <form role="form" id="form" onsubmit="enviar(); return false">
                     <div class="mb-3">
-                      <input type="text" class="form-control form-control-lg" placeholder="User" aria-label="user" id="Usuario" name="Usuario" minlength="3" maxlength="15" required>
+                      <input type="text" class="form-control form-control-lg" placeholder="User" aria-label="user" id="Usuario" name="usuario" minlength="3" maxlength="15" required>
                     </div>
                     <div class="mb-3">
                       <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" id="password" name="password" minlength="4" maxlength="20" required>

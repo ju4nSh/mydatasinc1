@@ -208,7 +208,7 @@ div#botonNavegacion > ul > li {
 
 @media (min-width: 1400px) {
     div.productosCargados {
-        grid-template: auto / repeat(5, 1fr) !important;
+        grid-template: auto / repeat(4, 1fr) !important;
         gap: 30px;
     }
 }

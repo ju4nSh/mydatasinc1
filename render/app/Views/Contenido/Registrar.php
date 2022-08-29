@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="./img/apple-icon.png">
   <link rel="icon" type="image/png" href="./img/favicon.png">
   <title>
-     MyDataSinc S.A.S
+    MyDataSinc S.A.S
 
   </title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -99,7 +99,7 @@
   <script src="../public/xinternet/popper.min.js"></script>
   <script src="../public/xinternet/sweetalert.min.js"></script>
   <script src="../public/xinternet/vue.js"></script>
-<!-- Fin sin internet -->
+  <!-- Fin sin internet -->
 
 </head>
 
@@ -219,10 +219,10 @@
             <div class="card-body">
               <form role="form" id="form1" onsubmit="Actualizar(); return false">
                 <div class="mb-3">
-                  <input type="number" class="form-control" placeholder="Identificacion" aria-label="Identificacion" name="Id" id="Id" min="10000000"  required>
+                  <input type="number" class="form-control" placeholder="Identificacion" aria-label="Identificacion" name="id" id="Id" minlength="5" required>
                 </div>
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" required name="Usuario" id="Usuario" minlength="3" maxlength="15">
+                  <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" required name="usuario" id="Usuario" minlength="3" maxlength="15">
                 </div>
                 <div class="mb-3">
                   <input type="password" class="form-control" placeholder="Password" aria-label="Password" required name="password" id="password" minlength="5" maxlength="20">
@@ -236,7 +236,7 @@
                 <div class="text-center">
                   <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
                 </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="<?= base_url('/')?>" class="text-dark font-weight-bolder">Sign in</a></p>
+                <p class="text-sm mt-3 mb-0">Already have an account? <a href="<?= base_url('/') ?>" class="text-dark font-weight-bolder">Sign in</a></p>
               </form>
             </div>
           </div>
@@ -317,24 +317,29 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
   <script>
-    function Actualizar(){
+    function Actualizar() {
       $.ajax({
         type: "post",
         url: '<?= base_url("/registrar") ?>',
         data: $('#form1').serialize(),
-        success: function (response) {
-          if(response ==="registrado"){
+        dataType: "json",
+        success: async function(response) {
+          if (response.result == 1) {
+            await swal("Bien!", "Usuario registrado exitosamente", "success")
             location.replace('<?= base_url("/index") ?>');
-          }else{
-            swal("Verifique la informacion suministrada", {
-                            icon: "warning",
-                        });
+          } else if(response.result == 2) {
+            await swal("Error!", "Rellene los campos", "error");
+          } 
+          else {
+            console.log(response)
+            swal(`Verifique la informacion suministrada -- ${response.error}`, {
+              icon: "warning",
+            });
           }
-          
+
         }
       });
-  }
-   
+    }
   </script>
 </body>
 

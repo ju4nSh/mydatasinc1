@@ -1,5 +1,11 @@
 <?php
 
+/*
+User = TEST0DZEHY3B
+app Id = 4332857485021545
+secret key = BXQbMgaylwbml72KGRrBtkdQCsATIkAm
+user id = 833930674
+*/
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
@@ -9,7 +15,7 @@ class Mercadolibre extends Controller
 {
     private $baseUri = '';
     private $users = [
-        "token" => "APP_USR-4332857485021545-082516-f8bb0818257e5ea3a94d2b6d1c24fbd4-833930674",
+        "token" => "APP_USR-4332857485021545-082914-8bbfd91adde80c5484e52e3bc4b85dd0-833930674",
         "user" => "TEST0DZEHY3B",
         "userId" => "833930674",
     ];
@@ -98,18 +104,19 @@ class Mercadolibre extends Controller
     }
     public function updateMercadolibre($code, $datos)
     {
-        $client = \Config\Services::curlrequest();
 
         $uri = $this->baseUri . "items/" . $code;
-        $response = $client->request('PUT', $uri, [
-            "json" => $datos,
-            "headers" => [
-                "Content-Type" => "application/json",
-                "Accept" => "application/json",
-                "Authorization" => "Bearer " . $this->users['token']
-            ],
-        ]);
-        return $response;
+        $conexion = curl_init();
+        $token = $this->users["token"];
+        curl_setopt($conexion, CURLOPT_URL, $uri);
+        curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($conexion, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json', "Authorization: Bearer $token"));
+        curl_setopt($conexion, CURLOPT_POSTFIELDS, json_encode($datos));
+        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+
+        $r = curl_exec($conexion);
+        curl_close($conexion);
+        return $r;
     }
     public function pausar_activar_eliminar($item, $value)
     {
@@ -165,7 +172,20 @@ class Mercadolibre extends Controller
         curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
 
         $r = curl_exec($conexion);
-        var_dump($r);
+        return $r;
+    }
+    public function getInfoProduct($code)
+    {
+        $uri = $this->baseUri . "items/" . $code;
+        $conexion = curl_init();
+        $token = $this->users["token"];
+        curl_setopt($conexion, CURLOPT_URL, $uri);
+        curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($conexion, CURLOPT_HTTPHEADER, array("Authorization: Bearer $token"));
+        // curl_setopt($conexion, CURLOPT_POSTFIELDS, json_encode($datos));
+        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
 
+        $r = curl_exec($conexion);
+        return $r;
     }
 }

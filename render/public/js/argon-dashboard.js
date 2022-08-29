@@ -340,7 +340,7 @@ function navbarBlurOnScroll(id) {
     navbar.classList.remove(...classes)
     navbar.classList.add(...toggleClasses)
 
-    toggleNavLinksColor('transparent');
+    // toggleNavLinksColor('transparent');
   }
 }
 

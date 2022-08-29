@@ -93,7 +93,9 @@ $routes->get('getData/(:any)/(:any)', 'Productos::getData/$1/$2');
 $routes->get('createLinks/(:any)/(:any)', 'Productos::createLinks/$1/$2');
 
 // obtener todos los productos de mercadolibre
-$routes->get('getAllProduct', 'Mercadolibre::getAllProduct');
+$routes->post('getAllProduct', 'Productos::getAllProduct');
+// obtener productos de la base de datos
+$routes->get('searchProducts/(:any)/(:any)/(:any)/(:any)', 'Productos::searchProducts/$1/$2/$3/$4');
 
 // activar o descativar productos | eliminar productos
 $routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar/$1/$2');
