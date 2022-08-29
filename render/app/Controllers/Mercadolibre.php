@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+// url para buscar productos  -- https://api.mercadolibre.com/users/833930674/items/search?search_type=scan 
 
 class Mercadolibre extends Controller
 {
@@ -126,6 +127,7 @@ class Mercadolibre extends Controller
         return $r;
     }
 
+
     public function getProductosdelUsuario($limit,$offset)
     {
         $client = \Config\Services::curlrequest();
@@ -194,5 +196,20 @@ class Mercadolibre extends Controller
                 // ];
             }
         return $fotos;
+    }
+    public function getAllProduct()
+    {
+        $uri = $this->baseUri . "users/" . $this->users["userId"] . "/items/search?search_type=scan";
+        $conexion = curl_init();
+        $token = $this->users["token"];
+        curl_setopt($conexion, CURLOPT_URL, $uri);
+        curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($conexion, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json', "Authorization: Bearer $token"));
+        // curl_setopt($conexion, CURLOPT_POSTFIELDS, json_encode($datos));
+        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+
+        $r = curl_exec($conexion);
+        var_dump($r);
+
     }
 }
