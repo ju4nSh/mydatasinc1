@@ -57,7 +57,8 @@ class Home extends BaseController
 						$session = session();
 						$data=[
                             "user"=> $userExits[0]["Usuario"], 
-                        "rol" => $userExits[0]["Rol"]
+                        "rol" => $userExits[0]["Rol"],
+                        "id" => $userExits[0]["id"]
                         ];
                         $session->set($data);
 						echo json_encode(["result" => 1]);
@@ -287,7 +288,7 @@ class Home extends BaseController
         $db = \Config\Database::connect();
         $builder = $db->table('users');
         $ssesion = \Config\Services::session();
-        $id = $ssesion->get("user");
+        $id = $ssesion->get("id");
         $data_array = array('id' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
@@ -310,8 +311,8 @@ class Home extends BaseController
         $db = \Config\Database::connect();
         $builder = $db->table('users');
         $ssesion = \Config\Services::session();
-        $id = $ssesion->get("user");
-        $data_array = array('Referenciado' => $id);
+        $id = $ssesion->get("id");
+        $data_array = array('Creator' => $id);
         $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
         foreach ($datos as $variable) {
             $array[] = [
@@ -334,11 +335,13 @@ class Home extends BaseController
         $Correo = $this->validar_input($this->request->getVar("Correo"));
         $Ciudad = $this->validar_input($this->request->getVar("Ciudad"));
         $Pais = $this->validar_input($this->request->getVar("Pais"));
+        $Password = password_hash($this->validar_input($this->request->getVar("Pass")),PASSWORD_DEFAULT);
+        $Rol = $this->validar_input($this->request->getVar("Rol"));
         $Usuario = $this->validar_input($this->request->getVar("Usuario"));
         if($this->isValidNumber($Identificacion) === true && $this->isValidEspacio($Nombre) === true && $this->isValidEspacio($Apellido) === true && $this->isValidEspacio($Ciudad) === true
          && $this->isValidEspacio($Pais) === true){
         $ssesion = \Config\Services::session();
-        $id = $ssesion->get("user");
+        $id = $ssesion->get("id");
         $compra = new Usuarios();
         try{
             $compra->insert([
@@ -348,7 +351,10 @@ class Home extends BaseController
                 'Correo' => $Correo,
                 'Ciudad' => $Ciudad,
                 'Pais' => $Pais,
-                'Referenciado' => $id,
+                'Creator' => $id,
+                'Usuario' => $Usuario,
+                'Password' => $Password,
+                'Rol' => $Rol,
             ]);
     
             $dato = [
@@ -358,7 +364,7 @@ class Home extends BaseController
                 'Correo' => $Correo,
                 'Ciudad' => $Ciudad,
                 'Pais' => $Pais,
-                'Referenciado' => $id,
+                'Creator' => $id,
             ];
             
         }catch(\Exception $e){

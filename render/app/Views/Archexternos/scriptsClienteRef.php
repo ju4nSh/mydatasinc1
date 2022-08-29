@@ -124,6 +124,8 @@ function limpiar() {
     document.getElementById("Correo").value = "";
     document.getElementById("Ciudad").value = "";
     document.getElementById("Pais").value = "";
+    document.getElementById("Usuario").value = "";
+    document.getElementById("Pass").value = "";
 }
 
 function validar(Id, Nombre, Apellido, Correo, Ciudad, Pais, Usuario) {

@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="container">
-                        
+
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
                                 <div data-app="true" class="v-application v-application--is-ltr theme--light">
@@ -40,7 +40,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="container">
                                             <v-data-table :headers="columnas" :items="articulos" class="elevation-19"
                                                 :search="search" :loading="loading">
@@ -126,6 +126,34 @@
                                                             minlength="3" maxlength="20" required style="border: 0px;">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group" id="borde">
+                                                    <label for="example-text-input"
+                                                        class="form-control-label">Usuario</label>
+                                                    <input class="form-control" type="text" id="Usuario" name="Usuario"
+                                                        minlength="3" maxlength="20" required style="border: 0px;">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Example select</label>
+                                                    <select class="form-control" id="Rol" name="Rol">
+                                                        <option></option>
+                                                        <option value="0">Administrador</option>
+                                                        <option value="1">Cliente</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group" id="borde">
+                                                    <label for="example-text-input"
+                                                        class="form-control-label">Contraseña</label>
+                                                    <input class="form-control" type="text" id="Pass" name="Pass"
+                                                        minlength="3" maxlength="20" required style="border: 0px;">
+                                                </div>
+                                            </div>
                                             </div>
                                             <hr class="horizontal dark">
                                             <button class="btn btn-primary" type="submit" value="hgsd">Agregar</button>

@@ -20,7 +20,7 @@
                 <div class="card-header pb-0">
                     <div class="d-flex align-items-center">
                         <p class="mb-0">Edit Profile</p>
-                        <button class="btn btn-primary btn-sm ms-auto" onclick="ConectarMerLi()">Settings</button>
+                        <button class="btn btn-primary btn-sm ms-auto" onclick='ConectarMerLi("<?=$rol?>")'>Settings</button>
                     </div>
                 </div>
                 <div class="card-body">
