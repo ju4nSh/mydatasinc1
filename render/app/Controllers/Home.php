@@ -16,7 +16,7 @@ class Home extends BaseController
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
-                ->setVar('pagina', "Salpicadero")
+                ->setVar('pagina', "Dashboard")
                 ->setVar('titulo', "Dashboard");
             echo $view->render("Contenido/contenidoDashboard");
         }

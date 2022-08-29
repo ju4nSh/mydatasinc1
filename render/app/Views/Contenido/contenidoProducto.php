@@ -36,7 +36,7 @@
 						</div>
 						<div class="productosCargados">
 							<div class="shadow-lg rounded-3" v-for="(p, index) in productos">
-								<div :id="p.codigo" class="carousel slide " data-ride="carousel">
+								<div :id="p.codigo" class="carousel slide" data-ride="carousel">
 									<div class="carousel-inner">
 										<div class="carousel-item " :class="{ 'active' : index == 0}" v-for="(img, index) in p.imagen">
 											<img :src="img" class="d-block w-100 rounded-top" alt="...">

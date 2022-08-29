@@ -7,7 +7,7 @@
 	let offset = 1;
 	let urlBase = "https://api.mercadolibre.com/";
 	$(document).ready(data => {
-
+		
 
 		var subCategory = Vue.component("sub-category", {
 			template: `
@@ -107,7 +107,7 @@
 				// });
 
 				let url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
-					// this.articulos = JSON.parse(response);
+				// this.articulos = JSON.parse(response);
 				await $.ajax({
 					url: url,
 					dataType: "json",
@@ -115,11 +115,13 @@
 						limite = response.limit
 						app.productos = response.data
 						$("#botonNavegacion").html(response.html)
-						$('.carousel').carousel({
-							interval: 2000
-						})
+
 					}
 				});
+				console.log("carousel")
+				// $('.carousel').carousel({
+				// 	interval: 2000
+				// })
 
 			},
 
@@ -130,7 +132,7 @@
 				https:\/\/static3.depositphotos.com\/1000501\/122\/i\/600\/depositphotos_1223337-stock-photo-colombian-flag.jpg
 				https:\/\/www.motor.com.co\/__export\/1645199062631\/sites\/motor\/img\/2022\/02\/18\/20220218_094422465_615231d537e21_r_1632776804770_49-43-1121-578.jpeg_242310155.jpeg
 				*/
-				getDataProduct:async  function() {
+				getDataProduct: async function() {
 					let url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
 					// this.articulos = JSON.parse(response);
 					await $.ajax({
@@ -140,9 +142,11 @@
 							limite = response.limit
 							app.productos = response.data
 							$("#botonNavegacion").html(response.html)
-							$('.carousel').carousel({
-								interval: 2000
-							})
+
+							console.log("carousel")
+							// $('.carousel').carousel({
+							// 	interval: 2000
+							// })
 						}
 					});
 				},
@@ -155,7 +159,7 @@
 							dataType: "json",
 							success: function(response) {
 								if (response.result) {
-									console.log(response)
+									// console.log(response)
 									app.productos = response.data
 									$("#botonNavegacion").html(response.html)
 								} else {
@@ -199,7 +203,7 @@
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
-										console.log(response)
+										// console.log(response)
 										if (response.result) {
 											e.target.parentElement.parentElement.remove()
 											swal("Bien", `Producto eliminado`, "success");
@@ -236,7 +240,7 @@
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
-										console.log(response)
+										// console.log(response)
 										if (response.result) {
 											e.target.parentElement.parentElement.parentElement.remove()
 
@@ -244,7 +248,7 @@
 										} else {
 											let error = [];
 											$.each(response.cause, function(indexInArray, valueOfElement) {
-												console.log(valueOfElement.message)
+												// console.log(valueOfElement.message)
 												error.push(valueOfElement.message)
 											});
 											error.push(response.mensaje)
@@ -283,7 +287,7 @@
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
-										console.log(response)
+										// console.log(response)
 										if (response.result) {
 											e.target.setAttribute("data-estado", status == "paused" ? 0 : 1)
 											// cambiando color al botón
@@ -296,7 +300,7 @@
 										} else {
 											let error = [];
 											$.each(response.cause, function(indexInArray, valueOfElement) {
-												console.log(valueOfElement.message)
+												// console.log(valueOfElement.message)
 												error.push(valueOfElement.message)
 											});
 											error.push(response.mensaje)
@@ -332,7 +336,7 @@
 									url: "<?= base_url("actualizarStatus") ?>/" + codigoMercadolibre + "/" + status,
 									dataType: "json",
 									success: function(response) {
-										console.log(response)
+										// console.log(response)
 										if (response.result) {
 											e.target.parentElement.setAttribute("data-estado", status == "paused" ? 0 : 1)
 											// cambiando color al botón
@@ -345,7 +349,7 @@
 										} else {
 											let error = [];
 											$.each(response.cause, function(indexInArray, valueOfElement) {
-												console.log(valueOfElement.message)
+												// console.log(valueOfElement.message)
 												error.push(valueOfElement.message)
 											});
 											error.push(response.mensaje)
@@ -412,10 +416,10 @@
 						url: urlBase + "categories/" + param + "/attributes",
 						dataType: "json",
 						success: function(response) {
-							console.log(response)
+							// console.log(response)
 							$.each(response, function(index, value) {
 								if (value.tags.required || value.tags.conditional_required) {
-									console.log(value.name, value.tags, value.value_type)
+									// console.log(value.name, value.tags, value.value_type)
 									app.camposRequeridos.push({
 										"id": value.id,
 										"name": value.name,
@@ -487,7 +491,7 @@
 							} else {
 								let error = [];
 								$.each(response.cause, function(indexInArray, valueOfElement) {
-									console.log(valueOfElement.message)
+									// console.log(valueOfElement.message)
 									error.push(valueOfElement.message)
 								});
 								error.push(response.mensaje)
@@ -529,7 +533,7 @@
 							} else {
 								let error = [];
 								$.each(response.cause, function(indexInArray, valueOfElement) {
-									console.log(valueOfElement.message)
+									// console.log(valueOfElement.message)
 									error.push(valueOfElement.message)
 								});
 								error.push(response.mensaje)
@@ -562,7 +566,7 @@
 				dataType: "json",
 				data: "codigo=" + codigoMercadolibre,
 				success: function(response) {
-					console.log(response)
+					// console.log(response)
 					descripcion = response.data.descripcion
 					codigoBD = response.data.id
 					app.inputsActualizarAux = [...response.data.imagen]
@@ -598,6 +602,7 @@
 
 
 	})
+	
 	async function buscarNuevo(limit1, offset1) {
 		var url = "<?= base_url("getData") ?>/" + limit1 + "/" + offset1 + "/" + numLinks + "/" + limite;
 		// this.articulos = JSON.parse(response);
@@ -605,7 +610,7 @@
 			url: url,
 			dataType: "json",
 			success: function(response) {
-				console.log(response)
+				// console.log(response)
 				limite = response.limit
 				app.productos = response.data
 				$("#botonNavegacion").html(response.html)
@@ -619,7 +624,7 @@
 			url: url,
 			dataType: "json",
 			success: function(response) {
-				console.log(response)
+				// console.log(response)
 				limite = response.limit
 				app.productos = response.data
 				$("#botonNavegacion").html(response.html)
