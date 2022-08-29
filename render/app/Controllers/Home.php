@@ -59,7 +59,7 @@ class Home extends BaseController
 						$session->set("rol", $userExits[0]["Rol"]);
 						echo json_encode(["result" => 1]);
 					} else {
-						echo json_encode(["result" => 0]);
+						echo json_encode(["result" => 2]);
 					}
 				} else {
 					echo json_encode(["result" => 2]);
