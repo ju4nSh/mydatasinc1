@@ -177,29 +177,47 @@ class Home extends BaseController
     }
     public function registrar()
     {
-        $id = $this->request->getVar("Id");
-        $user = $this->request->getVar("Usuario");
-        $db = \Config\Database::connect();
-        $ssesion = \Config\Services::session();
-        $builder = $db->table('users');
-        $data_array = array('Identificacion' => $id,'Usuario'=> '');
-        $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
-        if (count($datos) > 0) {
-            $pass =  password_hash($this->request->getVar("password"), PASSWORD_DEFAULT);
-            $data_pass = array(
-                'Password' => $pass,
-                'Usuario' => $user
-            );
-            $builder->where('Identificacion', $id);
-            $builder->update($data_pass);
-            $var = [
-                'user' => $user
-            ];
-            $ssesion->set($var);
-            echo "registrado";
-        } else {
-           echo "Verifique la informacion suministrada";
-        }
+        if ($this->request->getVar("id") != '' && $this->request->getVar("usuario") && $this->request->getVar("password")) {
+			$identity = $this->usuario->escapeString($this->request->getVar("id"));
+			$user = $this->usuario->escapeString($this->request->getVar("usuario"));
+			$password = password_hash($this->usuario->escapeString($this->request->getVar("password")), PASSWORD_DEFAULT);
+			$registro = false;
+
+			$userExits = $this->usuario->select("id, usuario")->where("usuario", $user)->find();
+			if (count($userExits) == 0) {
+				$data = [
+					"Identificacion" => $identity,
+					"Usuario" => $user,
+					"Password" => $password,
+					"Creator" => 0,
+				];
+				$registro = $this->usuario->save($data);
+				if ($registro) {
+					echo json_encode(["result" => 1]);
+				} else {
+					echo json_encode(["result" => 0]);
+				}
+			} else {
+				try {
+					$data = [
+						"Identificacion" => $identity,
+						"Usuario" => $user,
+						"Password" => $password,
+						"Creator" => $userExits[0]["id"],
+					];
+					$registro = $this->usuario->save($data);
+					if ($registro) {
+						echo json_encode(["result" => 1]);
+					} else {
+						echo json_encode(["result" => 0]);
+					}
+				} catch (\Exception $e) {
+					echo json_encode(["result" => 0, "error" => "usuario ya existe!"]);
+				}
+			}
+		} else {
+			echo json_encode(["result" => 2]);
+		}
     }
 
     public function perfil()
