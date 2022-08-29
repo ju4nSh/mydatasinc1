@@ -57,7 +57,7 @@ class Home extends BaseController
 						$session = session();
 						$data=[
                             "user"=> $userExits[0]["Usuario"], 
-                        "rol" => $userExits[0]["Rol"]
+                            "rol" => $userExits[0]["Rol"]
                         ];
                         $session->set($data);
 						echo json_encode(["result" => 1]);

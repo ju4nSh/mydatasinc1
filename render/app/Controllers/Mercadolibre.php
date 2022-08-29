@@ -188,4 +188,11 @@ class Mercadolibre extends Controller
         $r = curl_exec($conexion);
         return $r;
     }
+
+    public function generateToken($app_id, $client_Secret)
+    {
+        $redirect = 'https://google.com';
+        $uri = "https://auth.mercadolibre.com.co/authorization?response_type=code&client_id=$app_id&redirect_uri=$redirect";
+        
+    }
 }
