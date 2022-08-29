@@ -7,6 +7,10 @@ use App\Models\Usuarios;
 
 class Home extends BaseController
 {
+    private $usuario;
+    public function __construct() {
+        $this->usuario = new Usuarios();
+    }
     public function index()
     {
         $ssesion = \Config\Services::session();
@@ -51,7 +55,7 @@ class Home extends BaseController
 				if (count($userExits) > 0) {
 					if (password_verify($pass, $userExits[0]["Password"])) {
 						$session = session();
-						$session->set("user", $userExits[0]["id"]);
+						$session->set("user", $userExits[0]["Usuario"]);
 						echo json_encode(["result" => 1]);
 					} else {
 						echo json_encode(["result" => 0]);
