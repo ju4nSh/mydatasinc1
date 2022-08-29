@@ -11,13 +11,15 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
         if (empty($id)) {   
              return $this->response->redirect(site_url('/login'));
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
                 ->setVar('pagina', "Salpicadero")
-                ->setVar('titulo', "Dashboard");
+                ->setVar('titulo', "Dashboard")
+                ->setVar('rol', $rol);
             echo $view->render("Contenido/contenidoDashboard");
         }
     }
@@ -26,13 +28,15 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
         if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
                 ->setVar('pagina', "Clientes")
-                ->setVar('titulo', "Clientes");
+                ->setVar('titulo', "Clientes")
+                ->setVar('rol', $rol);
             echo $view->render("Contenido/contenidoTablas");
         }
     }
@@ -41,13 +45,15 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
         if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
                 ->setVar('pagina', "DatoProducto")
-                ->setVar('titulo', "DatoProducto");
+                ->setVar('titulo', "DatoProducto")
+                ->setVar('rol', $rol);
             echo $view->render("Contenido/contenidoDatosProducto");
         }
     }
@@ -56,6 +62,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
         if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         } else {
@@ -63,7 +70,8 @@ class Home extends BaseController
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
                 ->setVar('pagina', "Productos")
-                ->setVar('titulo', "Productos");
+                ->setVar('titulo', "Productos")
+                ->setVar('rol', $rol);
             echo $view->render("Contenido/contenidoProducto");
         }
     }
@@ -71,6 +79,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
         if (empty($id)) {
             $view = \Config\Services::renderer();
              echo $view->render("Contenido/login");
@@ -78,7 +87,8 @@ class Home extends BaseController
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
                 ->setVar('pagina', "Salpicadero")
-                ->setVar('titulo', "Dashboard");
+                ->setVar('titulo', "Dashboard")
+                ->setVar('rol', $rol);
             echo $view->render("Contenido/contenidoDashboard");
         }
         
@@ -204,6 +214,7 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
         if (empty($id)) {
             return $this->response->redirect(site_url('/'));
         } else {
@@ -211,7 +222,8 @@ class Home extends BaseController
 
             $view->setVar('one', $id)
                 ->setVar('pagina', "Perfil")
-                ->setVar('titulo', "Perfil");
+                ->setVar('titulo', "Perfil")
+                ->setVar('rol', $rol);
             echo $view->render("Contenido/contenidoPerfil");
         }
     }
@@ -362,10 +374,12 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
         $view = \Config\Services::renderer();
         $view->setVar('one', $id)
             ->setVar('pagina', "Tabla Api")
-            ->setVar('titulo', "Tabla Api");
+            ->setVar('titulo', "Tabla Api")
+            ->setVar('rol', $rol);
         echo $view->render("Contenido/contenidoTablaApi");
     }
     public function validar_input($data) {

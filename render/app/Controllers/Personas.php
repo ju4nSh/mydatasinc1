@@ -10,11 +10,13 @@ class Personas extends Controller
     public function validarConexionMerLi(){
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("rol");
-        if($id==="Administrador"){
+        if($id==="0"){
             echo"Bien";
         }else{
             echo "No";
         }
     }
+
+    
  
 }

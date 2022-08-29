@@ -18,7 +18,8 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-        <li class="nav-item">
+        <?php if ($rol == 0): ?>
+          <li class="nav-item">
           <a class="nav-link <?= current_url(true)->getSegment(5) == "tablas" ? "active" : "" ?>" href="<?= base_url("/tablas") ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
@@ -51,7 +52,6 @@
           </a>
         </li>
         <li class="nav-item">
-
           <a class="nav-link <?= current_url(true)->getSegment(5) == "usuarios" ? "active" : "" ?>" href="<?= base_url("/usuarios") ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
@@ -63,9 +63,35 @@
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Prueba Tabla</span>
-
           </a>
         </li>
+        <?php else: ?>
+        <li class="nav-item">
+          <a class="nav-link  <?= current_url(true)->getSegment(5) == "productos" ? "active" : "" ?>" href="<?= base_url("/productos") ?>">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Productos</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  <?= current_url(true)->getSegment(5) == "DatoProducto" ? "active" : "" ?>" href="<?= base_url("/tablaProductoHealth") ?>">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Tabla Datos Producto</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?= current_url(true)->getSegment(5) == "perfil" ? "active" : "" ?>" href="<?= base_url("/perfil") ?>">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Perfil</span>
+          </a>
+        </li>
+        <?php endif; ?>
+        
       </ul>
     </div>
     
