@@ -137,11 +137,10 @@ class Mercadolibre extends Controller
     public function getAccionesProducto($producto)
     {
         $client = \Config\Services::curlrequest();
-        $token = "APP_USR-4332857485021545-082908-924200383e9adfe27ad8b87be2fb8dec-833930674";
         $resp = $client->request('GET', 'https://api.mercadolibre.com/items/' . $producto.'/health/actions', [
             "headers" => [
                 "Accept" => "application/json",
-                "Authorization" => "Bearer " . $token
+                "Authorization" => "Bearer " . $this->users["token"]
             ]
         ]);
         $array = $resp->getBody();
