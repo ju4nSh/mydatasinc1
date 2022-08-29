@@ -13,7 +13,7 @@ class DataProducto extends Controller
         $builder = $db->table('productos');
         
 		if ($limit == 'all') {
-			$respuesta = $builder->select('nombre,codeigo')->get()->getResultArray();
+			$respuesta = $builder->select('nombre,codigo')->get()->getResultArray();
             foreach ($respuesta as $key => $value) {
 				 $dato[]=[
                     "Nombre" => $value["nombre"],
