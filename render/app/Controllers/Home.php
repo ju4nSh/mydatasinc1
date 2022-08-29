@@ -56,6 +56,7 @@ class Home extends BaseController
 					if (password_verify($pass, $userExits[0]["Password"])) {
 						$session = session();
 						$session->set("user", $userExits[0]["Usuario"]);
+						$session->set("rol", $userExits[0]["Rol"]);
 						echo json_encode(["result" => 1]);
 					} else {
 						echo json_encode(["result" => 0]);
@@ -183,7 +184,7 @@ class Home extends BaseController
 			$password = password_hash($this->usuario->escapeString($this->request->getVar("password")), PASSWORD_DEFAULT);
 			$registro = false;
 
-			$userExits = $this->usuario->select("id, Usuario, Rol")->where("Usuario", $user)->find();
+			$userExits = $this->usuario->select("Creator, Rol")->where("Usuario", $user)->find();
 			if (count($userExits) == 0) {
 				$data = [
 					"Identificacion" => $identity,
@@ -203,7 +204,7 @@ class Home extends BaseController
 						"Identificacion" => $identity,
 						"Usuario" => $user,
 						"Password" => $password,
-						"Creator" => $userExits[0]["id"],
+						"Creator" => $userExits[0]["Creator"],
 						"Rol" => $userExits[0]["Rol"],
 					];
 					$registro = $this->usuario->save($data);
