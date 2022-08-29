@@ -4,6 +4,7 @@
 	let numLinks = 6;
 	let limit = 16;
 	let offset = 1;
+	let urlBase = "https://api.mercadolibre.com/";
 	$(document).ready(data => {
 
 
@@ -84,13 +85,14 @@
 				countInput: 0,
 				inputsActualizar: [],
 				inputsActualizarAux: [],
+				inputProducts: '', //input para buscar en la tabla de productos
 			},
 			mounted: async function() {
 
 			},
 			created: async function() {
 
-				// let url1 = "<?#= base_url("getAllProduct") ?>";
+				// let url1 = "<? #= base_url("getAllProduct") ?>";
 				// await $.ajax({
 				// 	type: "post",
 				// 	url: url1,
@@ -127,12 +129,36 @@
 				https:\/\/static3.depositphotos.com\/1000501\/122\/i\/600\/depositphotos_1223337-stock-photo-colombian-flag.jpg
 				https:\/\/www.motor.com.co\/__export\/1645199062631\/sites\/motor\/img\/2022\/02\/18\/20220218_094422465_615231d537e21_r_1632776804770_49-43-1121-578.jpeg_242310155.jpeg
 				*/
-				
-				removeImagenModalActualizar: function (param) {
+				searchProduts: async function() {
+					if (app.inputProducts != '') {
+						($("#loadSearchProduts").parent()).addClass("disabled")
+						$("#loadSearchProduts").addClass("spinner-border spinner-border-sm");
+						await $.ajax({
+							url: "<?= base_url("/searchProducts") ?>/" + app.inputProducts,
+							dataType: "json",
+							success: function(response) {
+								if (response.result) {
+									console.log(response.data)
+									app.productos = response.data
+									$("#botonNavegacion").html(response.html)
+								} else {
+									swal("Oh!", `no se encontró el producto ${app.inputProducts}`, "info")
+								}
+							}
+						});
+						$("#loadSearchProduts").removeClass("spinner-border spinner-border-sm");
+						($("#loadSearchProduts").parent()).removeClass("disabled")
+					} else {
+						swal("Error", `debe llenar el campo a buscar`, "error")
+					}
+				},
+				removeImagenModalActualizar: function(param) {
 					app.inputsActualizar.splice(param, 1);
 				},
-				crearInputImagenActualizar: function () {
-					app.inputsActualizar.push({valor: ''})
+				crearInputImagenActualizar: function() {
+					app.inputsActualizar.push({
+						valor: ''
+					})
 				},
 				removeImagen: function(param) {
 					app.inputImagen.splice(param, 1);
@@ -326,17 +352,20 @@
 					window.open(url, "_blank")
 				},
 				crearInputImagen: function() {
-					
+
 					// app.inputImagen.push({
 					// 	valor: "input"+ ++app.countInput
 					// })
-					app.inputImagen.push({valor: "", clase:'input'})
+					app.inputImagen.push({
+						valor: "",
+						clase: 'input'
+					})
 				},
 				subcategory: function(id, index) {
-					// <?#= base_url("obtenerdetallescategoria") ?>/
+					// <? #= base_url("obtenerdetallescategoria") 	?>/
 					$("#spinnerAgregarProducto").addClass("spinner-border")
 					$.ajax({
-						url: "https://api.mercadolibre.com/categories/" + id,
+						url: urlBase + "categories/" + id,
 						dataType: "json",
 						success: function(response) {
 							if (response.children_categories.length) {
@@ -363,9 +392,8 @@
 					// number_unit
 					// list
 					// boolen
-					// 
 					$.ajax({
-						url: "<?= base_url("attributesCategory") ?>/" + param,
+						url: urlBase + "categories/" + param + "/attributes",
 						dataType: "json",
 						success: function(response) {
 							console.log(response)
@@ -394,9 +422,8 @@
 				},
 				categoriasProductos: function(param) {
 					$("#spinnerAgregarProducto").addClass("spinner-border")
-// <?#= base_url("/obtenercategoria") ?>
 					$.ajax({
-						url: "https://api.mercadolibre.com/sites/MCO/categories",
+						url: urlBase + "sites/MCO/categories",
 						dataType: "json",
 						success: function(response) {
 							// console.log(response)
@@ -407,10 +434,9 @@
 					});
 				},
 				detallesCategoria: function(param, i) {
-					// <?#= base_url("obtenerdetallescategoria") ?>/
 					$("#spinnerAgregarProducto").addClass("spinner-border")
 					$.ajax({
-						url: "https://api.mercadolibre.com/categories/" + param,
+						url: urlBase + "categories/" + param,
 						dataType: "json",
 						success: function(response) {
 							app.childrenCategories.splice(0)
@@ -524,8 +550,10 @@
 					descripcion = response.data.descripcion
 					codigoBD = response.data.id
 					app.inputsActualizarAux = [...response.data.imagen]
-					$.each(app.inputsActualizarAux, function (indexInArray, valueOfElement) { 
-						 app.inputsActualizar.push({valor: valueOfElement})
+					$.each(app.inputsActualizarAux, function(indexInArray, valueOfElement) {
+						app.inputsActualizar.push({
+							valor: valueOfElement
+						})
 					});
 				}
 			});

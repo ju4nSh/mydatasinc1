@@ -1,23 +1,22 @@
 <?php
 
+/*
+User = TEST0DZEHY3B
+app Id = 4332857485021545
+secret key = BXQbMgaylwbml72KGRrBtkdQCsATIkAm
+user id = 833930674
+*/
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-/* prueba interna
-APP_USR-7132638262334053-082718-6ebe0e164cc39f4501db4e27c2de82ff-245929580 code 
-245929580 user id
-TG-630a9fae127ffd000122cb99-245929580 refresh
 
-
-833930674 original
-*/
 class Mercadolibre extends Controller
 {
     private $baseUri = '';
     private $users = [
-        "token" => "APP_USR-7132638262334053-082718-6ebe0e164cc39f4501db4e27c2de82ff-245929580",
+        "token" => "APP_USR-4332857485021545-082908-924200383e9adfe27ad8b87be2fb8dec-833930674",
         "user" => "TEST0DZEHY3B",
-        "userId" => "245929580",
+        "userId" => "833930674",
     ];
     public function __construct()
     {

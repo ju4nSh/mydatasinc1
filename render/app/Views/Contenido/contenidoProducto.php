@@ -24,7 +24,16 @@
 			<div class="card col-md-12">
 				<div class="card-header pb-0">
 					<div class="row">
-						<h4 class="mb-2">Mis productos</h4>
+						<div class="row mb-2">
+							<h4 class="col-md-3">Mis productos</h4>
+							<div class="form-group col-md-6 p-3">
+								<input class="col-md-6 p-2 border" type="text" placeholder="Buscar productos" v-model="inputProducts">
+								<button @click="searchProduts" class="btn btn-outline-success col-md-4 p-2 m-0" type="button">
+									<span id="loadSearchProduts" class="" role="status" aria-hidden="true"></span>
+									Buscar
+								</button>
+							</div>
+						</div>
 						<div class="productosCargados">
 							<div class="shadow-lg rounded-3" v-for="(p, index) in productos">
 								<div :id="p.codigo" class="carousel slide " data-ride="carousel">
@@ -209,13 +218,13 @@
 									<input class="form-control" type="text" name="" id="cantidadAC">
 								</div>
 								<div class="form-group col-md-6">
-										<label for="message-text" class="col-form-label">Precio:</label>
-										<input class="form-control" type="text" name="" id="precioAC">
-									</div>
+									<label for="message-text" class="col-form-label">Precio:</label>
+									<input class="form-control" type="text" name="" id="precioAC">
+								</div>
 							</div>
 							<div class="row">
 								<label for="recipient-name" class="col-form-label">Imagenes:</label>
-								<div @click="removeImagenModalActualizar(p)" v-for="(item, p) in inputsActualizar"  is="imagenes" v-bind:src="item.valor" v-if="item.valor != ''"></div>
+								<div @click="removeImagenModalActualizar(p)" v-for="(item, p) in inputsActualizar" is="imagenes" v-bind:src="item.valor" v-if="item.valor != ''"></div>
 							</div>
 							<div class="row">
 								<div class="form-group col-md-6">
@@ -224,7 +233,7 @@
 									<label class="col-form-label" for="my-input">Imagen url:</label>
 									<a @click="crearInputImagenActualizar" href="javascript:;" class="bg-info p-1"><i class="fas fa-plus"></i></a>
 									<div class="fieldInput">
-											<input  v-for="i in inputsActualizar" class="form-control inputAC" type="text" name="" v-model="i.valor">
+										<input v-for="i in inputsActualizar" class="form-control inputAC" type="text" name="" v-model="i.valor">
 									</div>
 								</div>
 							</div>
@@ -249,6 +258,6 @@
 
 	</div>
 	<?= $this->endSection() ?>
-<?= $this->section("funciones"); ?>
-<?= $this->include("scripts/productos") ?>
-<?= $this->endSection() ?>
+	<?= $this->section("funciones"); ?>
+	<?= $this->include("scripts/productos") ?>
+	<?= $this->endSection() ?>

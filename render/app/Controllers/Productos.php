@@ -345,6 +345,40 @@ class Productos extends Controller
 				echo json_encode(["result" => 1]);
 		}
 	}
+
+	public function searchProducts($product)
+	{
+		if ($product != "") {
+			$this->_page  = 1;
+			$this->_limit = 16;
+			$numLinks = 3;
+
+			$response = $this->producto->like("nombre", $product)->findAll();
+			$this->_total = count($response);
+			foreach ($response as $key => $value) {
+				$response[$key]["imagen"] = json_decode($value["imagen"]);
+			}
+			if ($response) {
+				$result         = [
+					"page" => $this->_page,
+					"limit" => $this->_limit,
+					"total" => $this->_total,
+					"data" => $response,
+					"result" => 1
+				];
+
+				$html = $this->createLinks($numLinks, $this->_limit);
+
+				$result["html"] = $html;
+
+				echo json_encode($result);
+			} else {
+				echo json_encode(["result" => 0]);
+			}
+		} else {
+			echo json_encode(["result" => 0]);
+		}
+	}
 }
 
 
