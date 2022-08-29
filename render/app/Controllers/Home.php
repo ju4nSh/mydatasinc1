@@ -11,8 +11,8 @@ class Home extends BaseController
     {
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("user");
-        if (empty($id)) {
-            $this->login();
+        if (empty($id)) {   
+             return $this->response->redirect(site_url('/login'));
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)
