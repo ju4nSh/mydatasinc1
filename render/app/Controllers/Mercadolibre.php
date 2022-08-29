@@ -9,6 +9,7 @@ user id = 833930674
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+// url para buscar productos  -- https://api.mercadolibre.com/users/833930674/items/search?search_type=scan 
 
 class Mercadolibre extends Controller
 {
@@ -132,9 +133,36 @@ class Mercadolibre extends Controller
         $r = curl_exec($conexion);
         return $r;
     }
-    public function getAllProduct($scroll_id = '')
+
+    public function getAccionesProducto($producto)
     {
-        $uri = $this->baseUri . "users/" . $this->users["userId"] . "/items/search?search_type=scan&scroll_id=" . $scroll_id;
+        $client = \Config\Services::curlrequest();
+        $token = "APP_USR-4332857485021545-082908-924200383e9adfe27ad8b87be2fb8dec-833930674";
+        $resp = $client->request('GET', 'https://api.mercadolibre.com/items/' . $producto.'/health/actions', [
+            "headers" => [
+                "Accept" => "application/json",
+                "Authorization" => "Bearer " . $token
+            ]
+        ]);
+        $array = $resp->getBody();
+        $list=[];
+        $list2=[];
+        $fotos = [];
+        $products2 = json_decode($array, true);
+            $list= $products2['actions'];
+            foreach ($list as $key => $foto) {
+                $fotos[] = $foto["name"];
+            }
+            $list2= $products2['health'];
+            $dato=[
+                "health" => $list2,
+                "name" => json_encode($fotos)
+            ];
+        return $dato;
+    }
+    public function getAllProduct()
+    {
+        $uri = $this->baseUri . "users/" . $this->users["userId"] . "/items/search?search_type=scan";
         $conexion = curl_init();
         $token = $this->users["token"];
         curl_setopt($conexion, CURLOPT_URL, $uri);

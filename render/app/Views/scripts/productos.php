@@ -115,14 +115,12 @@
 						limite = response.limit
 						app.productos = response.data
 						$("#botonNavegacion").html(response.html)
-
 					}
 				});
 				console.log("carousel")
 				// $('.carousel').carousel({
 				// 	interval: 2000
 				// })
-
 			},
 
 			filters: {},
@@ -462,7 +460,7 @@
 						}
 					});
 				},
-				publicarAC: async function() {
+				publicarAC:async  function() {
 					($("#actualizarProductoN").parent()).addClass("disabled")
 					$("#actualizarProductoN").addClass("spinner-border spinner-border-sm");
 					let imagenes = [];
@@ -478,8 +476,6 @@
 						success: function(response) {
 							// console.log(response)
 							if (response.result == 1) {
-								document.getElementById("form_actualizar_producto").reset();
-
 								swal("Bien", "producto actualizado!", "success");
 								app.camposVacios = false;
 								$("#cerrarAC").click();
@@ -546,6 +542,7 @@
 			},
 			watch: {}
 		});
+		$('.carousel').carousel()
 		$('#modalActualizarProductos').on('show.bs.modal', async function(event) {
 			app.inputsActualizar = []
 			var button = $(event.relatedTarget)

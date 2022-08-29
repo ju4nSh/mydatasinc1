@@ -97,7 +97,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form id="form_agregar_producto">
+						<form>
 							<div class="text-center">
 								<div id="spinnerAgregarProducto">
 									<div id="spiner" role="status">
@@ -163,7 +163,6 @@
 											<input class="form-control" :class="input.clase" type="text" name="" v-model="input.valor">
 										</div>
 									</div>
-
 								</div>
 							</div>
 							<div class="row">
@@ -203,7 +202,7 @@
 								<span class="visually-hidden">Loading...</span>
 							</div>
 						</div>
-						<form id="form_actualizar_producto">
+						<form>
 							<input id="codigoPaActualizar" type="hidden" name="" value="">
 							<input id="codigoProductoAC" type="hidden" name="" value="">
 							<div class="row">
