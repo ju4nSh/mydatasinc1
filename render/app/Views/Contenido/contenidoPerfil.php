@@ -20,7 +20,8 @@
                 <div class="card-header pb-0">
                     <div class="d-flex align-items-center">
                         <p class="mb-0">Edit Profile</p>
-                        <button class="btn btn-primary btn-sm ms-auto" onclick='ConectarMerLi("<?=$rol?>")'>Settings</button>
+                        <button class="btn btn-primary btn-sm ms-auto"
+                            onclick='ConectarMerLi("<?=$rol?>")'>Settings</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -80,9 +81,9 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Contraseña</label>
-                                    <input class="form-control" type="password" minlength="4" maxlength="20"
-                                        :value="variable.Password" id="Pass" name="Pass" required>
+                                <label for="example-text-input" class="form-control-label">Contraseña</label>
+                                    <button class="btn btn-primary btn-sm ms-auto"
+                                        onclick="$('#exampleModal').modal('show');">Modificar</button>
                                 </div>
                             </div>
                         </div>
@@ -118,9 +119,9 @@
                                     <form role="form" id="form">
                                         <div class="mb-3">
                                             <label for="">Secret Key</label>
-                                            <input type="text" class="form-control form-control-lg" placeholder="Secret Key"
-                                                aria-label="user" id="Usuario" name="Usuario" minlength="3"
-                                                maxlength="15" required>
+                                            <input type="text" class="form-control form-control-lg"
+                                                placeholder="Secret Key" aria-label="user" id="Usuario" name="Usuario"
+                                                minlength="3" maxlength="15" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="">User Id</label>
@@ -134,6 +135,41 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h5>Modificar Contraseña</h5>
+                                <form id="formularioPass" v-on:submit.prevent="send">
+                                        <div class="mb-3">
+                                            <label for="">Contraseña Actual</label>
+                                            <input type="password" class="form-control form-control-lg"
+                                                placeholder="Secret Key"  id="PassActual" name="PassActual"
+                                                minlength="3" maxlength="15" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Nueva Contraseña</label>
+                                            <input type="password" class="form-control form-control-lg"
+                                                placeholder="User Id" id="PassNueva"
+                                                name="PassNueva" minlength="5" maxlength="20" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Cconfirma Nueva Contraseña</label>
+                                            <input type="password" class="form-control form-control-lg"
+                                                placeholder="User Id" id="PassNuevaConfir"
+                                                name="PassNuevaConfir" minlength="5" maxlength="20" required>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit"
+                                                class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                               
                             </div>
                         </div>
                     </div>

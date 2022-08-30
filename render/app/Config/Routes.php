@@ -109,3 +109,6 @@ $routes->get('tablaProductoHealth', 'Home::tablaProductoHealth');
 $routes->post('obtenerPaginacion', 'DataProducto::obtenerPaginacion');
 // validar conexion
 $routes->get('validarConexionMerLi', 'Personas::validarConexionMerLi');
+// Modificar Contraseña Perfil
+$routes->post('ModificarPasswordPerfil', 'Perfil::ModificarPasswordPerfil');
+

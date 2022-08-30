@@ -256,7 +256,6 @@ class Home extends BaseController
         $Ciudad = $this->validar_input($this->request->getVar("Ciudad"));
         $Pais = $this->validar_input($this->request->getVar("Pais"));
         $SobreMi = $this->validar_input($this->request->getVar("SobreMi"));
-        $Pass = password_hash($this->request->getVar("Pass"),PASSWORD_DEFAULT);
         if($this->isValidEspacio($Nombre) === true && $this->isValidEspacio($Apellido) === true && $this->isValidEspacio($Ciudad) === true
         && $this->isValidEspacio($Pais) === true && $this->isValidEspacio($SobreMi) === true && $this->isValidUrl($Foto) === true && $this->isValidNumberText($Direccion) === true){
         $ssesion = \Config\Services::session();
@@ -271,8 +270,7 @@ class Home extends BaseController
             'Ciudad' => $Ciudad,
             'Pais' => $Pais,
             'SobreMi' => $SobreMi,
-            'Foto' => $Foto,
-            'Password'=> $Pass
+            'Foto' => $Foto
         );
         $builder->where('Usuario', $id);
         $builder->update($data_array);
