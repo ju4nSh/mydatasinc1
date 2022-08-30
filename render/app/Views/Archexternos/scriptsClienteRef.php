@@ -31,6 +31,11 @@ $(document).ready(function() {
                         class: 'blue accent-2'
                     },
                     {
+                        text: 'Rol',
+                        value: 'Rol',
+                        class: 'blue accent-2'
+                    },
+                    {
                         text: 'Actions',
                         value: 'actions',
                         sortable: false,
@@ -38,6 +43,8 @@ $(document).ready(function() {
                     }
                 ],
                 articulos: [],
+                roles: [],
+                Id: ''
             }
         },
         created() {
@@ -50,9 +57,17 @@ $(document).ready(function() {
                     q.loading = false
                 }
             });
+            $.ajax({
+                type: "GET",
+                url: '<?= base_url("/mostrarRolesRegistrados") ?>',
+                success: function(response) {
+                    var json = JSON.parse(response);
+                    q.roles = json
+                }
+            });
         },
         methods: {
-            deleteItem(item,Identificacion) {
+            deleteItem(item, Identificacion) {
                 swal({
                         title: "¿Estás seguro?",
                         text: "Una vez eliminado, no podrá recuperar este archivo",
@@ -75,7 +90,34 @@ $(document).ready(function() {
                                     q.articulos.splice(q.articulos.indexOf(item), 1);
                                 }
                             });
-                            
+
+                        }
+                    });
+            },
+            ActualizarItem(item, Identificacion) {
+                swal({
+                        title: "¿Estás seguro?",
+                        text: "Una vez actualizado, no podrá recuperar este archivo",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $('#exampleModal').modal('show');
+                            q.Id = Identificacion;
+                            // $.ajax({
+                            //     type: "post",
+                            //     url: '<?= base_url("/modificarRol") ?>',
+                            //     data: {
+                            //         "identificacion": Identificacion
+                            //     },
+                            //     success: function(response) {
+                            //         var json = JSON.parse(response);
+                            //         q.articulos = json
+                            //     }
+                            // });
+
                         }
                     });
             },
@@ -103,17 +145,32 @@ $(document).ready(function() {
                 });
 
 
+            },
+            modificarRolUsuario: function(e) {
+                $.ajax({
+                    type: 'post',
+                    url: '<?= base_url("/modificarRol") ?>',
+                    data: $('#formularioModificarRolUsuario').serialize(),
+                    success: function(data) {
+                        $('#exampleModal').modal('hide');
+                        var json = JSON.parse(response);
+                        q.articulos = json
+                        
+                    }
+                });
+
+
             }
 
         }
     })
 });
 
-function prueba(x,y,z){
-        $('#exampleModal').modal('show');
-		$('#efirstname').val(x);
-		$('#elastname').val(y);
-		$('#eaddress').val(z);
+function prueba(x, y, z) {
+    $('#exampleModal').modal('show');
+    $('#efirstname').val(x);
+    $('#elastname').val(y);
+    $('#eaddress').val(z);
 }
 
 function limpiar() {

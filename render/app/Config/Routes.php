@@ -58,13 +58,13 @@ $routes->get('index', 'Home::index');
 $routes->get('login', 'Home::login');
 $routes->post('registrar', 'Home::registrar');
 $routes->get('mostrarRegistrar', 'Home::mostrarRegistrar');
-$routes->get('perfil', 'Home::perfil');
+$routes->get('Perfil', 'Home::perfil');
 $routes->get('llenarPerfil', 'Home::llenarPerfil');
 $routes->post('ModificarPerfil', 'Home::ModificarPerfil');
-$routes->get('tablas', 'Home::tablas');
+$routes->get('Clientes', 'Home::tablas');
 $routes->post('guardar', 'Home::guardar');
 $routes->get('salir', 'Home::salir');
-$routes->get('productos', 'Home::productos');
+$routes->get('Productos', 'Home::productos');
 $routes->get('obtenerproductos', 'Productos::getProduct');
 $routes->post('obtenercategoriaId', 'Productos::getCategory_Id');
 
@@ -79,13 +79,13 @@ $routes->post('eliminarClienteRef', 'Home::eliminarClienteRef');
 
 
 $routes->get('generateClient', 'Clientes::llenarClientes');
-$routes->get('usuarios', 'Clientes::index');
+$routes->get('Usuario', 'Clientes::index');
 $routes->get('listarClientes', 'Clientes::listarClientes');
 $routes->post('listarClientesnavegacion', 'Clientes::listarClientesNavegacion');
 $routes->post('listarClientesOffset', 'Clientes::listarClientesOffset');
 
 $routes->get('mostrarDatosApi', 'Home::mostrarDatosApi');
-$routes->get('datosApi', 'Home::datosApi');
+$routes->get('Prueba', 'Home::datosApi');
 
 // paginacion de productos
 $routes->get('getData/(:any)/(:any)/(:any)/(:any)', 'Productos::getData/$1/$2/$3/$4');
@@ -104,15 +104,22 @@ $routes->get('graficoCircular', 'Graficos::graficoCircular');
 $routes->get('graficoLineaProducto', 'Graficos::graficoLineaProducto');
 //TablaProductos
 $routes->post('obtenerDatosProducto', 'Home::obtenerDProd');
-$routes->get('tablaProductoHealth', 'Home::tablaProductoHealth');
+$routes->get('DatosProducto', 'Home::tablaProductoHealth');
 //Paginacion
 $routes->post('obtenerPaginacion', 'DataProducto::obtenerPaginacion');
 // validar conexion
 $routes->get('validarConexionMerLi', 'Personas::validarConexionMerLi');
-
-
 // get all questions of meli
 $routes->get('getAllQuestions', 'Productos::getAllQuestions');
 // answer questions MELI
 $routes->post('answerQuestions', 'Productos::answerQuestions');
-
+// Modificar Contraseña Perfil
+$routes->post('ModificarPasswordPerfil', 'Perfil::ModificarPasswordPerfil');
+//Roles
+$routes->get('Roles', 'Rol::abrirContenidoRol');
+//Agregar Nuevo Rol
+$routes->post('agregarNuevoRol', 'Rol::agregarNuevoRol');
+//Mostrar roles
+$routes->get('mostrarRolesRegistrados', 'Rol::mostrarRolesRegistrados');
+//Modificar Roles
+$routes->post('modificarRol', 'Rol::modificarRol');

@@ -32,20 +32,49 @@ function Actualizar() {
                 });
             }
         });
-} 
-function ConectarMerLi(varriable){
-            if(varriable==0){
-                $('#exampleModalLong').modal('show');
-            }else{
-                swal("Esta funcion no se encuentra habilitada para usted", {
-                                        icon: "warning",
-                                    });
-            }
 }
+
+function ConectarMerLi(varriable) {
+    if (varriable == 0) {
+        $('#exampleModalLong').modal('show');
+    } else {
+        swal("Esta funcion no se encuentra habilitada para usted", {
+            icon: "warning",
+        });
+    }
+}
+
 var q = new Vue({
     el: '#app',
     data: {
         datos: [],
+    },
+    methods: {
+        send: function(e) {
+            $.ajax({
+                type: "post",
+                url: '<?=base_url("/ModificarPasswordPerfil")?>',
+                data: $('#formularioPass').serialize(),
+                success: function(response) {
+                    var json = JSON.parse(response);
+                    if (json.error) {
+                        swal("Verfique la informacion enviada", {
+                            icon: "warning",
+                        });
+                    } else {
+                        swal("Modificado Correctamente", {
+                            icon: "success",
+                        });
+                        document.getElementById("PassActual").value = "";
+                        document.getElementById("PassNueva").value = "";
+                        document.getElementById("PassNuevaConfir").value = "";
+                        $('#exampleModal').modal('hide');
+
+                    }
+
+                }
+            });
+        }
     }
 })
 </script>
