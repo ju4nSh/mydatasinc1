@@ -35,10 +35,16 @@ class Clientes extends Controller
 	public function index()
 	{
 		$view = \Config\Services::renderer();
+		$ssesion = \Config\Services::session();
+		$rol = $ssesion->get("rol");
+        $contenido = $ssesion->get("contenido");
 		$view->setVar('one', session("user"))
 		->setVar("clientes", $this->listarClientes())
 			->setVar('pagina', "Usuarios")
-			->setVar('titulo', "Usuarios");
+			->setVar('titulo', "Usuarios")
+			->setVar('rol', $rol)
+			->setVar('contenido', $contenido);
+			
 		return $view->render("Contenido/contenidoUsuario");
 	}
 	public function llenarClientes()

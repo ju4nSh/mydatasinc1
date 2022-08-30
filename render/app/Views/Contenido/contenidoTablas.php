@@ -48,6 +48,9 @@
                                                     {{item.Nombre}} {{item.Apellido}}
                                                 </template>
                                                 <template v-slot:item.actions="{ item }">
+                                                    <v-icon small @click="ActualizarItem(item,item.Identificacion)">
+                                                        mdi-pencil
+                                                    </v-icon>
                                                     <v-icon small @click="deleteItem(item,item.Identificacion)">
                                                         mdi-delete
                                                     </v-icon>
@@ -128,37 +131,70 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group" id="borde">
-                                                    <label for="example-text-input"
-                                                        class="form-control-label">Usuario</label>
-                                                    <input class="form-control" type="text" id="Usuario" name="Usuario"
-                                                        minlength="3" maxlength="20" required style="border: 0px;">
+                                                <div class="col-md-3">
+                                                    <div class="form-group" id="borde">
+                                                        <label for="example-text-input"
+                                                            class="form-control-label">Usuario</label>
+                                                        <input class="form-control" type="text" id="Usuario"
+                                                            name="Usuario" minlength="3" maxlength="20" required
+                                                            style="border: 0px;">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlSelect1">Example select</label>
-                                                    <select class="form-control" id="Rol" name="Rol">
-                                                        <option></option>
-                                                        <option value="0">Administrador</option>
-                                                        <option value="1">Cliente</option>
-                                                    </select>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect1">Rol</label>
+                                                        <select class="form-control" id="Rol" name="Rol">
+                                                            <option v-for="docente in roles"
+                                                                :value="docente.Identificacion">{{docente.Nombre}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" id="borde">
-                                                    <label for="example-text-input"
-                                                        class="form-control-label">Contraseña</label>
-                                                    <input class="form-control" type="text" id="Pass" name="Pass"
-                                                        minlength="3" maxlength="20" required style="border: 0px;">
+                                                <div class="col-md-3">
+                                                    <div class="form-group" id="borde">
+                                                        <label for="example-text-input"
+                                                            class="form-control-label">Contraseña</label>
+                                                        <input class="form-control" type="text" id="Pass" name="Pass"
+                                                            minlength="3" maxlength="20" required style="border: 0px;">
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                             <hr class="horizontal dark">
                                             <button class="btn btn-primary" type="submit" value="hgsd">Agregar</button>
                                         </form>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h5>Modificar Rol</h5>
+                                        <form id="formularioModificarRolUsuario" v-on:submit.prevent="modificarRolUsuario">
+                                            <div class="mb-3">
+                                                <label for="">Identificacion</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="Secret Key" :value="Id" readonly id="Identificacion" name="Identificacion"
+                                                    >
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlSelect1">Rol</label>
+                                                <select class="form-control" id="Rol" name="Rol">
+                                                    <option v-for="docente in roles" :value="docente.Identificacion">
+                                                        {{docente.Nombre}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit"
+                                                    class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign
+                                                    in</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
