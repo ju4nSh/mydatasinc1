@@ -420,72 +420,83 @@ class Productos extends Controller
 			echo json_encode(["result" => 0]);
 		}
 	}
-}
 
-
-/*
-public function publicarMercadolibre()
+	public function getAllQuestions()
 	{
-		if ($this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("categoria") != "" && $this->request->getVar("cantidad") != "" && $this->request->getVar("imagen") != "" && $this->request->getVar("attributes") != "") {
-			$data = [
-				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
-				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
-				"categoria" => $this->producto->escapeString($this->request->getVar("categoria")),
-				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
-				"imagen" => json_decode($this->request->getVar("imagen")),
-				"attributes" => json_decode($this->request->getVar("attributes")),
-			];
-			$imagen = $data["imagen"];
-			foreach ($imagen as $key => $img) {
-				$imagen[$key] = array("source" => $img);
-			}
-			$datos = [
-				"title" => $data["nombre"],
-				"category_id" => $data["categoria"],
-				"price" => $data["precio"],
-				"currency_id" => "COP",
-				"available_quantity" => $data["cantidad"],
-				"condition" => "new",
-				"listing_type_id" => "gold_pro",
-				"pictures" => $imagen,
-				"attributes" => $data["attributes"],
-			];
-
-			$respuesta = $this->mercadolibre->postMercadolibre($datos);
-
-			$respuesta = (array) json_decode($respuesta);
-			if (array_key_exists("id", $respuesta)) {
-				// INSERTAR EN LA BASE DE DATOS
-				$idP = '';
-				$categoryP = '';
-				$linkP = '';
-				$response = $respuesta;
-				$idP = $response["id"];
-				$categoryP = $response["category_id"];
-				$linkP = $response["permalink"];
-				$dataProduct = [
-					"nombre" => $data["nombre"],
-					"precio" => $data["precio"],
-					"categoria" => $categoryP,
-					"codigo"  => $idP,
-					"imagen" => json_encode($data["imagen"]),
-					"link" => $linkP,
-					"cantidad" => $data["cantidad"]
-				];
-				$res = $this->producto->save($dataProduct);
-				if ($res) {
-					echo json_encode(["result" => 1]);
-				} else {
-					echo json_encode(["result" => 0]);
-				}
-			} else if (array_key_exists("status", $respuesta)) {
-				if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
-					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
-			} else {
-				echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
-			}
+		$questions = $this->mercadolibre->getAllQuestions();
+		$questions = (array) json_decode($questions);
+		$response = [];
+		if (array_key_exists("status", $questions)) {
+			echo json_encode(["result" => 0, "mensaje" => $questions["message"]]);
 		} else {
-			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
+			foreach ($questions["questions"] as $question) {
+				$aux = [];
+				$quest = [];
+				if ($question->status == "UNANSWERED") {
+					// buscamos el producto que pertenece a la pregunta
+					$producto = $this->getInfoProduct($question->item_id);
+					if ($producto != 0) {
+						if (count($response) == 0) {
+							array_push($aux, $question->text, $question->id);
+							array_push($quest, $aux);
+							array_push($producto, $quest);
+							$response[] = $producto;
+						} else {
+							// preguntar si es el mismo producto para agregar solo la pregunta
+							$flag = false;
+							foreach ($response as $key => $value) {
+								if(array_key_exists("codigo", $value[0])){
+									if ($value[0]["codigo"] == $producto[0]["codigo"]) {
+										array_push($quest,  $question->text, $question->id);
+										array_push($response[$key][1], $quest);
+										$flag = true;
+									} 
+								}
+							}
+							if(!$flag) {
+								array_push($aux,  $question->text, $question->id);
+								array_push($quest,  $aux);
+								array_push($producto, $quest);
+								$response[] = $producto;
+							}
+						}
+					}
+				}
+			}
+			if(count($response) > 0)
+				echo json_encode(["result" => 1, "data" =>$response]);
+			else {
+				echo json_encode(["result" => 0]);
+			}
 		}
 	}
-*/
+
+	public function getInfoProduct($code)
+	{
+		$producto = $this->producto->where("codigo", $code)->find();
+		if ($producto) {
+			return $producto;
+		} else {
+			return 0;
+		}
+	}
+
+	public function answerQuestions()
+	{
+		$id = $this->request->getVar("id");
+		$answer = $this->request->getVar("answer");
+		if($id != "" && $answer != ""){
+			$response = $this->mercadolibre->answerQuestions($id, $answer);
+			$response = (array) json_decode($response);
+			if (array_key_exists("code", $response)) {
+				echo json_encode(["result" => 0, "mensaje" => $response["message"]]);
+			} else {
+				echo json_encode(["result" => 1]);
+			}
+		} else {
+			echo json_encode(["result" => 2]);
+		}
+		
+	}
+		
+}

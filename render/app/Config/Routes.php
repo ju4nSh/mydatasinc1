@@ -109,3 +109,10 @@ $routes->get('tablaProductoHealth', 'Home::tablaProductoHealth');
 $routes->post('obtenerPaginacion', 'DataProducto::obtenerPaginacion');
 // validar conexion
 $routes->get('validarConexionMerLi', 'Personas::validarConexionMerLi');
+
+
+// get all questions of meli
+$routes->get('getAllQuestions', 'Productos::getAllQuestions');
+// answer questions MELI
+$routes->post('answerQuestions', 'Productos::answerQuestions');
+

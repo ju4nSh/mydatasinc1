@@ -7,7 +7,7 @@
 	let offset = 1;
 	let urlBase = "https://api.mercadolibre.com/";
 	$(document).ready(data => {
-		
+
 
 		var subCategory = Vue.component("sub-category", {
 			template: `
@@ -87,13 +87,16 @@
 				inputsActualizar: [],
 				inputsActualizarAux: [],
 				inputProducts: '', //input para buscar en la tabla de productos
+				arrayPreguntasMeli: [], //preguntas de productos de mercadolibre
+				preguntasMELI: false, 
+				modelAnswer: '',
 			},
 			mounted: async function() {
 
 			},
 			created: async function() {
 
-				// let url1 = "<?#= base_url("getAllProduct") ?>";
+				// let url1 = "<? #= base_url("getAllProduct") ?>";
 				// await $.ajax({
 				// 	type: "post",
 				// 	url: url1,
@@ -117,10 +120,26 @@
 						$("#botonNavegacion").html(response.html)
 					}
 				});
-				console.log("carousel")
-				// $('.carousel').carousel({
-				// 	interval: 2000
-				// })
+				await $.ajax({
+					url: "<?= base_url("getAllQuestions") ?>",
+					dataType: "json",
+					success: function(response) {
+						if (response.result != 0) {
+							console.log(response)
+							app.preguntasMELI = true;
+							app.arrayPreguntasMeli = response.data;
+						} else {
+							let error = [];
+							$.each(response.cause, function(indexInArray, valueOfElement) {
+								// console.log(valueOfElement.message)
+								error.push(valueOfElement.message)
+							});
+							error.push(response.mensaje)
+							console.log(JSON.stringify(error));
+						}
+					}
+				});
+				$("#btnPreguntasMELI").addClass("animate__tada");
 			},
 
 			filters: {},
@@ -460,7 +479,7 @@
 						}
 					});
 				},
-				publicarAC:async  function() {
+				publicarAC: async function() {
 					($("#actualizarProductoN").parent()).addClass("disabled")
 					$("#actualizarProductoN").addClass("spinner-border spinner-border-sm");
 					let imagenes = [];
@@ -539,6 +558,40 @@
 					($("#publicarProductoN").parent()).removeClass("disabled")
 
 				},
+				responderPregunta: async function(e){
+					if(app.modelAnswer != '') {
+						let id_q = e.target.getAttribute("data-idquestion")
+						e.target.classList.add("disabled")
+						e.target.firstChild.classList.add("spinner-border", "spinner-border-sm")
+						await $.ajax({
+							type: "post",
+							url: "<?= base_url("answerQuestions")?>",
+							data: "id=" + id_q + "&answer=" + app.modelAnswer,
+							dataType: "json",
+							success: function (response) {
+								console.log(response)
+								if(response.result == 1){
+									swal("Bien", "respuesta agregada", "success");
+									app.modelAnswer = ''
+								} else if(response.result == 2) {
+									swal("Error", "agrega una respuesta", "error");
+								} else {
+									let error = [];
+									$.each(response.cause, function(indexInArray, valueOfElement) {
+										// console.log(valueOfElement.message)
+										error.push(valueOfElement.message)
+									});
+									error.push(response.mensaje)
+									swal("Error", JSON.stringify(error), "info");
+								}
+							}
+						});
+						e.target.firstChild.classList.remove("spinner-border", "spinner-border-sm")
+						e.target.classList.remove("disabled")
+					} else {
+						swal("Error", "agrega una respuesta", "error");
+					}
+				},
 			},
 			watch: {}
 		});
@@ -596,7 +649,7 @@
 
 
 	})
-	
+
 	async function buscarNuevo(limit1, offset1) {
 		var url = "<?= base_url("getData") ?>/" + limit1 + "/" + offset1 + "/" + numLinks + "/" + limite;
 		// this.articulos = JSON.parse(response);

@@ -13,7 +13,8 @@ a.addProductBoton>i {
 }
 
 div#agregarProductoModal,
-div#modalActualizarProductos {
+div#modalActualizarProductos,
+div#modalResponderPreguntas {
     z-index: 10001 !important;
 }
 
