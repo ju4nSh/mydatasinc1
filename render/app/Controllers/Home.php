@@ -214,7 +214,7 @@ class Home extends BaseController
             $password = password_hash($this->usuario->escapeString($this->request->getVar("password")), PASSWORD_DEFAULT);
             $registro = false;
 
-            $userExits = $this->usuario->select("Creator, Rol")->where("Usuario", $user)->find();
+            $userExits = $this->usuario->select("Creator, Rol")->where("Usuario", $user, "Identificacion", $identity)->find();
             if (count($userExits) == 0) {
                 $data = [
                     "Identificacion" => $identity,
