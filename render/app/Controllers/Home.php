@@ -213,8 +213,8 @@ class Home extends BaseController
             $user = $this->usuario->escapeString($this->request->getVar("usuario"));
             $password = password_hash($this->usuario->escapeString($this->request->getVar("password")), PASSWORD_DEFAULT);
             $registro = false;
-
-            $userExits = $this->usuario->select("Creator, Rol")->where("Usuario", $user)->find();
+            $this->usuario = new Usuarios();
+            $userExits = $this->usuario->select("Creator, Rol, Password")->where("Usuario = '$user' ")->where("Identificacion", $identity)->find();
             if (count($userExits) == 0) {
                 $data = [
                     "Identificacion" => $identity,
@@ -231,18 +231,18 @@ class Home extends BaseController
                 }
             } else {
                 try {
-                    $data = [
-                        "Identificacion" => $identity,
-                        "Usuario" => $user,
-                        "Password" => $password,
-                        "Creator" => $userExits[0]["Creator"],
-                        "Rol" => $userExits[0]["Rol"],
-                    ];
-                    $registro = $this->usuario->save($data);
-                    if ($registro) {
-                        echo json_encode(["result" => 1]);
+                    if ($userExits[0]["Password"] == '') {
+                        $data = [
+                            "Password" => $password,
+                        ];
+                        $registro = $this->usuario->save($data);
+                        if ($registro) {
+                            echo json_encode(["result" => 1]);
+                        } else {
+                            echo json_encode(["result" => 0]);
+                        }
                     } else {
-                        echo json_encode(["result" => 0]);
+                            echo json_encode(["result" => 0]);
                     }
                 } catch (\Exception $e) {
                     echo json_encode(["result" => 0, "error" => "usuario ya existe!"]);
@@ -424,7 +424,7 @@ class Home extends BaseController
         $builder = $db->table('users');
         $data_array = array('Identificacion' => $Identificacion);
         $builder->where($data_array);
-        $dato=$builder->delete();
+        $dato = $builder->delete();
         echo json_encode($dato);
     }
 
