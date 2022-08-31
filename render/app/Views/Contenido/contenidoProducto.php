@@ -33,6 +33,11 @@
 									Buscar
 								</button>
 							</div>
+							<div v-if="preguntasMELI" class="form-group col-md-3 p-3">
+								<button data-target="#modalResponderPreguntas" data-toggle="modal" id="btnPreguntasMELI" @click="searchProduts" class="btn btn-info col-md-12 p-1 m-0 bg-info color-text-white animate__animated" type="button">
+									Tienes Preguntas pendientes
+								</button>
+							</div>
 						</div>
 						<div class="productosCargados">
 							<div class="shadow-lg rounded-3" v-for="(p, index) in productos">
@@ -97,7 +102,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="form_agregar_producto">
 							<div class="text-center">
 								<div id="spinnerAgregarProducto">
 									<div id="spiner" role="status">
@@ -254,6 +259,64 @@
 			</div>
 		</div>
 		<!-- FIN MODAL ACTUALIZAR PRODUCTO -->
+
+		<!-- MODAL RESPONDER PREGUNTAS -->
+		<div class="modal fade" id="modalResponderPreguntas" tabindex="-1" role="dialog" aria-labelledby="modalResponderPreguntas" aria-hidden="true">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Preguntas Por Responder</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div v-for="(item, i) in arrayPreguntasMeli" class="row p-2 m-2">
+								<div class="card m-0">
+									<div class="card-header">
+										<div class="form-group d-flex justify-content-between align-items-center">
+											<img style="object-fit: contain; height: 60px !important; width: 60px !important;" class="img img-thumbnail" :src=`${JSON.parse(item[0]['imagen'])[0]}` alt="">
+											<span for="my-input">{{item[0]["nombre"]}}</span>
+											<span for="my-input">{{new Intl.NumberFormat("es-CO", {style:"currency", currency: "COP", minimumFractionDigits:0}).format(item[0]["precio"])}} x {{item[0]["cantidad"]}} u.</span>
+											<a :href="item[0]['link']" target="_blank">Ver producto</a>
+										</div>
+										<div class="accordion m-1" :id=`ac${item[0]["codigo"]}`>
+											<div v-for="(p, index) in item[1]" class="card m-3">
+												<div class="card-header" :id='item[0]["codigo"]'>
+													<h2 class="mb-0">
+														<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" :data-target=`#q${p[1]}` aria-expanded="true" :aria-controls=`q${p[1]}`>
+															<p class="card-text">{{p[0]}}</p>
+														</button>
+													</h2>
+												</div>
+												<div :id=`q${p[1]}` class="collapse card-body row" :aria-labelledby='item[0]["codigo"]' :data-parent=`#ac${item[0]["codigo"]}`>
+													<div class="form-group row">
+														<input v-model="modelAnswer" class="form-control col-md-6 p-1" type="text" placeholder="Responde la pregunta">
+														<button @click="responderPregunta" class="btn btn-primary form-control col-md-2 p-1" :id=`btn-${p[1]}` type="button" :data-idquestion="p[1]">
+															<span class="" role="status" aria-hidden="true"></span>
+															Responder
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" id="cerrarPN" data-dismiss="modal">Cerrar</button>
+						<button @click="publicarPN" class="btn btn-primary" type="button">
+							<span id="publicarProductoN" class="" role="status" aria-hidden="true"></span>
+							Publicar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- FIN MODAL RESPONDER PREGUNTAS -->
 
 	</div>
 	<?= $this->endSection() ?>

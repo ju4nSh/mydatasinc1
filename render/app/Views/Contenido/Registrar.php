@@ -326,7 +326,7 @@
         success: async function(response) {
           if (response.result == 1) {
             await swal("Bien!", "Usuario registrado exitosamente", "success")
-            location.replace('<?= base_url("/index") ?>');
+            location.replace('<?= base_url("/") ?>');
           } else if(response.result == 2) {
             await swal("Error!", "Rellene los campos", "error");
           } 

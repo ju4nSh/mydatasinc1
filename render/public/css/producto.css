@@ -13,7 +13,8 @@ a.addProductBoton>i {
 }
 
 div#agregarProductoModal,
-div#modalActualizarProductos {
+div#modalActualizarProductos,
+div#modalResponderPreguntas {
     z-index: 10001 !important;
 }
 
@@ -220,6 +221,15 @@ div#botonNavegacion > ul > li {
 div.modal-footer > button {
     color: white !important;
 }
-
-
 /* FIN ESTILOS MODAL */
+
+/* ESTILOS DEL BOTON PREGUNTAS NUEVAS DE MELI */
+button#btnPreguntasMELI {
+    width: 200px;
+    height: 40px !important;
+    position: fixed !important;
+    right: 10% !important;
+    z-index: 100;
+    color: white !important;
+}
+/* FIN ESTILOS PREGUNTAS MELI */

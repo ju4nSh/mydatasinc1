@@ -109,6 +109,10 @@ $routes->get('DatosProducto', 'Home::tablaProductoHealth');
 $routes->post('obtenerPaginacion', 'DataProducto::obtenerPaginacion');
 // validar conexion
 $routes->get('validarConexionMerLi', 'Personas::validarConexionMerLi');
+// get all questions of meli
+$routes->get('getAllQuestions', 'Productos::getAllQuestions');
+// answer questions MELI
+$routes->post('answerQuestions', 'Productos::answerQuestions');
 // Modificar Contraseña Perfil
 $routes->post('ModificarPasswordPerfil', 'Perfil::ModificarPasswordPerfil');
 //Roles
@@ -122,6 +126,7 @@ $routes->post('mostrarRolesDelete', 'Rol::mostrarRolesDelete');
 $routes->post('eliminarRol', 'Rol::eliminarRol');
 //Modificar Roles
 $routes->post('modificarRol', 'Rol::modificarRol');
+
 //validar cambio contraseña
 $routes->post('ValidarModificarContraseña', 'Personas::ValidarModificarContraseña');
 $routes->post('PassClienteRef', 'Personas::PassClienteRef');

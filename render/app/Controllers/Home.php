@@ -221,6 +221,7 @@ class Home extends BaseController
                     "Usuario" => $user,
                     "Password" => $password,
                     "Creator" => 0,
+                    "Rol" => 0,
                 ];
                 $registro = $this->usuario->save($data);
                 if ($registro) {
