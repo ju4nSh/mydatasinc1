@@ -5,11 +5,11 @@
 <?= $this->endSection() ?>
 
 <?= $this->section("navLateral"); ?>
-<?= $this->include("Partes/navLateral");?>
+<?= $this->include("Partes/navLateral"); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section("navArriba"); ?>
-<?= $this->include("Partes/navArriba");?>
+<?= $this->include("Partes/navArriba"); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
@@ -35,20 +35,18 @@
                                         <div class="container">
                                             <div class="row justify-content-between">
                                                 <div class="col-4">
-                                                    <v-text-field v-model="search" append-icon="mdi-magnify"
-                                                        label="Search" single-line hide-details></v-text-field> <br>
+                                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field> <br>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="container">
-                                            <v-data-table :headers="columnas" :items="articulos" class="elevation-19"
-                                                :search="search" :loading="loading">
+                                            <v-data-table :headers="columnas" :items="articulos" class="elevation-19" :search="search" :loading="loading">
                                                 <template v-slot:item.fulname="{ item }">
                                                     {{item.Nombre}} {{item.Apellido}}
                                                 </template>
                                                 <template v-slot:item.actions="{ item }">
-                                                    <v-icon small @click="deleteItem(item,item.Identificacion)">
+                                                    <v-icon small @click="deleteItem(item,item.Identificacion,item.Nombre)">
                                                         mdi-delete
                                                     </v-icon>
                                                 </template>
@@ -70,10 +68,8 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="example-text-input"
-                                                        class="form-control-label">Nombre</label>
-                                                    <input class="form-control" type="text" id="nombre" name="nombre"
-                                                        minlength="3" maxlength="15" required>
+                                                    <label for="example-text-input" class="form-control-label">Nombre</label>
+                                                    <input class="form-control" type="text" id="nombre" name="nombre" minlength="3" maxlength="15" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
@@ -97,6 +93,43 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h3>Modificar Roles Usuarios</h3>
+                                        <form id="formPassw" v-on:submit.prevent="modificarPassClient">
+                                            
+                                                <div class="row">
+                                                <template v-for="item in arrayUsuario">
+                                                    <div class="col-6">
+                                                        
+                                                            <label for="">Identificacion</label>
+                                                            <input type="text" class="form-control form-control-lg" placeholder="Secret Key" :value="item.Identificacion" readonly id="id" name="id">
+                                                            <label for="">Nombre</label>
+                                                            <input type="text" class="form-control form-control-lg" placeholder="Secret Key" :value="item.Nombre" readonly id="id" name="id">
+                                                        
+                                                        
+                                                            <div class="form-group">
+                                                            <label for="exampleFormControlSelect1">Rol</label>
+                                                        <select class="form-control" id="Rol" name="Rol">
+                                                            <option v-for="docente in arrayRoles"
+                                                                :value="docente.Identificacion">{{docente.Nombre}}
+                                                            </option>
+                                                        </select>
+                                                            </div>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Modificar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,5 +140,5 @@
 <?= $this->endSection("contenido") ?>
 
 <?= $this->section("funciones"); ?>
-<?= $this->include("Archexternos/scriptsRoles")?>
+<?= $this->include("Archexternos/scriptsRoles") ?>
 <?= $this->endSection() ?>

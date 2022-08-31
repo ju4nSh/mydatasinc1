@@ -25,32 +25,43 @@ class Rol extends Controller
         }
     }
     public function agregarNuevoRol()
-	{
-		$select = $this->request->getVar("select");
-		$nombre = $this->request->getVar("nombre");
+    {
+        $home = new Home();
+        $select = $this->request->getVar("select");
         $rol = new Roles();
-        try{
-            $rol->insert([
-                'Contenido' => $select,
-                'Nombre' => $nombre,
-            ]);
-    
+        if ($home->isValidEspacio($this->request->getVar("nombre"))) {
+            if (strlen($this->request->getVar("nombre")) > 0 && strlen($select) > 0) {
+                try {
+                    $rol->insert([
+                        'Contenido' => $select,
+                        'Nombre' => $this->request->getVar("nombre"),
+                    ]);
+
+                    $dato = [
+                        'Contenido' => $select,
+                        'Nombre' => $this->request->getVar("nombre"),
+                    ];
+                } catch (\Exception $e) {
+                    $dato = [
+                        'error' => $e->getMessage(),
+                    ];
+                }
+            } else {
+                $dato = [
+                    'error' => "Rellene el campo Nombre",
+                ];
+            }
+        } else {
             $dato = [
-                'Contenido' => $select,
-                'Nombre' => $nombre,
-            ];
-            
-        }catch(\Exception $e){
-            $dato = [
-                'error' => $e->getMessage(),
+                'error' => "Rellene el campo Nombre",
             ];
         }
         echo json_encode($dato);
-	}
+    }
 
     public function mostrarRolesRegistrados()
-	{
-		$db = \Config\Database::connect();
+    {
+        $db = \Config\Database::connect();
         $builder = $db->table('roles');
         $ssesion = \Config\Services::session();
         $datos = $builder->select('*')->get()->getResultArray();
@@ -62,14 +73,14 @@ class Rol extends Controller
             ];
         }
         echo json_encode($array);
-	}
+    }
     public function modificarRol()
     {
         $db = \Config\Database::connect();
         $builder = $db->table('users');
         $Identificacion = $this->request->getVar("Identificacion");
-        $Rol = $this->request->getVar("Rol");
-        
+        $Rol = $this->request->getVar("Rol1");
+
         $data_array = array('Identificacion' => $Identificacion);
         $data = array(
             'Rol' => $Rol
@@ -80,17 +91,61 @@ class Rol extends Controller
         $controlador->mostrarClientesReferenciados();
     }
 
-    public function consultarDatosRol($id=8)
+    public function consultarDatosRol($id = 8)
     {
         $db = \Config\Database::connect();
         $builder = $db->table('roles');
         $ssesion = \Config\Services::session();
-        $datos = $builder->select('*')->where('Identificacion',$id)->get()->getResultArray();
+        $datos = $builder->select('*')->where('Identificacion', $id)->get()->getResultArray();
         foreach ($datos as $variable) {
-            $array= [
+            $array = [
                 'Contenido' => $variable['Contenido'],
             ];
         }
         return json_encode($datos[0]["Contenido"]);
+    }
+
+    public function eliminarRol()
+    {
+        $Identificacion = $this->request->getVar("identificacion");
+        $db = \Config\Database::connect();
+        $builder = $db->table('roles');
+        $builder1 = $db->table('users');
+        $datos = $builder1->select('Identificacion,Nombre')->where('Rol', $Identificacion)->get()->getResultArray();
+        if (count($datos) > 0) {
+            foreach ($datos as $variable) {
+                $array[] = [
+                    'Identificacion' => $variable['Identificacion'],
+                    'Nombre' => $variable['Nombre']
+                ];
+            }
+            echo json_encode($array);
+        } else {
+            $data_array = array('Identificacion' => $Identificacion);
+            $builder->where($data_array);
+            $dato = $builder->delete();
+            $array[] = [
+                'respuesta' => $dato
+            ];
+            echo json_encode($array);
+        }
+    }
+    public function mostrarRolesDelete()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('roles');
+        $Identificacion = $this->request->getVar("identificacion");
+        $datos = $builder->select('*')->get()->getResultArray();
+        foreach ($datos as $variable) {
+            if($variable['Identificacion']!=$Identificacion){
+                $array[] = [
+                    'Identificacion' => $variable['Identificacion'],
+                    'Nombre' => $variable['Nombre'],
+                    'Contenido' => $variable['Contenido'],
+                ];
+            }
+           
+        }
+        echo json_encode($array);
     }
 }

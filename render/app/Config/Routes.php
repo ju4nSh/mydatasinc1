@@ -121,5 +121,14 @@ $routes->get('Roles', 'Rol::abrirContenidoRol');
 $routes->post('agregarNuevoRol', 'Rol::agregarNuevoRol');
 //Mostrar roles
 $routes->get('mostrarRolesRegistrados', 'Rol::mostrarRolesRegistrados');
+$routes->post('mostrarRolesDelete', 'Rol::mostrarRolesDelete');
+//Eliminar Rol
+$routes->post('eliminarRol', 'Rol::eliminarRol');
 //Modificar Roles
 $routes->post('modificarRol', 'Rol::modificarRol');
+
+//validar cambio contraseña
+$routes->post('ValidarModificarContraseña', 'Personas::ValidarModificarContraseña');
+$routes->post('PassClienteRef', 'Personas::PassClienteRef');
+
+

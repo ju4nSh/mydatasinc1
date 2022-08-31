@@ -366,7 +366,6 @@ class Home extends BaseController
         $Correo = $this->validar_input($this->request->getVar("Correo"));
         $Ciudad = $this->validar_input($this->request->getVar("Ciudad"));
         $Pais = $this->validar_input($this->request->getVar("Pais"));
-        $Password = password_hash($this->validar_input($this->request->getVar("Pass")), PASSWORD_DEFAULT);
         $Rol = $this->validar_input($this->request->getVar("Rol"));
         $Usuario = $this->validar_input($this->request->getVar("Usuario"));
         if (
@@ -386,7 +385,6 @@ class Home extends BaseController
                     'Pais' => $Pais,
                     'Creator' => $id,
                     'Usuario' => $Usuario,
-                    'Password' => $Password,
                     'Rol' => $Rol,
                 ]);
                 $db = \Config\Database::connect();

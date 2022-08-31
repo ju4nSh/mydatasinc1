@@ -28,6 +28,9 @@ $(document).ready(function() {
                     }
                 ],
                 articulos: [],
+                nombreRol: '',
+                arrayUsuario: [],
+                arrayRoles: [],
             }
         },
         created() {
@@ -42,7 +45,8 @@ $(document).ready(function() {
             });
         },
         methods: {
-            deleteItem(item, Identificacion) {
+            deleteItem(item, Identificacion, Nombre) {
+                q.nombreRol = Nombre;
                 swal({
                         title: "¿Estás seguro?",
                         text: "Una vez eliminado, no podrá recuperar este archivo",
@@ -54,21 +58,44 @@ $(document).ready(function() {
                         if (willDelete) {
                             $.ajax({
                                 type: "post",
-                                url: '<?= base_url("/eliminarClienteRef") ?>',
+                                url: '<?= base_url("/eliminarRol") ?>',
                                 data: {
                                     "identificacion": Identificacion
                                 },
                                 success: function(response) {
-                                    swal("Eliminado Correctamente", {
-                                        icon: "success",
-                                    });
-                                    q.articulos.splice(q.articulos.indexOf(item), 1);
+                                    var json = JSON.parse(response);
+                                    if (json.respuesta) {
+                                        swal("Eliminado Correctamente", {
+                                            icon: "success",
+                                        });
+                                        this.articulos.splice(this.articulos.indexOf(
+                                            item), 1);
+                                    } else {
+                                        q.llenarSelectRol(Identificacion);
+                                        q.arrayUsuario = json;
+                                        $('#exampleModalCenter').modal('show');
+
+                                    }
                                 }
                             });
 
                         }
                     });
             },
+            llenarSelectRol(Identificacion) {
+                $.ajax({
+                    type: "post",
+                    url: '<?= base_url("/mostrarRolesDelete") ?>',
+                    data: {
+                        "identificacion": Identificacion
+                    },
+                    success: function(response) {
+                        var json = JSON.parse(response);
+                        q.arrayRoles = json
+                    }
+                });
+            },
+
             select: function(e) {
                 var select = document.getElementById('prueba');
                 var selected = [...select.selectedOptions]
