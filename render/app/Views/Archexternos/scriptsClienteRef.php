@@ -44,7 +44,8 @@ $(document).ready(function() {
                 ],
                 articulos: [],
                 roles: [],
-                Id: ''
+                Id: '',
+                Password: '',
             }
         },
         created() {
@@ -121,6 +122,37 @@ $(document).ready(function() {
                         }
                     });
             },
+            ActualizarContraseña(item, Identificacion) {
+                swal({
+                        title: "¿Estás seguro?",
+                        text: "Una vez actualizado, no podrá recuperar este archivo",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                type: "post",
+                                url: '<?= base_url("/ValidarModificarContraseña") ?>',
+                                data: {
+                                    "identificacion": Identificacion
+                                },
+                                success: function(data) {
+                                    if ("error" === data) {
+                                        swal("El usuario no ha completado su registro", {
+                                            icon: "warning",
+                                        });
+                                    } else {
+                                        $('#exampleModalCenter').modal('show');
+                                        q.Id = Identificacion;
+                                        q.Password = data;
+                                    }
+                                }
+                            });
+                        }
+                    });
+            },
             send: function(e) {
                 $.ajax({
                     type: 'post',
@@ -155,7 +187,26 @@ $(document).ready(function() {
                         $('#exampleModal').modal('hide');
                         var json = JSON.parse(response);
                         q.articulos = json
-                        
+
+                    }
+                });
+            }, 
+            modificarPassClient: function(e) {
+                $.ajax({
+                    type: 'post',
+                    url: '<?= base_url("/PassClienteRef") ?>',
+                    data: $('#formPassw').serialize(),
+                    success: function(data) {
+                        if(data === "true"){
+                            swal("Modificado Correctamente", {
+                                icon: "success",
+                            });
+                            $('#exampleModalCenter').modal('hide');
+                        }else{
+                            swal(data, {
+                                icon: "warning",
+                            });
+                        }
                     }
                 });
 
