@@ -112,21 +112,21 @@ class Rol extends Controller
         $builder = $db->table('roles');
         $builder1 = $db->table('users');
         $datos = $builder1->select('Identificacion,Nombre')->where('Rol', $Identificacion)->get()->getResultArray();
-        if (count($datos) > 0) {
+        if (count($datos) == 0) {
+            $data_array = array('Identificacion' => $Identificacion);
+            $builder->where($data_array);
+            $dato = $builder->delete();
+            $array = [
+                'respuesta' => $dato
+            ];
+            echo json_encode($array);
+        } else {
             foreach ($datos as $variable) {
                 $array[] = [
                     'Identificacion' => $variable['Identificacion'],
                     'Nombre' => $variable['Nombre']
                 ];
             }
-            echo json_encode($array);
-        } else {
-            $data_array = array('Identificacion' => $Identificacion);
-            $builder->where($data_array);
-            $dato = $builder->delete();
-            $array[] = [
-                'respuesta' => $dato
-            ];
             echo json_encode($array);
         }
     }
@@ -148,4 +148,21 @@ class Rol extends Controller
         }
         echo json_encode($array);
     }
+    public function modificarRolAUsuarios()
+    {
+        $Identificacion = $this->request->getVar("Identificacion");
+        $Nombre = $this->request->getVar("Nombre");
+        $Rol = $this->request->getVar("Rol");
+        for($i=0; $i<sizeof($Identificacion); $i++){
+            $db = \Config\Database::connect();
+            $builder = $db->table('users');
+            $data_array = array(
+                'Rol' => $Rol[$i],
+            );
+            $builder->where('Identificacion', $Identificacion[$i]);
+            $builder->update($data_array);
+        }
+        echo "Modificado Correctamente";
+    }
+    
 }

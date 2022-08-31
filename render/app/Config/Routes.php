@@ -126,7 +126,7 @@ $routes->post('mostrarRolesDelete', 'Rol::mostrarRolesDelete');
 $routes->post('eliminarRol', 'Rol::eliminarRol');
 //Modificar Roles
 $routes->post('modificarRol', 'Rol::modificarRol');
-
+$routes->post('modificarRolAUsuarios', 'Rol::modificarRolAUsuarios');
 //validar cambio contraseña
 $routes->post('ValidarModificarContraseña', 'Personas::ValidarModificarContraseña');
 $routes->post('PassClienteRef', 'Personas::PassClienteRef');

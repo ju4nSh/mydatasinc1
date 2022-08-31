@@ -46,6 +46,10 @@
                                                     {{item.Nombre}} {{item.Apellido}}
                                                 </template>
                                                 <template v-slot:item.actions="{ item }">
+                                                <v-icon small @click="ModalActualizar(item,item.Identificacion,item.Contenido,item.Nombre)">
+                                                        mdi-pencil
+                                                    </v-icon>
+                                                    &nbsp;&nbsp;&nbsp;
                                                     <v-icon small @click="deleteItem(item,item.Identificacion,item.Nombre)">
                                                         mdi-delete
                                                     </v-icon>
@@ -93,26 +97,52 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h5>Modificar Rol</h5>
+                                        <form id="formularioModificarRolUsuario"
+                                            v-on:submit.prevent="modificarRolUsuario">
+                                            <div class="mb-3">
+                                                <label for="">Identificacion</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="Secret Key" v-model="nombreRol" readonly id="Identificacion"
+                                                    name="Identificacion">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="">Contenido</label>
+                                                <textarea name="textarea" rows="10" cols="50" v-model="contenidoRol"></textarea>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit"
+                                                    class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign
+                                                    in</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-body">
                                         <h3>Modificar Roles Usuarios</h3>
-                                        <form id="formPassw" v-on:submit.prevent="modificarPassClient">
+                                        <form id="formroles" v-on:submit.prevent="UsuarioRoles">
                                             
                                                 <div class="row">
-                                                <template v-for="item in arrayUsuario">
+                                                <template v-for="(item, p) in arrayUsuario">
                                                     <div class="col-6">
-                                                        
                                                             <label for="">Identificacion</label>
-                                                            <input type="text" class="form-control form-control-lg" placeholder="Secret Key" :value="item.Identificacion" readonly id="id" name="id">
+                                                            <input type="text" class="form-control inputIdentificacion" placeholder="Secret Key" v-model="item.Identificacion" readonly  >
                                                             <label for="">Nombre</label>
-                                                            <input type="text" class="form-control form-control-lg" placeholder="Secret Key" :value="item.Nombre" readonly id="id" name="id">
-                                                        
-                                                        
+                                                            <input type="text" class="form-control inputNombre"  placeholder="Secret Key" v-model="item.Nombre" readonly >
                                                             <div class="form-group">
                                                             <label for="exampleFormControlSelect1">Rol</label>
-                                                        <select class="form-control" id="Rol" name="Rol">
+                                                        <select class="form-control inputRol" id="Rol" name="Rol">
                                                             <option v-for="docente in arrayRoles"
                                                                 :value="docente.Identificacion">{{docente.Nombre}}
                                                             </option>
@@ -123,7 +153,7 @@
                                                 </div>
                                             </template>
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Modificar</button>
+                                                <button type="submit"  class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Modificar</button>
                                             </div>
                                         </form>
                                     </div>
