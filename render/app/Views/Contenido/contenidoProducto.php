@@ -102,7 +102,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="form_agregar_producto">
 							<div class="text-center">
 								<div id="spinnerAgregarProducto">
 									<div id="spiner" role="status">
@@ -275,7 +275,12 @@
 							<div v-for="(item, i) in arrayPreguntasMeli" class="row p-2 m-2">
 								<div class="card m-0">
 									<div class="card-header">
-										{{item[0]["nombre"]}}
+										<div class="form-group d-flex justify-content-between align-items-center">
+											<img style="object-fit: contain; height: 60px !important; width: 60px !important;" class="img img-thumbnail" :src=`${JSON.parse(item[0]['imagen'])[0]}` alt="">
+											<span for="my-input">{{item[0]["nombre"]}}</span>
+											<span for="my-input">{{new Intl.NumberFormat("es-CO", {style:"currency", currency: "COP", minimumFractionDigits:0}).format(item[0]["precio"])}} x {{item[0]["cantidad"]}} u.</span>
+											<a :href="item[0]['link']" target="_blank">Ver producto</a>
+										</div>
 										<div class="accordion m-1" :id=`ac${item[0]["codigo"]}`>
 											<div v-for="(p, index) in item[1]" class="card m-3">
 												<div class="card-header" :id='item[0]["codigo"]'>

@@ -488,7 +488,7 @@ class Productos extends Controller
 		if($id != "" && $answer != ""){
 			$response = $this->mercadolibre->answerQuestions($id, $answer);
 			$response = (array) json_decode($response);
-			if (array_key_exists("code", $response)) {
+			if (array_key_exists("error", $response)) {
 				echo json_encode(["result" => 0, "mensaje" => $response["message"]]);
 			} else {
 				echo json_encode(["result" => 1]);

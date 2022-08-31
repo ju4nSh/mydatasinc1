@@ -490,7 +490,15 @@
 					await $.ajax({
 						type: "post",
 						url: "<?= base_url("actualizarproducto") ?>",
-						data: "id=" + $("#codigoPaActualizar").val() + "&codigo=" + $("#codigoProductoAC").val() + "&nombre=" + $("#nombreAC").val() + "&precio=" + $("#precioAC").val() + "&descripcion=" + $("#descripcionAC").val() + "&cantidad=" + $("#cantidadAC").val() + "&imagen=" + JSON.stringify(imagenes),
+						data: { 
+								"id" : $("#codigoPaActualizar").val(),
+								"codigo" : $("#codigoProductoAC").val(),
+								"nombre" : $("#nombreAC").val(),
+								"precio" : $("#precioAC").val(),
+								"descripcion" : $("#descripcionAC").val(),
+								"cantidad" : $("#cantidadAC").val(),
+								"imagen" : JSON.stringify(imagenes)
+							},
 						dataType: "json",
 						success: function(response) {
 							// console.log(response)
@@ -533,15 +541,26 @@
 					await $.ajax({
 						type: "post",
 						url: "<?= base_url("publicarMercadolibre") ?>",
-						data: "nombre=" + $("#nombrePN").val() + "&categoria=" + $("#categoriaPN").val() + "&descripcion=" + $("#descripcionPN").val() + "&precio=" + $("#precioPN").val() + "&cantidad=" + $("#cantidadPN").val() + "&imagen=" + JSON.stringify(imagenes) + "&attributes=" + JSON.stringify(attributes),
+						data: {
+							"nombre" : $("#nombrePN").val(),
+							"categoria" : $("#categoriaPN").val(),
+							"descripcion" : $("#descripcionPN").val(),
+							"precio" : $("#precioPN").val(),
+							"cantidad" : $("#cantidadPN").val(),
+							"imagen" : JSON.stringify(imagenes),
+							"attributes" : JSON.stringify(attributes)
+						},
 						dataType: "json",
 						success: async function(response) {
 
 							if (response.result == 1) {
-								document.getElementById("form_agregar_producto").reset();
 								await buscarNuevo(limit, offset)
-								swal("Bien", "producto publicado!", "success");
+								await swal("Bien", "producto publicado!", "success");
 								$("#cerrarPN").click();
+								document.getElementById("form_agregar_producto").reset();
+								app.inputImagen = []
+								app.childrenCategories = []
+								app.detallesEncontrados = []
 							} else {
 								let error = [];
 								$.each(response.cause, function(indexInArray, valueOfElement) {
@@ -566,12 +585,14 @@
 						await $.ajax({
 							type: "post",
 							url: "<?= base_url("answerQuestions")?>",
-							data: "id=" + id_q + "&answer=" + app.modelAnswer,
+							data: {"id" :id_q,  "answer" : app.modelAnswer },
 							dataType: "json",
-							success: function (response) {
+							// contentType: "application/json",
+							success:async  function (response) {
 								console.log(response)
 								if(response.result == 1){
-									swal("Bien", "respuesta agregada", "success");
+									await swal("Bien", "respuesta agregada", "success");
+									e.target.parentElement.parentElement.parentElement.remove()
 									app.modelAnswer = ''
 								} else if(response.result == 2) {
 									swal("Error", "agrega una respuesta", "error");
@@ -646,8 +667,6 @@
 			modal.find('#descripcionAC').val(descripcion)
 			modal.find("#codigoProductoAC").val(codigoBD)
 		})
-
-
 	})
 
 	async function buscarNuevo(limit1, offset1) {
