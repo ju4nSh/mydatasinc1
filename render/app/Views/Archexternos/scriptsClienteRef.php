@@ -48,7 +48,8 @@ $(document).ready(function() {
                 Password: '',
             }
         },
-        created() {
+        methods: {
+            llenarDatosTablaCliente(){
             $.ajax({
                 type: "GET",
                 url: '<?= base_url("/mostrarClientesReferenciados") ?>',
@@ -65,9 +66,8 @@ $(document).ready(function() {
                     var json = JSON.parse(response);
                     q.roles = json
                 }
-            });
+            });                 
         },
-        methods: {
             deleteItem(item, Identificacion) {
                 swal({
                         title: "¿Estás seguro?",
@@ -185,7 +185,7 @@ $(document).ready(function() {
                     data: $('#formularioModificarRolUsuario').serialize(),
                     success: function(data) {
                         $('#exampleModal').modal('hide');
-                        var json = JSON.parse(response);
+                        var json = JSON.parse(data);
                         q.articulos = json
 
                     }
@@ -213,7 +213,10 @@ $(document).ready(function() {
 
             }
 
-        }
+        },
+        created() {
+           this.llenarDatosTablaCliente();
+        },
     })
 });
 

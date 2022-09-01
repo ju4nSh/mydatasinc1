@@ -28,6 +28,8 @@ class Rol extends Controller
     {
         $home = new Home();
         $select = $this->request->getVar("select");
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("id");
         $rol = new Roles();
         if ($home->isValidEspacio($this->request->getVar("nombre"))) {
             if (strlen($this->request->getVar("nombre")) > 0 && strlen($select) > 0) {
@@ -35,6 +37,7 @@ class Rol extends Controller
                     $rol->insert([
                         'Contenido' => $select,
                         'Nombre' => $this->request->getVar("nombre"),
+                        'Usuario' => $id
                     ]);
 
                     $dato = [
@@ -64,7 +67,8 @@ class Rol extends Controller
         $db = \Config\Database::connect();
         $builder = $db->table('roles');
         $ssesion = \Config\Services::session();
-        $datos = $builder->select('*')->get()->getResultArray();
+        $id = $ssesion->get("id");
+        $datos = $builder->select('*')->where('Usuario',$id)->get()->getResultArray();
         foreach ($datos as $variable) {
             $array[] = [
                 'Identificacion' => $variable['Identificacion'],
@@ -163,6 +167,19 @@ class Rol extends Controller
             $builder->update($data_array);
         }
         echo "Modificado Correctamente";
+    }
+
+    public function ModificarContenidoRol(){
+        $Identificacion = $this->request->getVar("Identificacion");
+        $Contenido = $this->request->getVar("select");
+        $db = \Config\Database::connect();
+        $builder = $db->table('roles');
+        $data_array = array('Identificacion' => $Identificacion);
+        $data = array(
+            'Contenido' => $Contenido
+        );
+        $builder->where($data_array);
+        echo json_encode($builder->update($data));
     }
     
 }
