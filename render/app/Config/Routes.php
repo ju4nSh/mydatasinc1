@@ -132,4 +132,5 @@ $routes->post('ModificarContenidoRol', 'Rol::ModificarContenidoRol');
 $routes->post('ValidarModificarContraseña', 'Personas::ValidarModificarContraseña');
 $routes->post('PassClienteRef', 'Personas::PassClienteRef');
 
-
+// consultar clientes de Mshops
+$routes->get('mshop', 'MercadoShop::getValidarMercadoShop');

@@ -9,7 +9,7 @@ class MercadoShop extends Controller
 {
     public function getValidarMercadoShop()
     {
-        $token = "APP_USR-4332857485021545-090110-7dce48f88fef304dbcfb6e48a18226e9-833930674";
+        $token = "APP_USR-4332857485021545-090116-dd826487c8183177ecb357da2a42c182-833930674";
         $ssesion = \Config\Services::session();
         $db = \Config\Database::connect();
         $builder = $db->table('users');
@@ -54,9 +54,9 @@ class MercadoShop extends Controller
             }
         }
         if ($respuesta == true) {
-            echo "Bien";
+            echo json_encode(["result" => 1]);
         } else {
-            echo "No puede ejecutar esta funcion";
+            echo json_encode(["result" => 0]);
         }
     }
 }

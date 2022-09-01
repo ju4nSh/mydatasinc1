@@ -88,26 +88,31 @@
 				inputsActualizarAux: [],
 				inputProducts: '', //input para buscar en la tabla de productos
 				arrayPreguntasMeli: [], //preguntas de productos de mercadolibre
-				preguntasMELI: false, 
+				preguntasMELI: false,
 				modelAnswer: '', //input para escribir las respuestas de MELI
+				mshops: false,
 			},
 			mounted: async function() {
 
 			},
 			created: async function() {
+				$("#loadProductMELI").addClass("spinner-border spinner-border-sm");
 
-				// let url1 = "<? #= base_url("getAllProduct") ?>";
-				// await $.ajax({
-				// 	type: "post",
-				// 	url: url1,
-				// 	dataType: "json",
-				// 	success: function (response) {
-				// 		if(response.result)
-				// 			console.log(response)	
-				// 		else 
-				// 			swal("Error", `ocurrió un error: ${response.mensaje}`, "error")
-				// 	}
-				// });
+				let url1 = "<?= base_url("getAllProduct") ?>";
+				await $.ajax({
+					type: "post",
+					url: url1,
+					dataType: "json",
+					success: function(response) {
+						if (response.result == 1)
+							console.log(response)
+						else if (response.result == 2) {
+							console.log("aun no se puede actualizar")
+						} else
+							swal("Error", `ocurrió un error: ${response.mensaje}`, "error")
+					}
+				});
+
 
 				let url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
 				// this.articulos = JSON.parse(response);
@@ -115,11 +120,19 @@
 					url: url,
 					dataType: "json",
 					success: function(response) {
-						limite = response.limit
-						app.productos = response.data
-						$("#botonNavegacion").html(response.html)
+						if (response.data.length > 0) {
+							limite = response.limit
+							app.productos = response.data
+							$("#botonNavegacion").html(response.html)
+						} else {
+							swal("Hola!", "Agrega productos", "info")
+						}
+
 					}
 				});
+				$("#loadProductMELI").removeClass("spinner-border spinner-border-sm");
+				($("#loadProductMELI").parent()).remove()
+
 				await $.ajax({
 					url: "<?= base_url("getAllQuestions") ?>",
 					dataType: "json",
@@ -490,15 +503,15 @@
 					await $.ajax({
 						type: "post",
 						url: "<?= base_url("actualizarproducto") ?>",
-						data: { 
-								"id" : $("#codigoPaActualizar").val(),
-								"codigo" : $("#codigoProductoAC").val(),
-								"nombre" : $("#nombreAC").val(),
-								"precio" : $("#precioAC").val(),
-								"descripcion" : $("#descripcionAC").val(),
-								"cantidad" : $("#cantidadAC").val(),
-								"imagen" : JSON.stringify(imagenes)
-							},
+						data: {
+							"id": $("#codigoPaActualizar").val(),
+							"codigo": $("#codigoProductoAC").val(),
+							"nombre": $("#nombreAC").val(),
+							"precio": $("#precioAC").val(),
+							"descripcion": $("#descripcionAC").val(),
+							"cantidad": $("#cantidadAC").val(),
+							"imagen": JSON.stringify(imagenes)
+						},
 						dataType: "json",
 						success: function(response) {
 							// console.log(response)
@@ -542,13 +555,14 @@
 						type: "post",
 						url: "<?= base_url("publicarMercadolibre") ?>",
 						data: {
-							"nombre" : $("#nombrePN").val(),
-							"categoria" : $("#categoriaPN").val(),
-							"descripcion" : $("#descripcionPN").val(),
-							"precio" : $("#precioPN").val(),
-							"cantidad" : $("#cantidadPN").val(),
-							"imagen" : JSON.stringify(imagenes),
-							"attributes" : JSON.stringify(attributes)
+							"nombre": $("#nombrePN").val(),
+							"categoria": $("#categoriaPN").val(),
+							"descripcion": $("#descripcionPN").val(),
+							"precio": $("#precioPN").val(),
+							"cantidad": $("#cantidadPN").val(),
+							"imagen": JSON.stringify(imagenes),
+							"attributes": JSON.stringify(attributes),
+							"mshops" : $("#checkMshops").prop('checked') ? true : false,
 						},
 						dataType: "json",
 						success: async function(response) {
@@ -577,24 +591,27 @@
 					($("#publicarProductoN").parent()).removeClass("disabled")
 
 				},
-				responderPregunta: async function(e){
-					if(app.modelAnswer != '') {
+				responderPregunta: async function(e) {
+					if (app.modelAnswer != '') {
 						let id_q = e.target.getAttribute("data-idquestion")
 						e.target.classList.add("disabled")
 						e.target.firstChild.classList.add("spinner-border", "spinner-border-sm")
 						await $.ajax({
 							type: "post",
-							url: "<?= base_url("answerQuestions")?>",
-							data: {"id" :id_q,  "answer" : app.modelAnswer },
+							url: "<?= base_url("answerQuestions") ?>",
+							data: {
+								"id": id_q,
+								"answer": app.modelAnswer
+							},
 							dataType: "json",
 							// contentType: "application/json",
-							success:async  function (response) {
+							success: async function(response) {
 								console.log(response)
-								if(response.result == 1){
+								if (response.result == 1) {
 									await swal("Bien", "respuesta agregada", "success");
 									e.target.parentElement.parentElement.parentElement.remove()
 									app.modelAnswer = ''
-								} else if(response.result == 2) {
+								} else if (response.result == 2) {
 									swal("Error", "agrega una respuesta", "error");
 								} else {
 									let error = [];
@@ -667,6 +684,22 @@
 			modal.find('#descripcionAC').val(descripcion)
 			modal.find("#codigoProductoAC").val(codigoBD)
 		})
+
+		$('#agregarProductoModal').on('show.bs.modal', async function(event) {
+			await $.ajax({
+				url: "<?= base_url("mshop") ?>",
+				dataType: "json",
+				success: function(response) {
+					console.log(response)
+					if (response.result) {
+						app.mshops = true;
+					}
+				}
+			});
+		})
+
+
+
 	})
 
 	async function buscarNuevo(limit1, offset1) {

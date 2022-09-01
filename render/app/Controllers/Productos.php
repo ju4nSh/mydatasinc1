@@ -4,12 +4,15 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\Producto;
+use App\Models\Usuarios;
+use DateTime;
 
 class Productos extends Controller
 {
 	private $mercadolibre;
 	private $producto;
 	private $resultados = [];
+	private $usuario;
 
 	// variables paginación
 	private $_limit;
@@ -20,6 +23,7 @@ class Productos extends Controller
 	{
 		$this->mercadolibre = new Mercadolibre();
 		$this->producto = new Producto();
+		$this->usuario = new Usuarios();
 		$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll();
 		foreach ($respuesta as $key => $value) {
 			$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
@@ -43,15 +47,31 @@ class Productos extends Controller
 		$this->_page    = $page;
 
 		if ($this->_limit == 'all') {
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->findAll();
-			foreach ($respuesta as $key => $value) {
-				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+			if (session("rol") == 0) {
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", session("id"))->findAll();
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
+			} else {
+				$id_father = $this->usuario->select("Creator")->where("id", session("id"))->find();
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", $id_father)->findAll();
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
 			}
 		} else {
 			$offset = (($this->_page - 1) * $this->_limit);
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->findAll($this->_limit, $offset);
-			foreach ($respuesta as $key => $value) {
-				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+			if (session("rol") == 0) {
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", session("id"))->findAll($this->_limit, $offset);
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
+			} else {
+				$id_father = $this->usuario->select("Creator")->where("id", session("id"))->find();
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", $id_father)->findAll($this->_limit, $offset);
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
 			}
 		}
 
@@ -177,6 +197,7 @@ class Productos extends Controller
 				"imagen" => json_decode($this->request->getVar("imagen")),
 				"descripcion" => $this->request->getVar("descripcion"),
 				"attributes" => json_decode($this->request->getVar("attributes")),
+				"mshops" => $this->request->getVar("mshops")
 			];
 			$imagen = $data["imagen"];
 			foreach ($imagen as $key => $img) {
@@ -192,6 +213,7 @@ class Productos extends Controller
 				"listing_type_id" => "gold_pro",
 				"pictures" => $imagen,
 				"attributes" => $data["attributes"],
+				"channels" => ["marketplace", $data["mshops"] ? "mshops" : ''],
 			];
 
 			$respuesta = $this->mercadolibre->postMercadolibre($datos);
@@ -214,7 +236,8 @@ class Productos extends Controller
 					"imagen" => json_encode($data["imagen"]),
 					"link" => $linkP,
 					"cantidad" => $data["cantidad"],
-					"descripcion" => $data["descripcion"]
+					"descripcion" => $data["descripcion"],
+					"Owner" => session("id"),
 				];
 				$res = $this->producto->save($dataProduct);
 				if ($res) {
@@ -343,46 +366,71 @@ class Productos extends Controller
 
 	public function getAllProduct($scroll_id = '')
 	{
-		$respuesta = $this->mercadolibre->getAllProduct($scroll_id);
-		$respuesta = (array) json_decode($respuesta);
-		if (array_key_exists("status", $respuesta)) {
-			echo json_encode(["result" => 0, "mensaje" => $respuesta["message"]]);
-		} else if (array_key_exists("scroll_id", $respuesta) && count($respuesta["results"]) > 0) {
-			$this->resultados[] = $respuesta["results"];
-			$this->getAllProduct($respuesta["scroll_id"]);
-		} else {
-			$flag = false;
-			// proceso para buscar las caracteristicas de los productos por su codigo
-			foreach ($this->resultados as $value) {
-				foreach ($value as $pro) {
-					$imagenes = [];
-					$p = $this->mercadolibre->getInfoProduct($pro);
-					$p = json_decode($p);
-					if ($p->status != "closed" && $p->status != "paused") {
-						// guardo las imagenes
-						foreach ($p->pictures as $img) {
-							$imagenes[] = $img->url;
-						}
-						$dataProduct = [
-							"nombre" => $p->title,
-							"cantidad" =>  $p->available_quantity,
-							"precio" =>  $p->price,
-							"codigo" =>  $p->id,
-							"categoria" =>  $p->category_id,
-							"imagen" => json_encode($imagenes),
-							"link" =>  $p->permalink,
-							"descripcion" => json_encode($p->descriptions),
-						];
-						if ($this->producto->save($dataProduct)) {
-							$flag = true;
+		$usuario = new Usuarios();
+		$_date = $usuario->select("dateProductUpdated")->where("id", session("id"))->find();
+		$dUpdate = strtotime($_date[0]["dateProductUpdated"]);
+		$_time = new DateTime();
+		$_today = date_timestamp_get($_time);
+
+		if (($_today - $dUpdate) >= 86400) {
+			if (count($this->producto->findAll()) > 0) {
+				$this->producto->truncate();
+			}
+			$respuesta = $this->mercadolibre->getAllProduct($scroll_id);
+			$respuesta = (array) json_decode($respuesta);
+			if (array_key_exists("status", $respuesta)) {
+				echo json_encode(["result" => 0, "mensaje" => $respuesta["message"]]);
+			} else if (array_key_exists("scroll_id", $respuesta) && count($respuesta["results"]) > 0) {
+				$this->resultados[] = $respuesta["results"];
+				$this->getAllProduct($respuesta["scroll_id"]);
+			} else {
+				$flag = false;
+				// proceso para buscar las caracteristicas de los productos por su codigo
+				foreach ($this->resultados as $value) {
+					foreach ($value as $pro) {
+						$imagenes = [];
+						$p = $this->mercadolibre->getInfoProduct($pro);
+						$p = json_decode($p);
+						if ($p->status != "closed" && $p->status != "paused") {
+							// guardo las imagenes
+							foreach ($p->pictures as $img) {
+								$imagenes[] = $img->url;
+							}
+
+							$dataProduct = [
+								"nombre" => $p->title,
+								"cantidad" =>  $p->available_quantity,
+								"precio" =>  $p->price,
+								"codigo" =>  $p->id,
+								"categoria" =>  $p->category_id,
+								"imagen" => json_encode($imagenes),
+								"link" =>  $p->permalink,
+								"descripcion" => json_encode($p->descriptions),
+								"Owner" => session("id"),
+							];
+
+							if ($this->producto->save($dataProduct)) {
+								$flag = true;
+							}
 						}
 					}
 				}
+				if ($flag) {
+					$time = new DateTime();
+					$data_user = [
+						"id" => session("id"),
+						"dateProductUpdated" => $time->setTimestamp($time->getTimestamp())->format("Y-m-d H:i:s"),
+					];
+					if ($usuario->save($data_user)) {
+						echo json_encode(["result" => 1]);
+					} else {
+						echo json_encode(["result" => 0]);
+					}
+				} else
+					echo json_encode(["result" => 0]);
 			}
-			if ($flag)
-				echo json_encode(["result" => 1]);
-			else
-				echo json_encode(["result" => 1]);
+		} else {
+			echo json_encode(["result" => 2]);
 		}
 	}
 
@@ -445,15 +493,15 @@ class Productos extends Controller
 							// preguntar si es el mismo producto para agregar solo la pregunta
 							$flag = false;
 							foreach ($response as $key => $value) {
-								if(array_key_exists("codigo", $value[0])){
+								if (array_key_exists("codigo", $value[0])) {
 									if ($value[0]["codigo"] == $producto[0]["codigo"]) {
 										array_push($quest,  $question->text, $question->id);
 										array_push($response[$key][1], $quest);
 										$flag = true;
-									} 
+									}
 								}
 							}
-							if(!$flag) {
+							if (!$flag) {
 								array_push($aux,  $question->text, $question->id);
 								array_push($quest,  $aux);
 								array_push($producto, $quest);
@@ -463,8 +511,8 @@ class Productos extends Controller
 					}
 				}
 			}
-			if(count($response) > 0)
-				echo json_encode(["result" => 1, "data" =>$response]);
+			if (count($response) > 0)
+				echo json_encode(["result" => 1, "data" => $response]);
 			else {
 				echo json_encode(["result" => 0]);
 			}
@@ -473,7 +521,7 @@ class Productos extends Controller
 
 	public function getInfoProduct($code)
 	{
-		$producto = $this->producto->where("codigo", $code)->find();
+		$producto = $this->producto->where("codigo", $code)->where("Owner", session("id"))->find();
 		if ($producto) {
 			return $producto;
 		} else {
@@ -485,7 +533,7 @@ class Productos extends Controller
 	{
 		$id = $this->request->getVar("id");
 		$answer = $this->request->getVar("answer");
-		if($id != "" && $answer != ""){
+		if ($id != "" && $answer != "") {
 			$response = $this->mercadolibre->answerQuestions($id, $answer);
 			$response = (array) json_decode($response);
 			if (array_key_exists("error", $response)) {
@@ -496,7 +544,5 @@ class Productos extends Controller
 		} else {
 			echo json_encode(["result" => 2]);
 		}
-		
 	}
-		
 }
