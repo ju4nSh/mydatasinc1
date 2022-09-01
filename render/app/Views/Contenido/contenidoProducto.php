@@ -179,7 +179,7 @@
 							</div>
 							<div v-if="mshops" class="row">
 								<div class="form-group col-md-12 text-center">
-									<input type="checkbox"> Publicar también en mercadoshop
+									<input id="checkMshops" type="checkbox"> Publicar también en mercadoshop
 								</div>
 							</div>
 						</form>

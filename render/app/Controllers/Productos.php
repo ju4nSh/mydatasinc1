@@ -12,6 +12,7 @@ class Productos extends Controller
 	private $mercadolibre;
 	private $producto;
 	private $resultados = [];
+	private $usuario;
 
 	// variables paginación
 	private $_limit;
@@ -22,6 +23,7 @@ class Productos extends Controller
 	{
 		$this->mercadolibre = new Mercadolibre();
 		$this->producto = new Producto();
+		$this->usuario = new Usuarios();
 		$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria")->findAll();
 		foreach ($respuesta as $key => $value) {
 			$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
@@ -45,15 +47,31 @@ class Productos extends Controller
 		$this->_page    = $page;
 
 		if ($this->_limit == 'all') {
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->findAll();
-			foreach ($respuesta as $key => $value) {
-				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+			if (session("rol") == 0) {
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", session("id"))->findAll();
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
+			} else {
+				$id_father = $this->usuario->select("Creator")->where("id", session("id"))->find();
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", $id_father)->findAll();
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
 			}
 		} else {
 			$offset = (($this->_page - 1) * $this->_limit);
-			$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->findAll($this->_limit, $offset);
-			foreach ($respuesta as $key => $value) {
-				$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+			if (session("rol") == 0) {
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", session("id"))->findAll($this->_limit, $offset);
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
+			} else {
+				$id_father = $this->usuario->select("Creator")->where("id", session("id"))->find();
+				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", $id_father)->findAll($this->_limit, $offset);
+				foreach ($respuesta as $key => $value) {
+					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
+				}
 			}
 		}
 
@@ -179,6 +197,7 @@ class Productos extends Controller
 				"imagen" => json_decode($this->request->getVar("imagen")),
 				"descripcion" => $this->request->getVar("descripcion"),
 				"attributes" => json_decode($this->request->getVar("attributes")),
+				"mshops" => $this->request->getVar("mshops")
 			];
 			$imagen = $data["imagen"];
 			foreach ($imagen as $key => $img) {
@@ -194,6 +213,7 @@ class Productos extends Controller
 				"listing_type_id" => "gold_pro",
 				"pictures" => $imagen,
 				"attributes" => $data["attributes"],
+				"channels" => ["marketplace", $data["mshops"] ? "mshops" : ''],
 			];
 
 			$respuesta = $this->mercadolibre->postMercadolibre($datos);
@@ -216,7 +236,8 @@ class Productos extends Controller
 					"imagen" => json_encode($data["imagen"]),
 					"link" => $linkP,
 					"cantidad" => $data["cantidad"],
-					"descripcion" => $data["descripcion"]
+					"descripcion" => $data["descripcion"],
+					"Owner" => session("id"),
 				];
 				$res = $this->producto->save($dataProduct);
 				if ($res) {
@@ -500,7 +521,7 @@ class Productos extends Controller
 
 	public function getInfoProduct($code)
 	{
-		$producto = $this->producto->where("codigo", $code)->find();
+		$producto = $this->producto->where("codigo", $code)->where("Owner", session("id"))->find();
 		if ($producto) {
 			return $producto;
 		} else {
