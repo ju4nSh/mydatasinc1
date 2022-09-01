@@ -47,6 +47,7 @@
                                                 <template v-slot:item.fulname="{ item }">
                                                     {{item.Nombre}} {{item.Apellido}}
                                                 </template>
+                                                <?php if ($rol==0): ?>
                                                 <template v-slot:item.actions="{ item }">
                                                     <v-icon small @click="ActualizarItem(item,item.Identificacion)">
                                                         mdi-pencil
@@ -59,6 +60,13 @@
                                                         mdi-delete
                                                     </v-icon>
                                                 </template>
+                                                <?php else: ?>
+                                                    <template v-slot:item.actions="{ item }">
+                                                    <v-icon small @click="ActualizarItem(item,item.Identificacion)">
+                                                        mdi-pencil
+                                                    </v-icon>
+                                                    </template>
+                                                <?php endif ?>
                                             </v-data-table>
                                         </div>
                                     </v-main>
