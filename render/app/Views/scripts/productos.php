@@ -91,6 +91,7 @@
 				preguntasMELI: false,
 				modelAnswer: '', //input para escribir las respuestas de MELI
 				mshops: false,
+				loadScreen: false,
 			},
 			mounted: async function() {
 
@@ -513,9 +514,10 @@
 							"imagen": JSON.stringify(imagenes)
 						},
 						dataType: "json",
-						success: function(response) {
+						success: async function(response) {
 							// console.log(response)
 							if (response.result == 1) {
+								await buscarNuevo(limit, offset)
 								swal("Bien", "producto actualizado!", "success");
 								app.camposVacios = false;
 								$("#cerrarAC").click();
@@ -562,7 +564,7 @@
 							"cantidad": $("#cantidadPN").val(),
 							"imagen": JSON.stringify(imagenes),
 							"attributes": JSON.stringify(attributes),
-							"mshops" : $("#checkMshops").prop('checked') ? true : false,
+							"mshops": $("#checkMshops").prop('checked') ? true : false,
 						},
 						dataType: "json",
 						success: async function(response) {
@@ -703,6 +705,7 @@
 	})
 
 	async function buscarNuevo(limit1, offset1) {
+		app.loadScreen = true
 		var url = "<?= base_url("getData") ?>/" + limit1 + "/" + offset1 + "/" + numLinks + "/" + limite;
 		// this.articulos = JSON.parse(response);
 		await $.ajax({
@@ -710,6 +713,8 @@
 			dataType: "json",
 			success: function(response) {
 				// console.log(response)
+				app.loadScreen = false
+
 				limite = response.limit
 				app.productos = response.data
 				$("#botonNavegacion").html(response.html)
@@ -717,6 +722,8 @@
 		});
 	}
 	async function searchProductNew(limit2, offset2) {
+		app.loadScreen = true
+
 		var url = "<?= base_url("searchProducts") ?>/" + app.inputProducts + "/" + limit2 + "/" + offset2 + "/" + numLinks;
 		// this.articulos = JSON.parse(response);
 		await $.ajax({
@@ -724,6 +731,8 @@
 			dataType: "json",
 			success: function(response) {
 				// console.log(response)
+				app.loadScreen = false
+
 				limite = response.limit
 				app.productos = response.data
 				$("#botonNavegacion").html(response.html)

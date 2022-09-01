@@ -11,6 +11,9 @@ a.addProductBoton>i {
     font-size: 18px;
     /* color: var(--bs-info) */
 }
+div#contenidoProducto {
+    position: relative;
+}
 
 div#agregarProductoModal,
 div#modalActualizarProductos,
@@ -233,3 +236,18 @@ button#btnPreguntasMELI {
     color: white !important;
 }
 /* FIN ESTILOS PREGUNTAS MELI */
+
+/* ESTILO SCREEN LOAD CUANDO SE NAVEGA CON LOS LINK DE PRODUCTOS */
+div#loadScreenProduct {
+    display: grid !important;
+    place-items: center !important;
+    width: 300px !important;
+    height: 300px !important;
+    position: fixed;
+    transform: translate(150%, 50%) !important;
+    background-color: rgba(110, 109, 109, 0.8);
+    border-radius: 8px;
+    color: white;
+}
+
+/* FIN ESTILOS LOAD SCREEN */

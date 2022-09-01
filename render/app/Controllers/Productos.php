@@ -391,7 +391,7 @@ class Productos extends Controller
 						$imagenes = [];
 						$p = $this->mercadolibre->getInfoProduct($pro);
 						$p = json_decode($p);
-						if ($p->status != "closed" && $p->status != "paused") {
+						if ($p->status != "closed") {
 							// guardo las imagenes
 							foreach ($p->pictures as $img) {
 								$imagenes[] = $img->url;
@@ -406,6 +406,7 @@ class Productos extends Controller
 								"imagen" => json_encode($imagenes),
 								"link" =>  $p->permalink,
 								"descripcion" => json_encode($p->descriptions),
+								"estado" => $p->status == "paused" ? 0 : 1,
 								"Owner" => session("id"),
 							];
 

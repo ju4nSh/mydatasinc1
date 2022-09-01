@@ -92,6 +92,9 @@
 
 					</div>
 				</template>
+				<div v-if="loadScreen" id="loadScreenProduct" class="col-md-12">
+					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				</div>
 			</div>
 		</div>
 
@@ -322,9 +325,10 @@
 			</div>
 		</div>
 		<!-- FIN MODAL RESPONDER PREGUNTAS -->
-
 	</div>
-	<?= $this->endSection() ?>
-	<?= $this->section("funciones"); ?>
-	<?= $this->include("scripts/productos") ?>
-	<?= $this->endSection() ?>
+
+</div>
+<?= $this->endSection() ?>
+<?= $this->section("funciones"); ?>
+<?= $this->include("scripts/productos") ?>
+<?= $this->endSection() ?>
