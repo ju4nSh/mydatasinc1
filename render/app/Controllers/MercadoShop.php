@@ -54,9 +54,9 @@ class MercadoShop extends Controller
             }
         }
         if ($respuesta == true) {
-            echo "Bien";
+            echo json_encode(["result" => 1]);
         } else {
-            echo "No puede ejecutar esta funcion";
+            echo json_encode(["result" => 0]);
         }
     }
 }

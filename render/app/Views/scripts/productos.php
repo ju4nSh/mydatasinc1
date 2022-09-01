@@ -681,6 +681,7 @@
 				url: "<?= base_url("mshop")?>",
 				dataType: "json",
 				success: function (response) {
+					console.log(response)
 					if(response.result) {
 						app.mshops = true;
 					}
