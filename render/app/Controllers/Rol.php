@@ -139,7 +139,9 @@ class Rol extends Controller
         $db = \Config\Database::connect();
         $builder = $db->table('roles');
         $Identificacion = $this->request->getVar("identificacion");
-        $datos = $builder->select('*')->get()->getResultArray();
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("id");
+        $datos = $builder->select('*')->where('Usuario',$id)->get()->getResultArray();
         foreach ($datos as $variable) {
             if($variable['Identificacion']!=$Identificacion){
                 $array[] = [
