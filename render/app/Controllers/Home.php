@@ -345,17 +345,26 @@ class Home extends BaseController
         $datos = $builder->select('u.Identificacion as Identificacion, 
         u.Nombre as Nombre, u.Apellido as Apellido, u.Correo as Correo,u.Ciudad as Ciudad, 
         u.Pais as Pais, r.Nombre as Rol')->where($data_array)->join('roles as r', 'u.Rol=r.Identificacion')->get()->getResultArray();
-        foreach ($datos as $variable) {
-            $array[] = [
-                'Identificacion' => $variable['Identificacion'],
-                'Nombre' => $variable['Nombre'],
-                'Apellido' => $variable['Apellido'],
-                'Correo' => $variable['Correo'],
-                'Ciudad' => $variable['Ciudad'],
-                'Pais' => $variable['Pais'],
-                'Rol' => $variable['Rol']
-            ];
+        if(count($datos) == 0){
+            $builder1 = $db->table('users');
+            $datos1 = $builder1->select('Creator')->where('id',$id)->get()->getResultArray();
+            $data_array = array('Creator' => $datos1[0]["Creator"]);
+            $datos = $builder->select('u.Identificacion as Identificacion, 
+        u.Nombre as Nombre, u.Apellido as Apellido, u.Correo as Correo,u.Ciudad as Ciudad, 
+        u.Pais as Pais, r.Nombre as Rol')->where($data_array)->join('roles as r', 'u.Rol=r.Identificacion')->get()->getResultArray();
         }
+            foreach ($datos as $variable) {
+                $array[] = [
+                    'Identificacion' => $variable['Identificacion'],
+                    'Nombre' => $variable['Nombre'],
+                    'Apellido' => $variable['Apellido'],
+                    'Correo' => $variable['Correo'],
+                    'Ciudad' => $variable['Ciudad'],
+                    'Pais' => $variable['Pais'],
+                    'Rol' => $variable['Rol']
+                ];
+            }
+
         echo json_encode($array);
     }
 
