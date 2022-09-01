@@ -54,6 +54,7 @@ $(document).ready(function() {
             deleteItem(item, Identificacion) {
                 q.nombreRol = Identificacion;
                 q.idRol = item;
+                q.arrayRoles= [];
                 swal({
                         title: "¿Estás seguro?",
                         text: "Una vez eliminado, no podrá recuperar este archivo",
@@ -137,6 +138,7 @@ $(document).ready(function() {
                                 icon: "success",
                             });
                             q.loading = false
+                            document.getElementById('nombre').value='';
                         }
                     }
 
