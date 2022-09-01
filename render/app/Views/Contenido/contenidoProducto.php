@@ -39,6 +39,10 @@
 								</button>
 							</div>
 						</div>
+						<span>
+							<span id="loadProductMELI" role="status" aria-hidden="true"></span>
+							<span> Cargando productos de mercadolibre...</span>
+						</span>
 						<div class="productosCargados">
 							<div class="shadow-lg rounded-3" v-for="(p, index) in productos">
 								<div :id="p.codigo" class="carousel slide" data-ride="carousel">
@@ -172,6 +176,11 @@
 							</div>
 							<div class="row">
 								<div v-for="(item, p) in camposRequeridos" is="campos" v-bind:typedata="item.value_type" v-bind:id="item.id" v-bind:name="item.name" v-bind:data="item.data" v-bind:allowed_units="item.allowed_units" v-bind:hint="item.hint"></div>
+							</div>
+							<div v-if="mshops" class="row">
+								<div class="form-group col-md-12 text-center">
+									<input type="checkbox"> Publicar también en mercadoshop
+								</div>
 							</div>
 						</form>
 					</div>

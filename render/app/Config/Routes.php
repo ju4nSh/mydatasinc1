@@ -130,5 +130,3 @@ $routes->post('modificarRolAUsuarios', 'Rol::modificarRolAUsuarios');
 //validar cambio contraseña
 $routes->post('ValidarModificarContraseña', 'Personas::ValidarModificarContraseña');
 $routes->post('PassClienteRef', 'Personas::PassClienteRef');
-
-

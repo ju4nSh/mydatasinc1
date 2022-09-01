@@ -90,24 +90,29 @@
 				arrayPreguntasMeli: [], //preguntas de productos de mercadolibre
 				preguntasMELI: false, 
 				modelAnswer: '', //input para escribir las respuestas de MELI
+				mshops: false,
 			},
 			mounted: async function() {
 
 			},
 			created: async function() {
+				$("#loadProductMELI").addClass("spinner-border spinner-border-sm");
 
-				// let url1 = "<? #= base_url("getAllProduct") ?>";
-				// await $.ajax({
-				// 	type: "post",
-				// 	url: url1,
-				// 	dataType: "json",
-				// 	success: function (response) {
-				// 		if(response.result)
-				// 			console.log(response)	
-				// 		else 
-				// 			swal("Error", `ocurrió un error: ${response.mensaje}`, "error")
-				// 	}
-				// });
+				let url1 = "<?= base_url("getAllProduct") ?>";
+				await $.ajax({
+					type: "post",
+					url: url1,
+					dataType: "json",
+					success: function (response) {
+						if(response.result == 1)
+							console.log(response)	
+						else if(response.result == 2) {
+							console.log("aun no se puede actualizar")
+						} else
+							swal("Error", `ocurrió un error: ${response.mensaje}`, "error")
+					}
+				});
+
 
 				let url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
 				// this.articulos = JSON.parse(response);
@@ -120,6 +125,9 @@
 						$("#botonNavegacion").html(response.html)
 					}
 				});
+				$("#loadProductMELI").removeClass("spinner-border spinner-border-sm");
+				($("#loadProductMELI").parent()).remove()
+
 				await $.ajax({
 					url: "<?= base_url("getAllQuestions") ?>",
 					dataType: "json",
@@ -667,6 +675,21 @@
 			modal.find('#descripcionAC').val(descripcion)
 			modal.find("#codigoProductoAC").val(codigoBD)
 		})
+
+		$('#agregarProductoModal').on('show.bs.modal', async function(event) {
+			await $.ajax({
+				url: "<?= base_url("mshop")?>",
+				dataType: "json",
+				success: function (response) {
+					if(response.result) {
+						app.mshops = true;
+					}
+				}
+			});
+		})
+			
+
+
 	})
 
 	async function buscarNuevo(limit1, offset1) {
