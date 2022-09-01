@@ -242,7 +242,7 @@ class Home extends BaseController
                             echo json_encode(["result" => 0]);
                         }
                     } else {
-                            echo json_encode(["result" => 0]);
+                        echo json_encode(["result" => 0]);
                     }
                 } catch (\Exception $e) {
                     echo json_encode(["result" => 0, "error" => "usuario ya existe!"]);
@@ -341,7 +341,7 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("id");
         $data_array = array('Creator' => $id);
-        $array=[];
+        $array = [];
         $datos = $builder->select('u.Identificacion as Identificacion, 
         u.Nombre as Nombre, u.Apellido as Apellido, u.Correo as Correo,u.Ciudad as Ciudad, 
         u.Pais as Pais, r.Nombre as Rol')->where($data_array)->join('roles as r', 'u.Rol=r.Identificacion')->get()->getResultArray();
@@ -375,7 +375,16 @@ class Home extends BaseController
         ) {
             $ssesion = \Config\Services::session();
             $id = $ssesion->get("id");
+            $roles = $ssesion->get("rol");
+            $respuesta = $id;
             $compra = new Usuarios();
+            if ($roles != 0) {
+                $db = \Config\Database::connect();
+                $builder1 = $db->table('users');
+                $datos1 = $builder1->select('Creator')->where('id', $id)->get()->getResultArray();
+                $datos2 = $builder1->select('id')->where('id', $datos1[0]["Creator"])->get()->getResultArray();
+                $respuesta=$datos2[0]["id"];
+            }
             try {
                 $compra->insert([
                     'Identificacion' => $Identificacion,
@@ -384,7 +393,7 @@ class Home extends BaseController
                     'Correo' => $Correo,
                     'Ciudad' => $Ciudad,
                     'Pais' => $Pais,
-                    'Creator' => $id,
+                    'Creator' => $respuesta,
                     'Usuario' => $Usuario,
                     'Rol' => $Rol,
                 ]);
@@ -402,7 +411,7 @@ class Home extends BaseController
                     'Correo' => $Correo,
                     'Ciudad' => $Ciudad,
                     'Pais' => $Pais,
-                    'Creator' => $id,
+                    'Creator' => $respuesta,
                     'Rol' => $array,
                 ];
             } catch (\Exception $e) {
