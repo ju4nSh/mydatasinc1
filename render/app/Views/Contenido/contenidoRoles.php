@@ -97,28 +97,45 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-body">
                                         <h5>Modificar Rol</h5>
-                                        <form id="formularioModificarRolUsuario"
-                                            v-on:submit.prevent="modificarRolUsuario">
+                                        <form id="formularioContenidoRol"
+                                            v-on:submit.prevent="modificarContenidoRol">
                                             <div class="mb-3">
                                                 <label for="">Identificacion</label>
                                                 <input type="text" class="form-control form-control-lg"
-                                                    placeholder="Secret Key" v-model="nombreRol" readonly id="Identificacion"
-                                                    name="Identificacion">
+                                                    placeholder="Secret Key" v-model="nombreRol" readonly id="IdRol"
+                                                    name="IdRol">
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-6">
+                                                <label for="">Contenido</label><br>
+                                                <textarea name="textarea" rows="5" cols="40" readonly v-model="contenidoRol"></textarea>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="">Contenido Nuevo</label><br>
+                                                <textarea name="textarea" id="contenidoNuevoRol" name="contenidoNuevoRol" rows="5" cols="40" v-model="contenidoModificadoRol"></textarea>
+                                            </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="">Contenido</label>
-                                                <textarea name="textarea" rows="10" cols="50" v-model="contenidoRol"></textarea>
+                                            <label for="exampleFormControlSelect2" >Vistas a las que tendra
+                                                        acceso</label>
+                                                    <select  class="form-control" id="ContenidoRolMod"  @change='onChange'>
+                                                        <option value="Clientes">Clientes</option>
+                                                        <option value="Productos">Productos</option>
+                                                        <option value="DatosProducto">Datos Producto</option>
+                                                        <option value="Perfil">Perfil</option>
+                                                        <option value="Usuario">Usuario</option>
+                                                        <option value="Prueba">Prueba</option>
+                                                    </select>
                                             </div>
                                             <div class="text-center">
                                                 <button type="submit"
-                                                    class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign
-                                                    in</button>
+                                                    class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Modificar</button>
                                             </div>
                                         </form>
                                     </div>
