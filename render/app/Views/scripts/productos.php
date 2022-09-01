@@ -89,7 +89,7 @@
 				inputProducts: '', //input para buscar en la tabla de productos
 				arrayPreguntasMeli: [], //preguntas de productos de mercadolibre
 				preguntasMELI: false, 
-				modelAnswer: '',
+				modelAnswer: '', //input para escribir las respuestas de MELI
 			},
 			mounted: async function() {
 
