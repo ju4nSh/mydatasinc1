@@ -151,7 +151,7 @@ $(document).ready(function() {
                     url: '<?= base_url("/ModificarContenidoRol") ?>',
                     data: {
                         'select': select,
-                        'Identificacion': q.idRol
+                        'Identificacion': q.idRol3
                     },
                     success: function(data) {
                         if (data == "true") {

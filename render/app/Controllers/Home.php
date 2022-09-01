@@ -341,6 +341,7 @@ class Home extends BaseController
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("id");
         $data_array = array('Creator' => $id);
+        $array=[];
         $datos = $builder->select('u.Identificacion as Identificacion, 
         u.Nombre as Nombre, u.Apellido as Apellido, u.Correo as Correo,u.Ciudad as Ciudad, 
         u.Pais as Pais, r.Nombre as Rol')->where($data_array)->join('roles as r', 'u.Rol=r.Identificacion')->get()->getResultArray();

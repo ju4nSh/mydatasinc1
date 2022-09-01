@@ -69,13 +69,28 @@ class Rol extends Controller
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("id");
         $datos = $builder->select('*')->where('Usuario',$id)->get()->getResultArray();
-        foreach ($datos as $variable) {
-            $array[] = [
-                'Identificacion' => $variable['Identificacion'],
-                'Nombre' => $variable['Nombre'],
-                'Contenido' => $variable['Contenido'],
-            ];
+        if(count($datos) == 0){
+            $builder1 = $db->table('users');
+            $datos1 = $builder1->select('Creator')->where('id',$id)->get()->getResultArray();
+            $datos2 = $builder1->select('id')->where('id',$datos1[0]["Creator"])->get()->getResultArray();
+            $datos3 = $builder->select('*')->where('Usuario',$datos2[0]["id"])->get()->getResultArray();
+            foreach ($datos3 as $variable) {
+                $array[] = [
+                    'Identificacion' => $variable['Identificacion'],
+                    'Nombre' => $variable['Nombre'],
+                    'Contenido' => $variable['Contenido'],
+                ];
+            }
+        }else{
+            foreach ($datos as $variable) {
+                $array[] = [
+                    'Identificacion' => $variable['Identificacion'],
+                    'Nombre' => $variable['Nombre'],
+                    'Contenido' => $variable['Contenido'],
+                ];
+            }
         }
+        
         echo json_encode($array);
     }
     public function modificarRol()
