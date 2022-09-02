@@ -87,6 +87,7 @@
                                                         <option value="Perfil">Perfil</option>
                                                         <option value="Usuario">Usuario</option>
                                                         <option value="Prueba">Prueba</option>
+                                                        <option value="SinRol">SinRol</option>
                                                     </select>
                                                 </div>
                                             </div>

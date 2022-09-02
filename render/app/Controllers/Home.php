@@ -346,30 +346,53 @@ class Home extends BaseController
         $builder = $db->table('users as u');
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("id");
-        $data_array = array('Creator' => $id);
-        $array = [];
-        $datos = $builder->select('u.Identificacion as Identificacion, 
+        $rol = $ssesion->get("rol");
+        $data_array = array('Creator' => $id, 'id !=' => $id);
+        $p1='';
+        $respuesta=false;
+        $datos = $builder->select('u.id as id,u.Identificacion as Identificacion, 
         u.Nombre as Nombre, u.Apellido as Apellido, u.Correo as Correo,u.Ciudad as Ciudad, 
         u.Pais as Pais, r.Nombre as Rol')->where($data_array)->join('roles as r', 'u.Rol=r.Identificacion')->get()->getResultArray();
-        if(count($datos) == 0){
-            $builder1 = $db->table('users');
-            $datos1 = $builder1->select('Creator')->where('id',$id)->get()->getResultArray();
-            $data_array = array('Creator' => $datos1[0]["Creator"]);
-            $datos = $builder->select('u.Identificacion as Identificacion, 
+        if (count($datos) == 0) {
+            if ($rol == 0) {
+                $respuesta=true;
+            } else {
+                $builder1 = $db->table('users');
+                $datos1 = $builder1->select('Creator')->where('id', $id)->get()->getResultArray();
+                $p1=$datos1[0]["Creator"];
+                $data_array = array('Creator' => $datos1[0]["Creator"], 'id !=' => $datos1[0]["Creator"]);
+                $datos = $builder->select('u.id as id,u.Identificacion as Identificacion, 
         u.Nombre as Nombre, u.Apellido as Apellido, u.Correo as Correo,u.Ciudad as Ciudad, 
         u.Pais as Pais, r.Nombre as Rol')->where($data_array)->join('roles as r', 'u.Rol=r.Identificacion')->get()->getResultArray();
-        }
-            foreach ($datos as $variable) {
-                $array[] = [
-                    'Identificacion' => $variable['Identificacion'],
-                    'Nombre' => $variable['Nombre'],
-                    'Apellido' => $variable['Apellido'],
-                    'Correo' => $variable['Correo'],
-                    'Ciudad' => $variable['Ciudad'],
-                    'Pais' => $variable['Pais'],
-                    'Rol' => $variable['Rol']
-                ];
             }
+        }
+        if($respuesta == false){
+            if(count($datos) > 0){
+                foreach ($datos as $variable) {
+                if(count($datos) == 1 && $id == $variable["id"]){
+                    $array=[];
+                }else{
+                    if($id != $variable['id']){
+                        $array[] = [
+                            'Identificacion' => $variable['Identificacion'],
+                            'Nombre' => $variable['Nombre'],
+                            'Apellido' => $variable['Apellido'],
+                            'Correo' => $variable['Correo'],
+                            'Ciudad' => $variable['Ciudad'],
+                            'Pais' => $variable['Pais'],
+                            'Rol' => $variable['Rol']
+                        ];
+                       } 
+                }
+                }
+            }else{
+                $array=[];
+            }
+            
+        }else{
+            $array = [];
+        }
+        
 
         echo json_encode($array);
     }
@@ -398,7 +421,7 @@ class Home extends BaseController
                 $builder1 = $db->table('users');
                 $datos1 = $builder1->select('Creator')->where('id', $id)->get()->getResultArray();
                 $datos2 = $builder1->select('id')->where('id', $datos1[0]["Creator"])->get()->getResultArray();
-                $respuesta=$datos2[0]["id"];
+                $respuesta = $datos2[0]["id"];
             }
             try {
                 $compra->insert([
@@ -521,6 +544,26 @@ class Home extends BaseController
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function MostrarContenidoClienteSinRoll()
+    {
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("user");
+        $rol = $ssesion->get("rol");
+        $contenido = $ssesion->get("contenido");
+        if (empty($id)) {
+            return $this->response->redirect(site_url('/'));
+        } else {
+            $producto = new Productos();
+            $view = \Config\Services::renderer();
+            $view->setVar('one', $id)
+                ->setVar('pagina', "Clientes Sin Rol")
+                ->setVar('titulo', "Clientes Sin Rol")
+                ->setVar('rol', $rol)
+                ->setVar('contenido', $contenido);
+            echo $view->render("Contenido/contenidoClientesSinRol");
         }
     }
 }

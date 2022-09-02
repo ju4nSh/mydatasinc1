@@ -35,7 +35,7 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::login');
+$routes->get('/', 'Home::index');
 
 /*
  * --------------------------------------------------------------------
@@ -124,6 +124,7 @@ $routes->get('mostrarRolesRegistrados', 'Rol::mostrarRolesRegistrados');
 $routes->post('mostrarRolesDelete', 'Rol::mostrarRolesDelete');
 //Eliminar Rol
 $routes->post('eliminarRol', 'Rol::eliminarRol');
+
 //Modificar Roles
 $routes->post('modificarRol', 'Rol::modificarRol');
 $routes->post('modificarRolAUsuarios', 'Rol::modificarRolAUsuarios');
@@ -138,3 +139,11 @@ $routes->get('mshop', 'MercadoShop::getValidarMercadoShop');
 
 // LIBRERIA DE EXCEL
 $routes->get('excel', 'Excel::index');
+//EliminarRolForzado
+$routes->post('eliminarRolForzado', 'Rol::eliminarRolForzado');
+//Vista Clientes sin rol
+$routes->get('SinRol', 'Home::MostrarContenidoClienteSinRoll');
+$routes->get('PersonasRolNull', 'Personas::PersonasRolNull');
+$routes->post('modificarRolNull', 'Rol::modificarRolNull');
+
+

@@ -42,6 +42,53 @@ class Personas extends Controller
         $data=$builder->update($data_array);
         return json_encode($data);
     }
+
+    public function PersonasRolNull(){
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $ssesion = \Config\Services::session();
+        $id = $ssesion->get("id");
+        $rol = $ssesion->get("rol");
+        if($rol == 0){
+            $data_array = array('Creator' => $id,'Rol' => NULL);
+        $datos = $builder->select('*')->where($data_array)->get()->getResultArray();
+        if(count($datos) > 0){
+            foreach ($datos as $variable) {
+                $array[] = [
+                    'Identificacion' => $variable['Identificacion'],
+                    'Nombre' => $variable['Nombre'],
+                    'Apellido' => $variable['Apellido'],
+                    'Correo' => $variable['Correo'],
+                    'Ciudad' => $variable['Ciudad'],
+                    'Pais' => $variable['Pais'],
+                ];
+            }
+        }else{
+            $array=[];
+        }
+        }else{
+            $data_array = array('id' => $id);
+        $datos = $builder->select('Creator')->where($data_array)->get()->getResultArray();
+        $data_array1 = array('Creator' => $datos[0]["Creator"],'Rol' => NULL);
+        $datos1 = $builder->select('*')->where($data_array1)->get()->getResultArray();
+        if(count($datos1) > 0){
+            foreach ($datos1 as $variable) {
+                $array[] = [
+                    'Identificacion' => $variable['Identificacion'],
+                    'Nombre' => $variable['Nombre'],
+                    'Apellido' => $variable['Apellido'],
+                    'Correo' => $variable['Correo'],
+                    'Ciudad' => $variable['Ciudad'],
+                    'Pais' => $variable['Pais'],
+                ];
+            }
+        }else{
+            $array=[];
+        }
+        }
+        
+        echo json_encode($array);
+    }
     
     
 }

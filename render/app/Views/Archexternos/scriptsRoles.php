@@ -54,7 +54,7 @@ $(document).ready(function() {
             deleteItem(item, Identificacion) {
                 q.nombreRol = Identificacion;
                 q.idRol = item;
-                q.arrayRoles= [];
+                q.arrayRoles = [];
                 swal({
                         title: "¿Estás seguro?",
                         text: "Una vez eliminado, no podrá recuperar este archivo",
@@ -80,10 +80,8 @@ $(document).ready(function() {
                                             item), 1);
 
                                     } else {
-                                        q.llenarSelectRol(Identificacion);
+                                        q.llenarSelectRol(Identificacion,item);
                                         q.arrayUsuario = json;
-
-                                        $('#exampleModalCenter').modal('show');
 
                                     }
                                 }
@@ -100,7 +98,7 @@ $(document).ready(function() {
                 q.contenidoModificadoRol = [];
                 $('.bd-example-modal-lg').modal('show');
             },
-            llenarSelectRol(Identificacion) {
+            llenarSelectRol(Identificacion,item) {
                 $.ajax({
                     type: "post",
                     url: '<?= base_url("/mostrarRolesDelete") ?>',
@@ -110,6 +108,32 @@ $(document).ready(function() {
                     success: function(response) {
                         var json = JSON.parse(response);
                         q.arrayRoles = json
+                        if (q.arrayRoles.length === 0) {
+                            $.ajax({
+                                type: "post",
+                                url: '<?= base_url("/eliminarRolForzado") ?>',
+                                data: {
+                                    "identificacion": Identificacion
+                                },
+                                success: function(response) {
+                                    if (response ==
+                                        "true") {
+                                        swal(response, {
+                                            icon: "success",
+                                        });
+                                        q.articulos.splice(q
+                                            .articulos
+                                            .indexOf(
+                                                item), 1
+                                        );
+                                    }
+                                }
+                            });
+                        } else {
+                            $('#exampleModalCenter').modal('show');
+                        }
+
+
                     }
                 });
             },
@@ -138,7 +162,7 @@ $(document).ready(function() {
                                 icon: "success",
                             });
                             q.loading = false
-                            document.getElementById('nombre').value='';
+                            document.getElementById('nombre').value = '';
                         }
                     }
 
@@ -151,7 +175,7 @@ $(document).ready(function() {
                     url: '<?= base_url("/ModificarContenidoRol") ?>',
                     data: {
                         'select': select,
-                        'Identificacion': q.idRol3
+                        'Identificacion': q.idRol
                     },
                     success: function(data) {
                         if (data == "true") {
@@ -221,7 +245,7 @@ $(document).ready(function() {
                 }
             }
         },
-        created: function(){
+        created: function() {
             this.LlenarTablaRoles();
         },
     })
