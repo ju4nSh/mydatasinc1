@@ -139,11 +139,14 @@ $routes->get('mshop', 'MercadoShop::getValidarMercadoShop');
 
 // LIBRERIA DE EXCEL
 $routes->get('excel', 'Excel::index');
+
 //EliminarRolForzado
 $routes->post('eliminarRolForzado', 'Rol::eliminarRolForzado');
 //Vista Clientes sin rol
 $routes->get('SinRol', 'Home::MostrarContenidoClienteSinRoll');
 $routes->get('PersonasRolNull', 'Personas::PersonasRolNull');
 $routes->post('modificarRolNull', 'Rol::modificarRolNull');
+
+$routes->post('publicarMasivo', 'Productos::publicarMasivo');
 
 

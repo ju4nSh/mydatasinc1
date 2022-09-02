@@ -632,6 +632,25 @@
 						swal("Error", "agrega una respuesta", "error");
 					}
 				},
+				publicarMasivo: async function () {
+					let file = new FormData();
+					file.append("file", $("#archivoxslx").prop("files")[0])
+					await $.ajax({
+						type: "post",
+						url: "<?= base_url("publicarMasivo")?>",
+						data: file,
+						contentType: false,
+						processData: false,
+						dataType: "json",
+						success: function (response) {
+							if(response.result == 1) {
+								swal("Bien", "Productos publicados correctamente", "success")
+							} else {
+								console.log(2)
+							}
+						}
+					});
+				},
 			},
 			watch: {}
 		});

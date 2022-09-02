@@ -18,8 +18,9 @@
 <div class="row mt-3" id="contenidoProducto">
 	<div class="col-lg-12 mb-lg-0 mb-4">
 		<div class="row p-3">
-			<div class="card col-md-auto m-1 d-flex justify-content-between">
-				<a data-target="#agregarProductoModal" @click="categoriasProductos" data-toggle="modal" class="addProductBoton"><i class="fas fa-plus"></i>Agregar producto</a>
+			<div class="card col-md-auto m-1 d-flex flex-row justify-content-between p-0">
+				<div> <a data-target="#agregarProductoModal" @click="categoriasProductos" data-toggle="modal" class="addProductBoton m-1 p-1"><i class="fas fa-plus"></i>Agregar producto</a></div>
+				<div> <a data-target="#agregarProductoMasivo" @click="categoriasProductos" data-toggle="modal" class="addProductBoton m-1 p-1"><i class="fas fa-plus"></i>Publicador masivo</a></div>
 			</div>
 			<div class="card col-md-12">
 				<div class="card-header pb-0">
@@ -325,6 +326,48 @@
 			</div>
 		</div>
 		<!-- FIN MODAL RESPONDER PREGUNTAS -->
+
+		<!-- MODAL CARGA MASIVA -->
+		<div class="modal fade" id="agregarProductoMasivo" tabindex="-1" role="dialog" aria-labelledby="modalResponderPreguntas" aria-hidden="true">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Agregar productos masivamente</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="form-masivo">
+							<div class="row p-2 m-2">
+								<div class="card m-0">
+									<div class="card-header">
+										<div class="form-group d-flex justify-content-between align-items-center">
+											<span for="my-input">Sube el archivo xslx:</span>
+										</div>
+										<div class="card-body row">
+											<div class="form-group row">
+												<input class="form-control col-md-6 p-1 mr-1" id="archivoxslx" type="file" name="archivo">
+												<button @click="publicarMasivo" class="btn btn-primary form-control col-md-2 p-1" type="button">
+													<span class="" role="status" aria-hidden="true"></span>
+													Publicar
+												</button>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- FIN MODAL CARGA MASIVA -->
+
 	</div>
 
 </div>

@@ -17,7 +17,8 @@ div#contenidoProducto {
 
 div#agregarProductoModal,
 div#modalActualizarProductos,
-div#modalResponderPreguntas {
+div#modalResponderPreguntas,
+div#agregarProductoMasivo {
     z-index: 10001 !important;
 }
 
