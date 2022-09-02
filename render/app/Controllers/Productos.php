@@ -560,4 +560,16 @@ class Productos extends Controller
 			echo json_encode(["result" => 2]);
 		}
 	}
+
+	public function publicarMasivo()
+	{
+		$file = $this->request->getFile("file");
+		$file->move("../public/uploads", $file->getName());
+		if($file->hasMoved()) {
+			$excel = new Excel();
+			$excel->index();
+		}
+		else 
+			echo json_encode(["result" => 0]);
+	}
 }

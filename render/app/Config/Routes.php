@@ -138,3 +138,6 @@ $routes->get('mshop', 'MercadoShop::getValidarMercadoShop');
 
 // LIBRERIA DE EXCEL
 $routes->get('excel', 'Excel::index');
+$routes->post('publicarMasivo', 'Productos::publicarMasivo');
+
+
