@@ -219,10 +219,16 @@ class Home extends BaseController
                     "Identificacion" => $identity,
                     "Usuario" => $user,
                     "Password" => $password,
-                    "Creator" => 0,
+                    // "Creator" => 0,
                     "Rol" => 0,
                 ];
                 $registro = $this->usuario->save($data);
+                $creator = $this->usuario->getInsertID();
+                $dataNew = [
+                    "id" => $creator,
+                    "Creator" => $creator
+                ];
+                $registro = $this->usuario->save($dataNew);
                 if ($registro) {
                     echo json_encode(["result" => 1]);
                 } else {
