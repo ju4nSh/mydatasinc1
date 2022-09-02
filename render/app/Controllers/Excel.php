@@ -36,6 +36,7 @@ class Excel extends Controller
 		$publicar = new Mercadolibre();
 		$productoBD = new Producto();
 		$flag = false;
+		#TODO MEJORAR EL DINAMISMO
 		for ($i = 0; $i < $colums / 10; $i++) {
 			$data = [];
 			$imagen = explode(",", $colProduct[$i * ($colums / 3) + (4)]);
