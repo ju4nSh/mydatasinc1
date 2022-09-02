@@ -529,7 +529,7 @@ class Productos extends Controller
 			if (count($response) > 0)
 				echo json_encode(["result" => 1, "data" => $response]);
 			else {
-				echo json_encode(["result" => 0]);
+				echo json_encode(["result" => 0, "mensaje" => "No tiene preguntas pendientes"]);
 			}
 		}
 	}

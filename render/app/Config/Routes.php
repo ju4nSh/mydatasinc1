@@ -134,3 +134,7 @@ $routes->post('PassClienteRef', 'Personas::PassClienteRef');
 
 // consultar clientes de Mshops
 $routes->get('mshop', 'MercadoShop::getValidarMercadoShop');
+
+
+// LIBRERIA DE EXCEL
+$routes->get('excel', 'Excel::index');
