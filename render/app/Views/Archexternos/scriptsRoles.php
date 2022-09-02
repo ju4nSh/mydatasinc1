@@ -60,6 +60,10 @@ $(document).ready(function() {
                         {
                             title: 'Prueba',
                             checked: false
+                        },
+                        {
+                            title: 'SinRol',
+                            checked: false
                         }
                     ],
                 }
@@ -144,11 +148,23 @@ $(document).ready(function() {
                 ModalActualizar(item, Identificacion, Contenido, Nombre) {
                     q.nombreRol = Nombre;
                     q.idRol = Identificacion;
-                    q.contenidoRol = Contenido;
-                    hola = q.contenidoRol;
+                    q.refrescarTask();
+                    var array = Contenido.split(',');
+                    for(var w=0; w<array.length;w++){
+                        for(var e=0; e<q.tasks.length; e++){
+                            if(array[w]==q.tasks[e]["title"]){
+                                q.tasks[e]["checked"]=true;
+                            }
+                        }
+                    }
                     q.contenidoModificadoRol = [];
                     $('.bd-example-modal-lg').modal('show');
                 },
+                refrescarTask(){
+                    for(var e=0; e<q.tasks.length; e++){
+                        q.tasks[e]["checked"]=false;
+                }
+            },
                 llenarSelectRol(Identificacion, item) {
                     $.ajax({
                         type: "post",
@@ -219,12 +235,17 @@ $(document).ready(function() {
                     });
                 },
                 modificarContenidoRol: function(e) {
-                    var select = document.getElementById('contenidoNuevoRol').value;
+                    var array = [];
+                    for(var e=0; e<q.tasks.length;e++){
+                        if(q.tasks[e]["checked"]==true){
+                            array.push(q.tasks[e]["title"]);
+                        }
+                    }
                     $.ajax({
                         type: "post",
                         url: '<?= base_url("/ModificarContenidoRol") ?>',
                         data: {
-                            'select': select,
+                            'select': array.toString(),
                             'Identificacion': q.idRol
                         },
                         success: function(data) {

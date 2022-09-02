@@ -80,6 +80,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleFormControlSelect2">Vistas a las que tendra
                                                         acceso</label>
+
                                                     <select multiple class="form-control" id="prueba">
                                                         <option value="Clientes">Clientes</option>
                                                         <option value="Productos">Productos</option>
@@ -108,33 +109,13 @@
                                                 <label for="">Identificacion</label>
                                                 <input type="text" class="form-control form-control-lg" placeholder="Secret Key" v-model="nombreRol" readonly id="IdRol" name="IdRol">
                                             </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label for="">Contenido</label><br>
-                                                    <textarea name="textarea" rows="5" cols="40" readonly v-model="contenidoRol"></textarea>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="">Contenido Nuevo</label><br>
-                                                    <textarea name="textarea" id="contenidoNuevoRol" name="contenidoNuevoRol" rows="5" cols="40" v-model="contenidoModificadoRol"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                            
-                                                    <li v-for="task in tasks">
-                                                        <input type="checkbox" :id="task.title" v-model="task.checked">
-                                                        <label :for="task.title">{{task.title}}  {{task.checked}}</label>
-                                                    </li>
                                            
-                                                <label for="exampleFormControlSelect2">Vistas a las que tendra
-                                                    acceso</label>
-                                                <select class="form-control" id="ContenidoRolMod" @change='onChange'>
-                                                    <option value="Clientes">Clientes</option>
-                                                    <option value="Productos">Productos</option>
-                                                    <option value="DatosProducto">Datos Producto</option>
-                                                    <option value="Perfil">Perfil</option>
-                                                    <option value="Usuario">Usuario</option>
-                                                    <option value="Prueba">Prueba</option>
-                                                </select>
+                                            <div class="mb-3">
+                                                <h6>Seleccione el contenido</h6>
+                                                <div class="form-check" v-for="task in tasks">
+                                                    <input class="form-check-input" type="checkbox" :id="task.title" v-model="task.checked">
+                                                    <label :for="task.title">{{task.title}}</label>
+                                                </div>
                                             </div>
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Modificar</button>
