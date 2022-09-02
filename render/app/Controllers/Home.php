@@ -392,8 +392,7 @@ class Home extends BaseController
         }else{
             $array = [];
         }
-        
-
+    
         echo json_encode($array);
     }
 
