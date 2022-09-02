@@ -1,6 +1,6 @@
 <script>
 	var app;
-	let limite = 0;
+	let limite = 1;
 	let numLinks = 6;
 	let limit = 16,
 		limit2 = 8;
@@ -699,9 +699,6 @@
 				}
 			});
 		})
-
-
-
 	})
 
 	async function buscarNuevo(limit1, offset1) {

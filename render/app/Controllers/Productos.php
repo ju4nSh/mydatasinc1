@@ -203,18 +203,32 @@ class Productos extends Controller
 			foreach ($imagen as $key => $img) {
 				$imagen[$key] = array("source" => $img);
 			}
-			$datos = [
-				"title" => $data["nombre"],
-				"category_id" => $data["categoria"],
-				"price" => $data["precio"],
-				"currency_id" => "COP",
-				"available_quantity" => $data["cantidad"],
-				"condition" => "new",
-				"listing_type_id" => "gold_pro",
-				"pictures" => $imagen,
-				"attributes" => $data["attributes"],
-				"channels" => ["marketplace", $data["mshops"] ? "mshops" : ''],
-			];
+			if ($data["mshops"] == "true")
+				$datos = [
+					"title" => $data["nombre"],
+					"category_id" => $data["categoria"],
+					"price" => $data["precio"],
+					"currency_id" => "COP",
+					"available_quantity" => $data["cantidad"],
+					"condition" => "new",
+					"listing_type_id" => "gold_pro",
+					"pictures" => $imagen,
+					"attributes" => $data["attributes"],
+					"channels" => ["marketplace", "mshops"],
+				];
+			else
+				$datos = [
+					"title" => $data["nombre"],
+					"category_id" => $data["categoria"],
+					"price" => $data["precio"],
+					"currency_id" => "COP",
+					"available_quantity" => $data["cantidad"],
+					"condition" => "new",
+					"listing_type_id" => "gold_pro",
+					"pictures" => $imagen,
+					"attributes" => $data["attributes"],
+					"channels" => ["marketplace"],
+				];
 
 			$respuesta = $this->mercadolibre->postMercadolibre($datos);
 
