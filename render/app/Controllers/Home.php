@@ -18,17 +18,13 @@ class Home extends BaseController
         $id = $ssesion->get("user");
         $rol = $ssesion->get("rol");
         $contenido = $ssesion->get("contenido");
-        if (empty($id)) {
-            return $this->response->redirect(site_url('/login'));
-        } else {
-            $view = \Config\Services::renderer();
-            $view->setVar('one', $id)
-                ->setVar('pagina', "Salpicadero")
-                ->setVar('titulo', "Dashboard")
-                ->setVar('rol', $rol)
-                ->setVar('contenido', $contenido);
-            echo $view->render("Contenido/contenidoDashboard");
-        }
+        $view = \Config\Services::renderer();
+        $view->setVar('one', $id)
+            ->setVar('pagina', "Salpicadero")
+            ->setVar('titulo', "Dashboard")
+            ->setVar('rol', $rol)
+            ->setVar('contenido', $contenido);
+        echo $view->render("Contenido/contenidoDashboard");
     }
 
     public function tablas()
@@ -66,6 +62,7 @@ class Home extends BaseController
                             "user" => $userExits[0]["Usuario"],
                             "rol" => $userExits[0]["Rol"],
                             "id" => $userExits[0]["id"],
+                            "login_in" => true,
                             "contenido" => $dato
                         ];
                         $session->set($data);
@@ -202,8 +199,8 @@ class Home extends BaseController
 
     public function salir()
     {
-        $ssesion = \Config\Services::session();
-        $ssesion->remove("user");
+        $session = \Config\Services::session();
+        $session->destroy();
         return $this->response->redirect(site_url('/'));
     }
     public function registrar()

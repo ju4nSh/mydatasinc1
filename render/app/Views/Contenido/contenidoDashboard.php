@@ -1,16 +1,5 @@
-<?= $this->extend("Dis/dashboard"); ?>
+<?= $this->extend("Dis/admin/dashboard"); ?>
 
-<?= $this->section("head"); ?>
-<?= $this->include("Partes/head"); ?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navLateral"); ?>
-<?= $this->include("Partes/navLateral"); ?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navArriba"); ?>
-<?= $this->include("Partes/navArriba"); ?>
-<?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
 <div class="container-fluid py-4">

@@ -1,3 +1,10 @@
+<script>
+    $(document).ready(function () {
+      if (<?php echo session()->get('login_in') ?>) {
+            location.replace('<?= base_url("index") ?>');
+        }
+    });
+</script>
 <script type="application/javascript">
 async function enviar(e) {
     await $.ajax({

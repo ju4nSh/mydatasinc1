@@ -50,6 +50,7 @@ class Productos extends Controller
 			if (session("rol") == 0) {
 				$respuesta = $this->producto->select("nombre, cantidad, codigo, precio, imagen, link, categoria, estado")->orderBy("id DESC")->where("Owner", session("id"))->findAll();
 				foreach ($respuesta as $key => $value) {
+					print_r($respuesta[$key]["imagen"]);
 					$respuesta[$key]["imagen"] = json_decode($value["imagen"]);
 				}
 			} else {
