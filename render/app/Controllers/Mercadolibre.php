@@ -15,7 +15,6 @@ class Mercadolibre extends Controller
 {
 	private $baseUri = '';
 	private $users = [
-
 		"token" => "APP_USR-7132638262334053-090314-b8460aa0e7caee0a47911f2234656e6a-245929580",
 		"user" => "TEST0DZEHY3B",
 		"userId" => "245929580",

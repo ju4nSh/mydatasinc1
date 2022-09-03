@@ -1,20 +1,6 @@
-<?= $this->extend("Dis/dashboard"); ?>
-
-
-<?= $this->section("head"); ?>
-<?= $this->include("Partes/head"); ?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navLateral"); ?>
-<?= $this->include("Partes/navLateral"); ?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navArriba"); ?>
-<?= $this->include("Partes/navArriba"); ?>
-<?= $this->endSection() ?>
+<?= $this->extend("Dis/admin/dashboard"); ?>
 
 <?= $this->section("contenido"); ?>
-
 <div class="row mt-3" id="contenidoProducto">
 	<div class="col-lg-12 mb-lg-0 mb-4">
 		<div class="row p-3">
