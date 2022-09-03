@@ -7,6 +7,7 @@ use App\Models\Producto;
 use CodeIgniter\Controller;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\Console\Descriptor\Descriptor;
 
 class Excel extends Controller
 {
@@ -22,44 +23,79 @@ class Excel extends Controller
 		$highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
 		$colProduct = [];
 		$colums = 0;
+		$rows = 0;
+		$flagColumn = false;
+		$col = 0;
 		for ($row = 2; $row <= $highestRow; ++$row) {
 			for ($col = 1; $col <= $highestColumnIndex; ++$col) {
 				$value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
 				if ($value != null) {
-					$colums++;
 					$colProduct[] = $value;
 				}
 			}
 		}
+		$keys = ["title", "category_id", "price", "available_quantity", "pictures", "attributes", "descripcion"];
+		$attributes = ["MOTO_TYPE", "BRAND", "MODEL", "VEHICLE_YEAR"];
+		$description = '';
 		$colProduct;
 		unlink("../public/uploads/meli.xlsx");
 		$publicar = new Mercadolibre();
 		$productoBD = new Producto();
 		$flag = false;
-		#TODO MEJORAR EL DINAMISMO
-		for ($i = 0; $i < $colums / 10; $i++) {
+		#SIRVE SOLO PARA CATEGORIAS MOTO
+		for ($ñ = 0; $ñ < $highestRow - 1; $ñ++) {
 			$data = [];
-			$imagen = explode(",", $colProduct[$i * ($colums / 3) + (4)]);
-			foreach ($imagen as $key => $img) {
-				$imagen[$key] = array("source" => trim($img));
+			$offset = $ñ * $highestColumnIndex;
+			$jsonImagen = [];
+			for ($j = 0; $j < $highestColumnIndex; $j++) {
+				if ($keys[$j] == "pictures") {
+					$imagen = explode(",", $colProduct[$offset + $j]);
+					$jsonImagen = $imagen;
+					foreach ($imagen as $key => $img) {
+						$imagen[$key] = array("source" => trim($img));
+					}
+					$data[] = [
+						$keys[$j] => $imagen,
+					];
+					continue;
+				}
+				if($keys[$j] == "attributes") {
+					$at = [];
+					$auxAt = [];
+					for($k = $j, $c = 0; $k < $j + 4; $k++, $c++) {
+						$auxAt[] = [
+							"id" => $attributes[$c],
+							"value_name" => $colProduct[$offset + $k]
+						];
+					}
+					$data[] = [
+						$keys[$j] => $auxAt,
+					];
+					continue;
+				}
+				if($keys[$j] == "descripcion") {
+					$description = $colProduct[$offset + $j + 3];
+					break;
+				}
+				$data[] = [
+					$keys[$j] => $colProduct[$offset + $j]
+				];
 			}
-			$data = [
-				"title" => $colProduct[$i * ($colums / 3) + (0)],
-				"category_id" => $colProduct[$i * ($colums / 3) + (1)],
-				"price" => $colProduct[$i * ($colums / 3) + (2)],
-				"available_quantity" => $colProduct[$i * ($colums / 3) + (3)],
-				"pictures" => $imagen,
+			$resu = [];
+			$op = [
 				"currency_id" => "COP",
 				"condition" => "new",
-				"attributes" => [
-					["id" => "MOTO_TYPE", "value_name" => $colProduct[$i * ($colums / 3) + (6)]],
-					["id" => "BRAND", "value_name" => $colProduct[$i * ($colums / 3) + (7)]],
-					["id" => "MODEL", "value_name" => $colProduct[$i * ($colums / 3) + (8)]],
-					["id" => "VEHICLE_YEAR", "value_name" => $colProduct[$i * ($colums / 3) + (9)]],
-				],
 				"listing_type_id" => "gold_pro",
 			];
-			$respuesta = $publicar->postMercadolibre($data);
+			for($i = 0; $i < count($data); $i++){
+				foreach ($data[$i] as $key => $value) {
+					$resu[0][$key] = $value;
+				}
+			}
+			foreach ($op as $key => $value) {
+				$resu[0][$key] = $value;
+			}
+			$respuesta = $publicar->postMercadolibre($resu[0]);
 			$respuesta = (array) json_decode($respuesta);
 
 			if (array_key_exists("id", $respuesta)) {
@@ -72,19 +108,19 @@ class Excel extends Controller
 				$categoryP = $response["category_id"];
 				$linkP = $response["permalink"];
 				$dataProduct = [
-					"nombre" => $colProduct[$i * ($colums / 3) + (0)],
-					"precio" => $colProduct[$i * ($colums / 3) + (2)],
+					"nombre" => $response["title"],
+					"precio" => $response["price"],
 					"categoria" => $categoryP,
 					"codigo"  => $idP,
-					"imagen" => json_encode(explode(",", $colProduct[$i * ($colums / 3) + (4)])),
+					"imagen" => json_encode($jsonImagen),
 					"link" => $linkP,
-					"cantidad" => $colProduct[$i * ($colums / 3) + (3)],
-					"descripcion" =>  $colProduct[$i * ($colums / 3) + (5)],
+					"cantidad" =>$response["available_quantity"],
+					"descripcion" =>  $description,
 					"Owner" => session("id"),
 				];
 				$res = $productoBD->save($dataProduct);
 				if ($res) {
-					$publicar->addDescriptionMercadolibre($idP, $colProduct[$i * ($colums / 3) + (5)]);
+					$publicar->addDescriptionMercadolibre($idP, $description);
 					$flag = true;
 				} else {
 					$flag = false;
@@ -96,7 +132,7 @@ class Excel extends Controller
 				echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
 			}
 		}
-		if($flag) {
+		if ($flag) {
 			echo json_encode(["result" => 1]);
 		} else {
 			echo json_encode(["result" => 0]);
