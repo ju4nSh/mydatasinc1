@@ -68,20 +68,20 @@ class Rol extends Controller
         $builder = $db->table('roles');
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("id");
+        $rol = $ssesion->get("rol");
+        $respuesta=false;
         $datos = $builder->select('*')->where('Usuario',$id)->get()->getResultArray();
         if(count($datos) == 0){
-            $builder1 = $db->table('users');
+            if($rol == 0){
+                $respuesta = true;
+            }else{
+                $builder1 = $db->table('users');
             $datos1 = $builder1->select('Creator')->where('id',$id)->get()->getResultArray();
             $datos2 = $builder1->select('id')->where('id',$datos1[0]["Creator"])->get()->getResultArray();
-            $datos3 = $builder->select('*')->where('Usuario',$datos2[0]["id"])->get()->getResultArray();
-            foreach ($datos3 as $variable) {
-                $array[] = [
-                    'Identificacion' => $variable['Identificacion'],
-                    'Nombre' => $variable['Nombre'],
-                    'Contenido' => $variable['Contenido'],
-                ];
+            $datos = $builder->select('*')->where('Usuario',$datos2[0]["id"])->get()->getResultArray();
             }
-        }else{
+        }
+        if($respuesta==false){
             foreach ($datos as $variable) {
                 $array[] = [
                     'Identificacion' => $variable['Identificacion'],
@@ -89,6 +89,9 @@ class Rol extends Controller
                     'Contenido' => $variable['Contenido'],
                 ];
             }
+        }
+        else{
+            $array=[];
         }
         
         echo json_encode($array);
@@ -149,6 +152,7 @@ class Rol extends Controller
             echo json_encode($array);
         }
     }
+   
     public function mostrarRolesDelete()
     {
         $db = \Config\Database::connect();
@@ -157,6 +161,7 @@ class Rol extends Controller
         $ssesion = \Config\Services::session();
         $id = $ssesion->get("id");
         $datos = $builder->select('*')->where('Usuario',$id)->get()->getResultArray();
+        $array=[];
         foreach ($datos as $variable) {
             if($variable['Identificacion']!=$Identificacion){
                 $array[] = [
@@ -164,9 +169,8 @@ class Rol extends Controller
                     'Nombre' => $variable['Nombre'],
                     'Contenido' => $variable['Contenido'],
                 ];
-            }
-           
         }
+    }
         echo json_encode($array);
     }
     public function modificarRolAUsuarios()
@@ -197,6 +201,36 @@ class Rol extends Controller
         );
         $builder->where($data_array);
         echo json_encode($builder->update($data));
+    }
+
+    public function eliminarRolForzado()
+    {
+        $Identificacion = $this->request->getVar("identificacion");
+        $db = \Config\Database::connect();
+        $builder = $db->table('roles');
+        $builder1 = $db->table('users');
+        $data_array = array('Identificacion' => $Identificacion);
+        $builder->where($data_array);
+        $dato = $builder->delete();
+       
+            echo json_encode($dato);
+        
+    }
+    public function modificarRolNull()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $Identificacion = $this->request->getVar("Identificacion");
+        $Rol = $this->request->getVar("Rol1");
+
+        $data_array = array('Identificacion' => $Identificacion);
+        $data = array(
+            'Rol' => $Rol
+        );
+        $builder->where($data_array);
+        $builder->update($data);
+        $controlador = new Personas();
+        $controlador->PersonasRolNull();
     }
     
 }
