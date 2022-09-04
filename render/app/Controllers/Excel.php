@@ -26,6 +26,11 @@ class Excel extends Controller
 		$rows = 0;
 		$flagColumn = false;
 		$col = 0;
+		$keys = ["title", "category_id", "price", "available_quantity", "pictures", "attributes", "descripcion"];
+		$attributes = ["MOTO_TYPE", "BRAND", "MODEL", "VEHICLE_YEAR"];
+		$publicar = new Mercadolibre();
+		$productoBD = new Producto();
+		$object = [];
 		for ($row = 2; $row <= $highestRow; ++$row) {
 			for ($col = 1; $col <= $highestColumnIndex; ++$col) {
 				$value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
@@ -34,13 +39,9 @@ class Excel extends Controller
 				}
 			}
 		}
-		$keys = ["title", "category_id", "price", "available_quantity", "pictures", "attributes", "descripcion"];
-		$attributes = ["MOTO_TYPE", "BRAND", "MODEL", "VEHICLE_YEAR"];
 		$description = '';
 		$colProduct;
 		unlink("../public/uploads/meli.xlsx");
-		$publicar = new Mercadolibre();
-		$productoBD = new Producto();
 		$flag = false;
 		#SIRVE SOLO PARA CATEGORIAS MOTO
 		for ($ñ = 0; $ñ < $highestRow - 1; $ñ++) {
@@ -54,13 +55,10 @@ class Excel extends Controller
 					foreach ($imagen as $key => $img) {
 						$imagen[$key] = array("source" => trim($img));
 					}
-					$data[] = [
-						$keys[$j] => $imagen,
-					];
+					$data[$keys[$j]] = $imagen;
 					continue;
 				}
 				if($keys[$j] == "attributes") {
-					$at = [];
 					$auxAt = [];
 					for($k = $j, $c = 0; $k < $j + 4; $k++, $c++) {
 						$auxAt[] = [
@@ -68,34 +66,19 @@ class Excel extends Controller
 							"value_name" => $colProduct[$offset + $k]
 						];
 					}
-					$data[] = [
-						$keys[$j] => $auxAt,
-					];
+					$data[$keys[$j]] =  $auxAt;
 					continue;
 				}
 				if($keys[$j] == "descripcion") {
 					$description = $colProduct[$offset + $j + 3];
 					break;
 				}
-				$data[] = [
-					$keys[$j] => $colProduct[$offset + $j]
-				];
+				$data[$keys[$j]] = $colProduct[$offset + $j];
 			}
-			$resu = [];
-			$op = [
-				"currency_id" => "COP",
-				"condition" => "new",
-				"listing_type_id" => "gold_pro",
-			];
-			for($i = 0; $i < count($data); $i++){
-				foreach ($data[$i] as $key => $value) {
-					$resu[0][$key] = $value;
-				}
-			}
-			foreach ($op as $key => $value) {
-				$resu[0][$key] = $value;
-			}
-			$respuesta = $publicar->postMercadolibre($resu[0]);
+			$data["currency_id"] = "COP";
+			$data["condition"] = "new";
+			$data["listing_type_id"] = "gold_pro";
+			$respuesta = $publicar->postMercadolibre($data);
 			$respuesta = (array) json_decode($respuesta);
 
 			if (array_key_exists("id", $respuesta)) {
