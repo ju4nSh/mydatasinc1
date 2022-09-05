@@ -160,7 +160,7 @@ class Personas extends Controller
     public function PausarLote($to){
         $db = \Config\Database::connect();
         $builder = $db->table('productos');
-        $datos = $builder->select('codigo')->like("nombre",$to,'before')->limit(2)->get()->getResultArray();
+        $datos = $builder->select('codigo')->like("nombre",$to,'after')->limit(2)->get()->getResultArray();
         foreach($datos as $variable){
             CLI::newLine();
             $uri ="https://api.mercadolibre.com/items/".$variable["codigo"];
@@ -180,6 +180,7 @@ class Personas extends Controller
 		curl_close($conexion);
 		print_r($r);
         CLI::newLine();
+
         }
     }
     
