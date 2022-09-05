@@ -1,9 +1,9 @@
 a.addProductBoton {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 4px;
     cursor: pointer;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
     text-decoration: none;
 }
 
@@ -11,6 +11,7 @@ a.addProductBoton>i {
     font-size: 18px;
     /* color: var(--bs-info) */
 }
+
 div#contenidoProducto {
     position: relative;
 }
@@ -23,11 +24,11 @@ div#agregarProductoMasivo {
 }
 
 div.categoriesDetail>.form-group {
-    padding: 0;
+    cursor: pointer;
     max-height: 300px;
+    padding: 0;
     overflow: scroll;
     overflow-x: hidden;
-    cursor: pointer;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar,
@@ -59,8 +60,8 @@ div.categoriesDetail>.form-group::-webkit-scrollbar-thumb,
 div.fieldInput::-webkit-scrollbar-thumb,
 div#productos_wrapper::-webkit-scrollbar-thumb {
     background-color: #5e72e4 !important;
-    border-radius: 20px !important;
     border: 1px solid #5e72e4 !important;
+    border-radius: 20px !important;
 }
 
 div.categoriesDetail>.form-group::-webkit-scrollbar-track,
@@ -85,13 +86,13 @@ div.swal-overlay {
 }
 
 div#spinnerAgregarProducto {
-    position: absolute;
-    width: 60px;
     height: 60px;
-    z-index: 10002 !important;
-    top: 50%;
-    z-index: 10003 !important;
     left: 49%;
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    z-index: 10002 !important;
+    z-index: 10003 !important;
 }
 
 /* FIN ESTILOS DEL SWEETALERT */
@@ -125,46 +126,48 @@ div.carousel>div.detallesProductos {
 }
 
 div.carousel>div.detallesProductos>div.cantidadProducto {
-    width: 100%;
     display: flex !important;
     justify-content: space-between;
+    width: 100%;
 }
 
 /* estilos del nav paginacion */
-div#botonNavegacion > ul {
-    list-style: none !important;
+div#botonNavegacion>ul {
     display: flex !important;
     gap: 10px;
+    list-style: none !important;
 }
-div#botonNavegacion > ul > li.active {
+
+div#botonNavegacion>ul>li.active {
     background-color: var(--bs-info) !important;
 }
 
-div#botonNavegacion > ul > li.disabled 
-{
-    cursor: not-allowed;
+div#botonNavegacion>ul>li.disabled {
     background-color: rgb(229, 229, 229) !important;
+    cursor: not-allowed;
 }
-div#botonNavegacion > ul > li.disabled > * 
-{
-    pointer-events:none;
+
+div#botonNavegacion>ul>li.disabled>* {
+    pointer-events: none;
 }
-div#botonNavegacion > ul > li {
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
+
+div#botonNavegacion>ul>li {
     align-items: center;
     background-color: whitesmoke;
+    border-radius: 100%;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
 }
+
 /* fin estilos paginacion */
 
 
 @media (max-width: 575px) {
     div.productosCargados {
-        grid-template: auto / repeat(1, 1fr) !important;
         gap: 30px;
+        grid-template: auto / repeat(1, 1fr) !important;
     }
 
     #app {
@@ -174,8 +177,8 @@ div#botonNavegacion > ul > li {
 
 @media (min-width: 576px) and (max-width: 767px) {
     div.productosCargados {
-        grid-template: auto / repeat(2, 1fr) !important;
         gap: 30px;
+        grid-template: auto / repeat(2, 1fr) !important;
     }
 
     #app {
@@ -185,8 +188,8 @@ div#botonNavegacion > ul > li {
 
 @media (min-width: 768px) and (max-width: 991px) {
     div.productosCargados {
-        grid-template: auto / repeat(3, 1fr) !important;
         gap: 30px;
+        grid-template: auto / repeat(3, 1fr) !important;
     }
 
     #app {
@@ -196,9 +199,10 @@ div#botonNavegacion > ul > li {
 
 @media (min-width: 992px) and (max-width: 1199px) {
     div.productosCargados {
-        grid-template: auto / repeat(3, 1fr) !important;
         gap: 30px;
+        grid-template: auto / repeat(3, 1fr) !important;
     }
+
     #app {
         margin-left: 2rem !important;
     }
@@ -206,15 +210,15 @@ div#botonNavegacion > ul > li {
 
 @media (min-width: 1200px) and (max-width: 1399px) {
     div.productosCargados {
-        grid-template: auto / repeat(3, 1fr) !important;
         gap: 30px;
+        grid-template: auto / repeat(3, 1fr) !important;
     }
 }
 
 @media (min-width: 1400px) {
     div.productosCargados {
-        grid-template: auto / repeat(4, 1fr) !important;
         gap: 30px;
+        grid-template: auto / repeat(4, 1fr) !important;
     }
 }
 
@@ -222,33 +226,35 @@ div#botonNavegacion > ul > li {
 
 
 /* ESTILOS MODAL AGREGAR PRODUCTOS FOOTER BOTONES */
-div.modal-footer > button {
+div.modal-footer>button {
     color: white !important;
 }
+
 /* FIN ESTILOS MODAL */
 
 /* ESTILOS DEL BOTON PREGUNTAS NUEVAS DE MELI */
 button#btnPreguntasMELI {
-    width: 200px;
+    color: white !important;
     height: 40px !important;
     position: fixed !important;
     right: 10% !important;
+    width: 200px;
     z-index: 100;
-    color: white !important;
 }
+
 /* FIN ESTILOS PREGUNTAS MELI */
 
 /* ESTILO SCREEN LOAD CUANDO SE NAVEGA CON LOS LINK DE PRODUCTOS */
 div#loadScreenProduct {
-    display: grid !important;
-    place-items: center !important;
-    width: 300px !important;
-    height: 300px !important;
-    position: fixed;
-    transform: translate(150%, 50%) !important;
     background-color: rgba(110, 109, 109, 0.8);
     border-radius: 8px;
     color: white;
+    display: grid !important;
+    height: 300px !important;
+    position: fixed;
+    place-items: center !important;
+    transform: translate(150%, 50%) !important;
+    width: 300px !important;
 }
 
 /* FIN ESTILOS LOAD SCREEN */

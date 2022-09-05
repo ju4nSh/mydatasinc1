@@ -1,4 +1,4 @@
-<?= $this->extend("Dis/dashboard"); ?>
+<?= $this->extend("Dis/admin/dashboard"); ?>
 
 <?= $this->section("head"); ?>
 <?= $this->include("Partes/head"); ?>

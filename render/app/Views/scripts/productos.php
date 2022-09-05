@@ -92,17 +92,17 @@
 				modelAnswer: '', //input para escribir las respuestas de MELI
 				mshops: false,
 				loadScreen: false,
+				generateXlsx: false,
+				downloadEXCEL: false,
 			},
 			mounted: async function() {
 
 			},
 			created: async function() {
 				$("#loadProductMELI").addClass("spinner-border spinner-border-sm");
-
-				let url1 = "<?= base_url("getAllProduct") ?>";
 				await $.ajax({
 					type: "post",
-					url: url1,
+					url: "<?= base_url("getAllProduct") ?>",
 					dataType: "json",
 					success: function(response) {
 						if (response.result == 1)
@@ -114,11 +114,8 @@
 					}
 				});
 
-
-				let url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
-				// this.articulos = JSON.parse(response);
 				await $.ajax({
-					url: url,
+					url: "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null",
 					dataType: "json",
 					success: function(response) {
 						if (response.data.length > 0) {
@@ -465,6 +462,8 @@
 							$("#agregarProductoModal").animate({
 								scrollTop: altura + "px"
 							});
+
+							app.generateXlsx = true;
 						}
 					});
 				},
@@ -633,6 +632,9 @@
 					}
 				},
 				publicarMasivo: async function () {
+					($("#pMasivo").parent()).addClass("disabled")
+					$("#pMasivo").addClass("spinner-border spinner-border-sm");
+					
 					let file = new FormData();
 					file.append("file", $("#archivoxslx").prop("files")[0])
 					await $.ajax({
@@ -646,10 +648,42 @@
 							if(response.result == 1) {
 								swal("Bien", "Productos publicados correctamente", "success")
 							} else {
-								console.log(2)
+								let error = [];
+								$.each(response.cause, function(indexInArray, valueOfElement) {
+									// console.log(valueOfElement.message)
+									error.push(valueOfElement.message)
+								});
+								error.push(response.mensaje)
+								swal("Error", JSON.stringify(error), "info");
 							}
 						}
 					});
+					$("#pMasivo").removeClass("spinner-border spinner-border-sm");
+					($("#pMasivo").parent()).removeClass("disabled")
+				},
+				generateXLSX: async function () {
+					($("#generateXlsx").parent()).addClass("disabled")
+					$("#generateXlsx").addClass("spinner-border spinner-border-sm");
+					await $.ajax({
+						type: "post",
+						url: "<?=base_url("generateXlsx")?>",
+						data: {
+							"category" : $("#categoriaPN").val(),
+							"attributes" : app.camposRequeridos
+						},
+						dataType: "json",
+						success: function (response) {
+							// console.log(response)
+							app.downloadEXCEL = true;
+						},
+						error: function () {
+							console.log(1)
+							$("#generateXlsx").removeClass("spinner-border spinner-border-sm");
+							($("#generateXlsx").parent()).removeClass("disabled")
+						}
+					});
+					$("#generateXlsx").removeClass("spinner-border spinner-border-sm");
+					($("#generateXlsx").parent()).removeClass("disabled")
 				},
 			},
 			watch: {}

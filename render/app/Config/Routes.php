@@ -64,11 +64,11 @@ $routes->post('ModificarPerfil', 'Home::ModificarPerfil');
 $routes->get('Clientes', 'Home::tablas');
 $routes->post('guardar', 'Home::guardar');
 $routes->get('salir', 'Home::salir');
-$routes->get('Productos', 'Home::productos');
+$routes->add('Productos', 'Home::productos');
 $routes->get('obtenerproductos', 'Productos::getProduct');
 $routes->post('obtenercategoriaId', 'Productos::getCategory_Id');
 
-$routes->get('obtenercategoria', 'Productos::obtenerCategoria');
+$routes->add('obtenercategoria', 'Productos::obtenerCategoria');
 $routes->get('obtenerdetallescategoria/(:any)', 'Productos::obtenerDetallesCategoria/$1');
 $routes->get('attributesCategory/(:any)', 'Productos::attributesCategory/$1');
 $routes->post('publicarMercadolibre', 'Productos::publicarMercadolibre');
@@ -93,12 +93,12 @@ $routes->get('getData/(:any)/(:any)', 'Productos::getData/$1/$2');
 $routes->get('createLinks/(:any)/(:any)', 'Productos::createLinks/$1/$2');
 
 // obtener todos los productos de mercadolibre
-$routes->post('getAllProduct', 'Productos::getAllProduct');
+$routes->add('getAllProduct', 'Productos::getAllProduct');
 // obtener productos de la base de datos
 $routes->get('searchProducts/(:any)/(:any)/(:any)/(:any)', 'Productos::searchProducts/$1/$2/$3/$4');
 
 // activar o descativar productos | eliminar productos
-$routes->get('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar/$1/$2');
+$routes->add('actualizarStatus/(:any)/(:any)', 'Productos::pausarActivarEliminar/$1/$2');
 //Graficos
 $routes->get('graficoCircular', 'Graficos::graficoCircular');
 $routes->get('graficoLineaProducto', 'Graficos::graficoLineaProducto');
@@ -110,7 +110,7 @@ $routes->post('obtenerPaginacion', 'DataProducto::obtenerPaginacion');
 // validar conexion
 $routes->get('validarConexionMerLi', 'Personas::validarConexionMerLi');
 // get all questions of meli
-$routes->get('getAllQuestions', 'Productos::getAllQuestions');
+$routes->add('getAllQuestions', 'Productos::getAllQuestions');
 // answer questions MELI
 $routes->post('answerQuestions', 'Productos::answerQuestions');
 // Modificar Contraseña Perfil
@@ -152,3 +152,9 @@ $routes->post('publicarMasivo', 'Productos::publicarMasivo');
 $routes->cli('pruebacli',   'Personas::prueba');
 
 
+// metodos CLI
+$routes->cli('getAllProductCli/(:num)', 'Productos::getAllProductCli/$1');
+$routes->cli('updateStatusLikeName/(:any)', 'Productos::updateStatusLikeName/$1');
+
+// generando los archivos xlsx dependiendo de la categoria
+$routes->post('generateXlsx', 'Productos::generateXlsx');

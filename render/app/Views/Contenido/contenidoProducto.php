@@ -1,20 +1,6 @@
-<?= $this->extend("Dis/dashboard"); ?>
-
-
-<?= $this->section("head"); ?>
-<?= $this->include("Partes/head"); ?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navLateral"); ?>
-<?= $this->include("Partes/navLateral"); ?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navArriba"); ?>
-<?= $this->include("Partes/navArriba"); ?>
-<?= $this->endSection() ?>
+<?= $this->extend("Dis/admin/dashboard"); ?>
 
 <?= $this->section("contenido"); ?>
-
 <div class="row mt-3" id="contenidoProducto">
 	<div class="col-lg-12 mb-lg-0 mb-4">
 		<div class="row p-3">
@@ -135,6 +121,7 @@
 									<div is="sub-category" v-for="(j, index) in item" v-bind:id="j.id" v-bind:name="j.name" v-on:add="subcategory(j.id, p)"></div>
 								</div>
 
+
 							</div>
 							<div class="row">
 								<label for="recipient-name" class="col-form-label">Imagenes:</label>
@@ -189,6 +176,11 @@
 						</form>
 					</div>
 					<div class="modal-footer">
+						<a v-if="downloadEXCEL" class="btn btn-warning" href="./meli.xlsx" type="button" download="">Descargar excel</a>
+						<button v-if="generateXlsx" @click="generateXLSX" class="btn btn-info" type="button">
+							<span id="generateXlsx" class="" role="status" aria-hidden="true"></span>
+							Generar plantilla Xlsx
+						</button>
 						<button type="button" class="btn btn-secondary" id="cerrarPN" data-dismiss="modal">Cerrar</button>
 						<button @click="publicarPN" class="btn btn-primary" type="button">
 							<span id="publicarProductoN" class="" role="status" aria-hidden="true"></span>
@@ -349,7 +341,7 @@
 											<div class="form-group row">
 												<input class="form-control col-md-6 p-1 mr-1" id="archivoxslx" type="file" name="archivo">
 												<button @click="publicarMasivo" class="btn btn-primary form-control col-md-2 p-1" type="button">
-													<span class="" role="status" aria-hidden="true"></span>
+													<span id="pMasivo" class="" role="status" aria-hidden="true"></span>
 													Publicar
 												</button>
 											</div>
