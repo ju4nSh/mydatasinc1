@@ -9,7 +9,7 @@ class MercadoShop extends Controller
 {
     public function getValidarMercadoShop()
     {
-        $token = "APP_USR-4332857485021545-090510-0c6e7a223ed06ccd56eb62178834dc45-833930674";
+        $token = "APP_USR-4332857485021545-090516-f69a7b649907e5a96228a68c6007cf56-833930674";
         $ssesion = \Config\Services::session();
         $db = \Config\Database::connect();
         $builder = $db->table('users');
