@@ -334,8 +334,8 @@
 										<div class="card-body row">
 											<div class="form-group row">
 												<input class="form-control col-md-6 p-1 mr-1" id="archivoxslx" type="file" name="archivo">
-												<button @click="publicarMasivo" class="btn btn-primary form-control col-md-2 p-1" type="button">
-													<span class="" role="status" aria-hidden="true"></span>
+												<button  @click="publicarMasivo" class="btn btn-primary form-control col-md-2 p-1" type="button">
+													<span id="pMasivo" class="" role="status" aria-hidden="true"></span>
 													Publicar
 												</button>
 											</div>

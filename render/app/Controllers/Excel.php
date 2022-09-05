@@ -111,8 +111,10 @@ class Excel extends Controller
 			} else if (array_key_exists("status", $respuesta)) {
 				if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
 					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
+					return;
 			} else {
 				echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
+				return;
 			}
 		}
 		if ($flag) {

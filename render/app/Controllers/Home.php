@@ -20,7 +20,7 @@ class Home extends BaseController
         $rol = $ssesion->get("rol");
         $contenido = $ssesion->get("contenido");
         if (empty($id)) {
-            return $this->response->redirect(base_url('/login'));
+            return $this->response->redirect(base_url('login'));
         } else {
             $view = \Config\Services::renderer();
             $view->setVar('one', $id)

@@ -565,12 +565,14 @@ class Productos extends Controller
 	public function publicarMasivo()
 	{
 		$file = $this->request->getFile("file");
-		$file->move("../public/uploads", $file->getName());
-		if($file->hasMoved()) {
-			$excel = new Excel();
-			$excel->index();
+		if($file != null) {
+			$file->move("../public/uploads", $file->getName());
+			if($file->hasMoved()) {
+				$excel = new Excel();
+				$excel->index();
+			}
 		}
 		else 
-			echo json_encode(["result" => 0]);
+			echo json_encode(["result" => 0, "mensaje" => "elija un archivo"]);
 	}
 }

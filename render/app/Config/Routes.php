@@ -54,7 +54,7 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
 
-$routes->get('index', 'Home::index', ['filter' => 'auth']);
+$routes->get('index', 'Home::index');
 $routes->get('login', 'Home::login');
 $routes->post('registrar', 'Home::registrar');
 $routes->get('mostrarRegistrar', 'Home::mostrarRegistrar');

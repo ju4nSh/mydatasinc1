@@ -1,10 +1,4 @@
-<script>
-    $(document).ready(function () {
-      if (<?php echo session()->get('login_in') ?>) {
-            location.replace('<?= base_url("index") ?>');
-        }
-    });
-</script>
+
 <script type="application/javascript">
 async function enviar(e) {
     await $.ajax({
@@ -15,7 +9,8 @@ async function enviar(e) {
         dataType: "json",
         success:async function(data) {
             if (data.result == 1) {
-                location.replace('<?= base_url("/index") ?>');
+                alert(2)
+                location.replace('<?= base_url("index") ?>');
             } else if(data.result == 3) {
                 await swal("Error", "rellene los campos", "error")
             } else if (data.result == 2) {

@@ -633,6 +633,9 @@
 					}
 				},
 				publicarMasivo: async function () {
+					($("#pMasivo").parent()).addClass("disabled")
+					$("#pMasivo").addClass("spinner-border spinner-border-sm");
+					
 					let file = new FormData();
 					file.append("file", $("#archivoxslx").prop("files")[0])
 					await $.ajax({
@@ -646,10 +649,18 @@
 							if(response.result == 1) {
 								swal("Bien", "Productos publicados correctamente", "success")
 							} else {
-								console.log(2)
+								let error = [];
+								$.each(response.cause, function(indexInArray, valueOfElement) {
+									// console.log(valueOfElement.message)
+									error.push(valueOfElement.message)
+								});
+								error.push(response.mensaje)
+								swal("Error", JSON.stringify(error), "info");
 							}
 						}
 					});
+					$("#pMasivo").removeClass("spinner-border spinner-border-sm");
+					($("#pMasivo").parent()).removeClass("disabled")
 				},
 			},
 			watch: {}
