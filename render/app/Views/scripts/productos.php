@@ -92,6 +92,8 @@
 				modelAnswer: '', //input para escribir las respuestas de MELI
 				mshops: false,
 				loadScreen: false,
+				generateXlsx: false,
+				downloadEXCEL: false,
 			},
 			mounted: async function() {
 
@@ -460,6 +462,8 @@
 							$("#agregarProductoModal").animate({
 								scrollTop: altura + "px"
 							});
+
+							app.generateXlsx = true;
 						}
 					});
 				},
@@ -656,6 +660,30 @@
 					});
 					$("#pMasivo").removeClass("spinner-border spinner-border-sm");
 					($("#pMasivo").parent()).removeClass("disabled")
+				},
+				generateXLSX: async function () {
+					($("#generateXlsx").parent()).addClass("disabled")
+					$("#generateXlsx").addClass("spinner-border spinner-border-sm");
+					await $.ajax({
+						type: "post",
+						url: "<?=base_url("generateXlsx")?>",
+						data: {
+							"category" : $("#categoriaPN").val(),
+							"attributes" : app.camposRequeridos
+						},
+						dataType: "json",
+						success: function (response) {
+							// console.log(response)
+							app.downloadEXCEL = true;
+						},
+						error: function () {
+							console.log(1)
+							$("#generateXlsx").removeClass("spinner-border spinner-border-sm");
+							($("#generateXlsx").parent()).removeClass("disabled")
+						}
+					});
+					$("#generateXlsx").removeClass("spinner-border spinner-border-sm");
+					($("#generateXlsx").parent()).removeClass("disabled")
 				},
 			},
 			watch: {}

@@ -7,8 +7,8 @@ use App\Models\Producto;
 use CodeIgniter\Controller;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpParser\Node\Stmt\Foreach_;
 use Symfony\Component\Console\Descriptor\Descriptor;
-
 class Excel extends Controller
 {
 	public static function index()
@@ -22,9 +22,6 @@ class Excel extends Controller
 		$highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
 		$highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
 		$colProduct = [];
-		$colums = 0;
-		$rows = 0;
-		$flagColumn = false;
 		$col = 0;
 		$keys = ["title", "category_id", "price", "available_quantity", "pictures", "attributes", "descripcion"];
 		$attributes = ["MOTO_TYPE", "BRAND", "MODEL", "VEHICLE_YEAR"];
@@ -122,5 +119,33 @@ class Excel extends Controller
 		} else {
 			echo json_encode(["result" => 0]);
 		}
+	}
+
+	public static function generateExcel($category, $attr)
+	{
+		// generando el excel
+		
+		/** Create a new Spreadsheet Object **/
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue('A1', 'title');
+		$sheet->setCellValue('B1', 'category_id');
+		$sheet->setCellValue('B2', $category);
+		$sheet->setCellValue('C1', 'price');
+		$sheet->setCellValue('D1', 'available_quantity');
+		$sheet->setCellValue('E1', 'pictures');
+		$colsLetter = array("F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+		$count = 0;
+		if($attr != null) {
+			foreach ($attr as $key => $value) {
+				$sheet->setCellValue("{$colsLetter[$key]}1", $value["id"]);
+				$count++;
+			}
+		}
+		$sheet->setCellValue("{$colsLetter[$count]}1", 'description');
+
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('meli.xlsx');
+		return true;
 	}
 }

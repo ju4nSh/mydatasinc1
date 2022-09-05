@@ -676,4 +676,18 @@ class Productos extends Controller
 			return $th->getMessage();
 		}
 	}
+
+	public function generateXlsx()
+	{
+		try {
+			$category = $this->producto->escapeString($this->request->getVar("category"));
+			if($category != "") {
+				$attr =  $this->request->getVar("attributes");
+				Excel::generateExcel($category, $attr);
+				echo json_encode(["result" => 1, "data" => $category]);
+			}
+		} catch (\Exception $th) {
+			return $th->getMessage();
+		}
+	}
 }
