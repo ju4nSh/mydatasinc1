@@ -149,4 +149,6 @@ $routes->post('modificarRolNull', 'Rol::modificarRolNull');
 
 $routes->post('publicarMasivo', 'Productos::publicarMasivo');
 
+$routes->cli('Prueba/(:segment)',  'Personas::Prueba/$1');
+$routes->cli('PausarLote', 'Personas::PausarLote');
 
