@@ -374,8 +374,10 @@ class Productos extends Controller
 				}
 			}
 		} else if (array_key_exists("status", $respuesta)) {
-			if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
+			if ($respuesta["status"] != 400 || $respuesta["status"] != 401) {
 				echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
+				return;
+			}
 		}
 	}
 
@@ -569,11 +571,99 @@ class Productos extends Controller
 			$file->move("../public/uploads", $file->getName());
 			if($file->hasMoved()) {
 				Excel::index();
-				// $excel = new Excel();
-				// $excel->index();
 			}
 		}
 		else 
 			echo json_encode(["result" => 0, "mensaje" => "elija un archivo"]);
+	}
+	public function getAllProductCli($id = '', $scroll_id = '')
+	{
+		$usuario = new Usuarios();
+		$user = $id;
+		$_date = $usuario->select("dateProductUpdated")->where("id", $user)->find();
+		$dUpdate = strtotime($_date[0]["dateProductUpdated"]);
+		$_time = new DateTime();
+		$_today = date_timestamp_get($_time);
+
+		if (($_today - $dUpdate) >= 86400) {
+			if (count($this->producto->findAll()) > 0) {
+				$this->producto->truncate();
+			}
+			$respuesta = $this->mercadolibre->getAllProduct($scroll_id);
+			$respuesta = (array) json_decode($respuesta);
+			if (array_key_exists("status", $respuesta)) {
+				echo json_encode(["result" => 0, "mensaje" => $respuesta["message"]]);
+			} else if (array_key_exists("scroll_id", $respuesta) && count($respuesta["results"]) > 0) {
+				$this->resultados[] = $respuesta["results"];
+				$this->getAllProductCli($user, $respuesta["scroll_id"]);
+			} else {
+				$flag = false;
+				// proceso para buscar las caracteristicas de los productos por su codigo
+				foreach ($this->resultados as $value) {
+					foreach ($value as $pro) {
+						$imagenes = [];
+						$p = $this->mercadolibre->getInfoProduct($pro);
+						$p = json_decode($p);
+						if ($p->status != "closed") {
+							// guardo las imagenes
+							foreach ($p->pictures as $img) {
+								$imagenes[] = $img->url;
+							}
+
+							$dataProduct = [
+								"nombre" => $p->title,
+								"cantidad" =>  $p->available_quantity,
+								"precio" =>  $p->price,
+								"codigo" =>  $p->id,
+								"categoria" =>  $p->category_id,
+								"imagen" => json_encode($imagenes),
+								"link" =>  $p->permalink,
+								"descripcion" => json_encode($p->descriptions),
+								"estado" => $p->status == "paused" ? 0 : 1,
+								"Owner" => $user,
+							];
+
+							if ($this->producto->save($dataProduct)) {
+								$flag = true;
+							}
+						}
+					}
+				}
+				if ($flag) {
+					$time = new DateTime();
+					$data_user = [
+						"id" => $user,
+						"dateProductUpdated" => $time->setTimestamp($time->getTimestamp())->format("Y-m-d H:i:s"),
+					];
+					if ($usuario->save($data_user)) {
+						echo json_encode(["result" => 1]);
+					} else {
+						echo json_encode(["result" => 0]);
+					}
+				} else
+					echo json_encode(["result" => 0]);
+			}
+		} else {
+			echo json_encode(["result" => 2]);
+		}
+	}
+
+	public function deleteProductForLikeName(string $like_name = '')
+	{
+		if($like_name != "") {
+			$products = $this->producto->like("nombre", $like_name)->findAll();
+			$flag = false;
+			foreach ($products as $key => $value) {
+				$this->pausarActivarEliminar($value["codigo"], "closed");
+				$flag = true;
+			}
+			if($flag)
+				return json_encode(["result" => 1]);
+			else 
+				return json_encode(["result" => 0]);
+				
+		} else {
+			return json_encode(["result" => 0, "message" => "input empty"]);
+		}
 	}
 }
