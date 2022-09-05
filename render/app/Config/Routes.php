@@ -152,4 +152,4 @@ $routes->post('publicarMasivo', 'Productos::publicarMasivo');
 
 // metodos CLI
 $routes->cli('getAllProductCli/(:num)', 'Productos::getAllProductCli/$1');
-$routes->cli('deleteProductForLikeName/(:alpha)', 'Productos::deleteProductForLikeName/$1');
+$routes->cli('updateStatusLikeName/(:any)', 'Productos::updateStatusLikeName/$1');

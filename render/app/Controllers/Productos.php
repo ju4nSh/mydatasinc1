@@ -648,22 +648,32 @@ class Productos extends Controller
 		}
 	}
 
-	public function deleteProductForLikeName(string $like_name = '')
+	/**
+	 * $code hace referencia al producto que no aplicara la accion.
+	 * $like_name el string a buscar
+	 * $action accion a realizar (paused, active, closed)
+	 */
+	public function updateStatusLikeName(string $like_name = '', string $action = '', string $code = '')
 	{
-		if($like_name != "") {
-			$products = $this->producto->like("nombre", $like_name)->findAll();
-			$flag = false;
-			foreach ($products as $key => $value) {
-				$this->pausarActivarEliminar($value["codigo"], "closed");
-				$flag = true;
+		try {
+			if($like_name != "" && $action != "") {
+				$code = $code != '' ? $code : '';
+				$products = $this->producto->where("codigo <> '" . $code . "'")->like("nombre", $like_name)->findAll();
+				$flag = false;
+				foreach ($products as $key => $value) {
+					$this->pausarActivarEliminar($value["codigo"], $action);
+					$flag = true;
+				}
+				if($flag)
+					return json_encode(["result" => 1]);
+				else 
+					return json_encode(["result" => 0]);
+					
+			} else {
+				return json_encode(["result" => 0, "message" => "input empty"]);
 			}
-			if($flag)
-				return json_encode(["result" => 1]);
-			else 
-				return json_encode(["result" => 0]);
-				
-		} else {
-			return json_encode(["result" => 0, "message" => "input empty"]);
+		} catch (\Exception $th) {
+			return $th->getMessage();
 		}
 	}
 }
