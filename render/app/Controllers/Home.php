@@ -425,18 +425,36 @@ class Home extends BaseController
                 $respuesta = $datos2[0]["id"];
             }
             try {
-                $compra->insert([
-                    'Identificacion' => $Identificacion,
-                    'Nombre' => $Nombre,
-                    'Apellido' => $Apellido,
-                    'Correo' => $Correo,
-                    'Ciudad' => $Ciudad,
-                    'Pais' => $Pais,
-                    'Creator' => $respuesta,
-                    'Usuario' => $Usuario,
-                    'Rol' => $Rol,
-                ]);
-                $db = \Config\Database::connect();
+				if($Rol == ''){
+					$Rol=Null;
+					$array= "Sin rol";
+					$compra->insert([
+						'Identificacion' => $Identificacion,
+						'Nombre' => $Nombre,
+						'Apellido' => $Apellido,
+						'Correo' => $Correo,
+						'Ciudad' => $Ciudad,
+						'Pais' => $Pais,
+						'Creator' => $respuesta,
+						'Usuario' => $Usuario,
+						'Rol' => $Rol,
+					]);
+					$dato = [
+						'agregado' => 'Para ver al usuario agregado, vaya al apartado SinRol en la parte izquierda de la pantalla',
+					];
+				}else{
+					$compra->insert([
+						'Identificacion' => $Identificacion,
+						'Nombre' => $Nombre,
+						'Apellido' => $Apellido,
+						'Correo' => $Correo,
+						'Ciudad' => $Ciudad,
+						'Pais' => $Pais,
+						'Creator' => $respuesta,
+						'Usuario' => $Usuario,
+						'Rol' => $Rol,
+					]);
+					$db = \Config\Database::connect();
                 $builder = $db->table('roles');
                 $data_array = array('Identificacion' => $Rol);
                 $datos = $builder->select('Nombre')->where($data_array)->get()->getResultArray();
@@ -453,6 +471,9 @@ class Home extends BaseController
                     'Creator' => $respuesta,
                     'Rol' => $array,
                 ];
+				}
+                
+                
             } catch (\Exception $e) {
                 $dato = [
                     'error' => $e->getMessage(),
