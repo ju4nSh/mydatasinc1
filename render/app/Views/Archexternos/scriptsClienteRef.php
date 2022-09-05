@@ -161,16 +161,10 @@ $(document).ready(function() {
                     success: function(data) {
                         var json = JSON.parse(data);
                         if (json.error) {
-                            swal(json.error, {
+                            swal("Verfique llenar todos los campos", {
                                 icon: "warning",
                             });
-                        } else if(json.agregado) {
-                            swal(json.agregado, {
-                                icon: "success",
-                            });
-                            limpiar();
-                            q.loading = false;
-                        }else{
+                        } else {
                             console.log()
                             q.articulos.push(json);
                             swal("Agregado Correctamente", {
@@ -178,7 +172,6 @@ $(document).ready(function() {
                             });
                             limpiar();
                             q.loading = false
-                        
                         }
                     }
                 });
