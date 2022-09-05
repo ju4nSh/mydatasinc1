@@ -89,6 +89,11 @@ class Personas extends Controller
         
         echo json_encode($array);
     }
+
+    public function prueba(){
+        
+        return "sahdjkahsjdhasjh";
+    }
     
     
 }
