@@ -148,5 +148,3 @@ $routes->get('PersonasRolNull', 'Personas::PersonasRolNull');
 $routes->post('modificarRolNull', 'Rol::modificarRolNull');
 
 $routes->post('publicarMasivo', 'Productos::publicarMasivo');
-
-

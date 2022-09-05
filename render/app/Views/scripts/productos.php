@@ -98,11 +98,9 @@
 			},
 			created: async function() {
 				$("#loadProductMELI").addClass("spinner-border spinner-border-sm");
-
-				let url1 = "<?= base_url("getAllProduct") ?>";
 				await $.ajax({
 					type: "post",
-					url: url1,
+					url: "<?= base_url("getAllProduct") ?>",
 					dataType: "json",
 					success: function(response) {
 						if (response.result == 1)
@@ -114,11 +112,8 @@
 					}
 				});
 
-
-				let url = "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null";
-				// this.articulos = JSON.parse(response);
 				await $.ajax({
-					url: url,
+					url: "<?= base_url("getData") ?>/" + limit + "/" + offset + "/" + numLinks + "/null",
 					dataType: "json",
 					success: function(response) {
 						if (response.data.length > 0) {

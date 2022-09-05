@@ -568,8 +568,9 @@ class Productos extends Controller
 		if($file != null) {
 			$file->move("../public/uploads", $file->getName());
 			if($file->hasMoved()) {
-				$excel = new Excel();
-				$excel->index();
+				Excel::index();
+				// $excel = new Excel();
+				// $excel->index();
 			}
 		}
 		else 

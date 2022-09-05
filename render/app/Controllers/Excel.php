@@ -11,7 +11,7 @@ use Symfony\Component\Console\Descriptor\Descriptor;
 
 class Excel extends Controller
 {
-	public function index()
+	public static function index()
 	{
 		$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
 		$reader->setReadDataOnly(TRUE);
@@ -58,9 +58,9 @@ class Excel extends Controller
 					$data[$keys[$j]] = $imagen;
 					continue;
 				}
-				if($keys[$j] == "attributes") {
+				if ($keys[$j] == "attributes") {
 					$auxAt = [];
-					for($k = $j, $c = 0; $k < $j + 4; $k++, $c++) {
+					for ($k = $j, $c = 0; $k < $j + 4; $k++, $c++) {
 						$auxAt[] = [
 							"id" => $attributes[$c],
 							"value_name" => $colProduct[$offset + $k]
@@ -69,7 +69,7 @@ class Excel extends Controller
 					$data[$keys[$j]] =  $auxAt;
 					continue;
 				}
-				if($keys[$j] == "descripcion") {
+				if ($keys[$j] == "descripcion") {
 					$description = $colProduct[$offset + $j + 3];
 					break;
 				}
@@ -97,7 +97,7 @@ class Excel extends Controller
 					"codigo"  => $idP,
 					"imagen" => json_encode($jsonImagen),
 					"link" => $linkP,
-					"cantidad" =>$response["available_quantity"],
+					"cantidad" => $response["available_quantity"],
 					"descripcion" =>  $description,
 					"Owner" => session("id"),
 				];
@@ -111,7 +111,7 @@ class Excel extends Controller
 			} else if (array_key_exists("status", $respuesta)) {
 				if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
 					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
-					return;
+				return;
 			} else {
 				echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
 				return;
