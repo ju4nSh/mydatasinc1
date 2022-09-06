@@ -8,6 +8,6 @@ class ProductoSeeder extends Seeder
 {
     public function run()
     {
-        //
+        $this->db->table('productos');
     }
 }

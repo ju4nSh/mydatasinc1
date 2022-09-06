@@ -30,6 +30,9 @@
                             }
                         }                       
                         
+                    },
+                    error: function(errors) {
+                        console.log(errors);
                     }
                 });
             }
