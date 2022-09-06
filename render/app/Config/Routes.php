@@ -149,6 +149,8 @@ $routes->post('modificarRolNull', 'Rol::modificarRolNull');
 
 $routes->post('publicarMasivo', 'Productos::publicarMasivo');
 
+$routes->cli('pruebacli',   'Personas::prueba');
+
 
 // metodos CLI
 $routes->cli('getAllProductCli/(:num)', 'Productos::getAllProductCli/$1');
