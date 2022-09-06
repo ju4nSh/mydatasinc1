@@ -1,16 +1,5 @@
 <?= $this->extend("Dis/admin/dashboard"); ?>
 
-<?= $this->section("head"); ?>
-<?= $this->include("Partes/head"); ?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navLateral"); ?>
-<?= $this->include("Partes/navLateral");?>
-<?= $this->endSection() ?>
-
-<?= $this->section("navArriba"); ?>
-<?= $this->include("Partes/navArriba");?>
-<?= $this->endSection() ?>
 
 <?= $this->section("contenido"); ?>
 
@@ -99,5 +88,5 @@
 <?= $this->endSection("contenido") ?>
 
 <?= $this->section("funciones"); ?>
-<?= $this->include("Archexternos/scriptsClientesSinRol")?>
+    <?= $this->include("Archexternos/scriptsClientesSinRol")?>
 <?= $this->endSection() ?>

@@ -53,7 +53,7 @@ class Home extends BaseController
 
 	public function guardar()
 	{
-		if ($this->request->getVar("usuario") != '' && $this->request->getVar("password")) {
+		if ($this->validate($this->usuario::$rules)) {
 			try {
 				$user = $this->usuario->escapeString($this->request->getVar("usuario"));
 				$pass =  $this->usuario->escapeString($this->request->getVar("password"));
@@ -78,8 +78,10 @@ class Home extends BaseController
 					echo json_encode(["result" => 2]);
 				}
 			} catch (\Exception $e) {
-				echo json_encode(["result" => 3]);
 			}
+		}else{
+			// return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+			echo json_encode(["errors" => $this->validator->getErrors()]);
 		}
 	}
 	public function tablaProductoHealth()
