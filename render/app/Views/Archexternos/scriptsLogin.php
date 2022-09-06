@@ -9,7 +9,6 @@ async function enviar(e) {
         dataType: "json",
         success:async function(data) {
             if (data.result == 1) {
-                alert(2)
                 location.replace('<?= base_url("index") ?>');
             } else if(data.result == 3) {
                 await swal("Error", "rellene los campos", "error")
