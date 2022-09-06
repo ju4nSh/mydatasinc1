@@ -156,3 +156,7 @@ $routes->cli('updateStatusLikeName/(:any)', 'Productos::updateStatusLikeName/$1'
 
 // generando los archivos xlsx dependiendo de la categoria
 $routes->post('generateXlsx', 'Productos::generateXlsx');
+
+
+// comandos delm CLI PRODUCTOS
+$routes->cli('help_command', 'Commands::help_command');

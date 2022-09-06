@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Controller;
 use App\Models\Producto;
 use App\Models\Usuarios;
@@ -390,8 +391,8 @@ class Productos extends Controller
 		$_today = date_timestamp_get($_time);
 
 		if (($_today - $dUpdate) >= 86400) {
-			if (count($this->producto->findAll()) > 0) {
-				$this->producto->truncate();
+			if (count($this->producto->where("owner", session("id"))->findAll()) > 0) {
+				$this->producto->where("owner", session("id"))->delete();
 			}
 			$respuesta = $this->mercadolibre->getAllProduct($scroll_id);
 			$respuesta = (array) json_decode($respuesta);
@@ -495,7 +496,12 @@ class Productos extends Controller
 		if (array_key_exists("status", $questions)) {
 			echo json_encode(["result" => 0, "mensaje" => $questions["message"]]);
 		} else {
+			// barra de progreso
+			$totalSteps = count($questions["questions"]);
+			$currStep   = 1;
+			// fin barra
 			foreach ($questions["questions"] as $question) {
+				CLI::showProgress($currStep++, $totalSteps);
 				$aux = [];
 				$quest = [];
 				if ($question->status == "UNANSWERED") {
@@ -535,15 +541,21 @@ class Productos extends Controller
 				echo json_encode(["result" => 0, "mensaje" => "No tiene preguntas pendientes"]);
 			}
 		}
+		CLI::showProgress(false);
 	}
 
-	public function getInfoProduct($code)
+	public function getInfoProduct($code, ?int $user_id = null)
 	{
-		$producto = $this->producto->where("codigo", $code)->where("Owner", session("id"))->find();
-		if ($producto) {
-			return $producto;
-		} else {
-			return 0;
+		try {
+			$owner = (!empty(session("id"))) ? session("id") : $user_id;
+			$producto = $this->producto->where("codigo", $code)->where("Owner", $owner)->find();
+			if ($producto) {
+				return $producto;
+			} else {
+				return 0;
+			}
+		} catch (\Exception $th) {
+			return $th->getMessage();
 		}
 	}
 
@@ -567,27 +579,26 @@ class Productos extends Controller
 	public function publicarMasivo()
 	{
 		$file = $this->request->getFile("file");
-		if($file != null) {
+		if ($file != null) {
 			$file->move("../public/uploads", $file->getName());
-			if($file->hasMoved()) {
+			if ($file->hasMoved()) {
 				Excel::index();
 			}
-		}
-		else 
+		} else
 			echo json_encode(["result" => 0, "mensaje" => "elija un archivo"]);
 	}
 	public function getAllProductCli($id = '', $scroll_id = '')
 	{
 		$usuario = new Usuarios();
-		$user = $id;
-		$_date = $usuario->select("dateProductUpdated")->where("id", $user)->find();
+		$user_id = $id;
+		$_date = $usuario->select("dateProductUpdated")->where("id", $user_id)->find();
 		$dUpdate = strtotime($_date[0]["dateProductUpdated"]);
 		$_time = new DateTime();
 		$_today = date_timestamp_get($_time);
 
 		if (($_today - $dUpdate) >= 86400) {
-			if (count($this->producto->findAll()) > 0) {
-				$this->producto->truncate();
+			if (count($this->producto->where("owner", $user_id)->findAll()) > 0) {
+				$this->producto->where("owner", $user_id)->delete();
 			}
 			$respuesta = $this->mercadolibre->getAllProduct($scroll_id);
 			$respuesta = (array) json_decode($respuesta);
@@ -595,11 +606,16 @@ class Productos extends Controller
 				echo json_encode(["result" => 0, "mensaje" => $respuesta["message"]]);
 			} else if (array_key_exists("scroll_id", $respuesta) && count($respuesta["results"]) > 0) {
 				$this->resultados[] = $respuesta["results"];
-				$this->getAllProductCli($user, $respuesta["scroll_id"]);
+				$this->getAllProductCli($user_id, $respuesta["scroll_id"]);
 			} else {
 				$flag = false;
 				// proceso para buscar las caracteristicas de los productos por su codigo
+				// barra de progreso
+				$totalSteps = count($this->resultados);
+				$currStep   = 1;
+				// fin barra
 				foreach ($this->resultados as $value) {
+					CLI::showProgress($currStep++, $totalSteps);
 					foreach ($value as $pro) {
 						$imagenes = [];
 						$p = $this->mercadolibre->getInfoProduct($pro);
@@ -620,7 +636,7 @@ class Productos extends Controller
 								"link" =>  $p->permalink,
 								"descripcion" => json_encode($p->descriptions),
 								"estado" => $p->status == "paused" ? 0 : 1,
-								"Owner" => $user,
+								"Owner" => $user_id,
 							];
 
 							if ($this->producto->save($dataProduct)) {
@@ -632,7 +648,7 @@ class Productos extends Controller
 				if ($flag) {
 					$time = new DateTime();
 					$data_user = [
-						"id" => $user,
+						"id" => $user_id,
 						"dateProductUpdated" => $time->setTimestamp($time->getTimestamp())->format("Y-m-d H:i:s"),
 					];
 					if ($usuario->save($data_user)) {
@@ -644,8 +660,9 @@ class Productos extends Controller
 					echo json_encode(["result" => 0]);
 			}
 		} else {
-			echo json_encode(["result" => 2]);
+			echo json_encode(["result" => 2, "alert" => "ya esta actualizado"]);
 		}
+		CLI::showProgress(false);
 	}
 
 	/**
@@ -656,7 +673,7 @@ class Productos extends Controller
 	public function updateStatusLikeName(string $like_name = '', string $action = '', string $code = '')
 	{
 		try {
-			if($like_name != "" && $action != "") {
+			if ($like_name != "" && $action != "") {
 				$code = $code != '' ? $code : '';
 				$products = $this->producto->where("codigo <> '" . $code . "'")->like("nombre", $like_name)->findAll();
 				$flag = false;
@@ -664,11 +681,10 @@ class Productos extends Controller
 					$this->pausarActivarEliminar($value["codigo"], $action);
 					$flag = true;
 				}
-				if($flag)
+				if ($flag)
 					return json_encode(["result" => 1]);
-				else 
+				else
 					return json_encode(["result" => 0]);
-					
 			} else {
 				return json_encode(["result" => 0, "message" => "input empty"]);
 			}
@@ -681,7 +697,7 @@ class Productos extends Controller
 	{
 		try {
 			$category = $this->producto->escapeString($this->request->getVar("category"));
-			if($category != "") {
+			if ($category != "") {
 				$attr =  $this->request->getVar("attributes");
 				Excel::generateExcel($category, $attr);
 				echo json_encode(["result" => 1, "data" => $category]);
