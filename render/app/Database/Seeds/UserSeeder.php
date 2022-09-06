@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'Creator' => $faker->randomElement([1, 0]),
             'Foto' => $faker->imageUrl($width = 640, $height = 480),
             'Rol' => 0,
-            'userid' => $faker->randomElement(['833930674', '833930674']),
+            'userid' => '833930674',
         ];
         $this->db->table('users')->insert($data);
 
