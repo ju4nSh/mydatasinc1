@@ -19,7 +19,7 @@ class Usuarios extends Model{
         ],
         'password' => [
             'label'  => 'Contraseña',
-            'rules'  => 'required|min_length[10]',
+            'rules'  => 'required|min_length[8]',
             'errors' => [
                 'required' => 'el campo {field} es requerido',
                 'min_length' => '{field} debe tener 8 caracteres',

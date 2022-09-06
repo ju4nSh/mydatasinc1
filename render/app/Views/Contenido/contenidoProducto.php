@@ -60,10 +60,10 @@
 									</div>
 								</div>
 								<div class="btn-group col-md-12" role="group" aria-label="Button group">
-									<a :href="p.link" target="_blank" class="btn btn-light" type="button"><i class="fas fa-location-arrow"></i></a>
-									<button id="editarProductos" class="btn btn-primary " type="button" data-target="#modalActualizarProductos" data-toggle="modal"><i class="fas fa-edit"></i></button>
-									<button @click="pausarPublicacion" :data-estado="p.estado" class="btn" :class="{'btn-warning' : p.estado == 1 , 'btn-info' : p.estado == 0}" type="button"><i class="fas" :class="{'fa-pause' : p.estado == 1, 'fa-play': p.estado == 0}"></i></button>
-									<button @click="eliminarPublicacion" class="btn btn-danger" type="button"><i class="fas fa-trash-alt"></i></button>
+									<a title="Ver el producto en mercadolibre" :href="p.link" target="_blank" class="btn btn-light" type="button"><i class="fas fa-location-arrow"></i></a>
+									<button title="editar producto" id="editarProductos" class="btn btn-primary " type="button" data-target="#modalActualizarProductos" data-toggle="modal"><i class="fas fa-edit"></i></button>
+									<button :title="p.estado == 1 ? 'pausar producto' : 'activar producto'" @click="pausarPublicacion" :data-estado="p.estado" class="btn" :class="p.estado == 1 ? 'btn-warning' : 'btn-info' " ype="button"><i class="fas" :class="p.estado == 1 ? 'fa-pause' : 'fa-play' "></i></button>
+									<button title="eliminar producto" @click="eliminarPublicacion" class="btn btn-danger" type="button"><i class="fas fa-trash-alt"></i></button>
 								</div>
 							</div>
 						</div>
