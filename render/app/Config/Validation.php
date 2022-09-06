@@ -26,7 +26,7 @@ class Validation extends BaseConfig
         FileRules::class,
         CreditCardRules::class,
     ];
-
+    
     /**
      * Specifies the views that are used to display the
      * errors.
@@ -37,7 +37,7 @@ class Validation extends BaseConfig
         'list'   => 'CodeIgniter\Validation\Views\list',
         'single' => 'CodeIgniter\Validation\Views\single',
     ];
-
+    
     //--------------------------------------------------------------------
     // Rules
     //--------------------------------------------------------------------
