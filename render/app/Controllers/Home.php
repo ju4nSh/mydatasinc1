@@ -81,6 +81,7 @@ class Home extends BaseController
 			}
 		}else{
 			// return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+			// throw 
 			echo json_encode(["errors" => $this->validator->getErrors()]);
 		}
 	}

@@ -104,11 +104,11 @@
                 <div class="card-body">
                   <form role="form" id="form" @submit.prevent="enviar()">
                     <div class="mb-3" id="">
-                      <input type="text" class="form-control form-control-lg" placeholder="User" aria-label="user" id="Usuario" name="usuario" minlength="3" maxlength="15">
+                      <input type="text" class="form-control form-control-lg" :class="errors.usuario ? 'border border-danger' : ''" placeholder="User" id="Usuario" name="usuario">
                         <span v-if="errors.usuario" class="text-sm text-danger">{{errors.usuario}}</span>
                     </div>
                     <div class="mb-3">
-                      <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" id="password" name="password" minlength="4" maxlength="20">
+                      <input type="password" class="form-control form-control-lg" :class="errors.password ? 'border border-danger' : ''" placeholder="Password" id="password" name="password">
                       <span v-if="errors.password" class="text-sm text-danger">{{errors.password}}</span>
                     </div>
                     
