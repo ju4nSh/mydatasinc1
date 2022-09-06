@@ -160,5 +160,5 @@ $routes->cli('updateStatusLikeName/(:any)', 'Productos::updateStatusLikeName/$1'
 $routes->post('generateXlsx', 'Productos::generateXlsx');
 
 
-// comandos delm CLI PRODUCTOS
+// comandos del CLI PRODUCTOS
 $routes->cli('help_command', 'Commands::help_command');

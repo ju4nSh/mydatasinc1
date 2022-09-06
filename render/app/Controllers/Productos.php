@@ -191,82 +191,123 @@ class Productos extends Controller
 	public function publicarMercadolibre()
 	{
 		if ($this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("categoria") != "" && $this->request->getVar("cantidad") != "" && $this->request->getVar("imagen") != "" && $this->request->getVar("attributes") != "") {
-			$data = [
-				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
-				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
-				"categoria" => $this->producto->escapeString($this->request->getVar("categoria")),
-				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
-				"imagen" => json_decode($this->request->getVar("imagen")),
-				"descripcion" => $this->request->getVar("descripcion"),
-				"attributes" => json_decode($this->request->getVar("attributes")),
-				"mshops" => $this->request->getVar("mshops")
+
+			$rule = [
+				"nombre" => "required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ\- ]*$/u]|min_length[3]",
+				"precio" => "required|numeric|min_length[4]",
+				"categoria" => "required|alpha_numeric|min_length[4]",
+				"cantidad" => "required|numeric|min_length[1]",
+				"imagen" => "required",
+				"descripcion" => "regex_match[/^[0-9a-zñáéíóúüA-ZÑÁÉÍÓÚÜ\- ]*$/u]|min_length[0]",
+				"mshops" => "required|alpha|min_length[4]",
 			];
-			$imagen = $data["imagen"];
-			foreach ($imagen as $key => $img) {
-				$imagen[$key] = array("source" => $img);
-			}
-			if ($data["mshops"] == "true")
-				$datos = [
-					"title" => $data["nombre"],
-					"category_id" => $data["categoria"],
-					"price" => $data["precio"],
-					"currency_id" => "COP",
-					"available_quantity" => $data["cantidad"],
-					"condition" => "new",
-					"listing_type_id" => "gold_pro",
-					"pictures" => $imagen,
-					"attributes" => $data["attributes"],
-					"channels" => ["marketplace", "mshops"],
-				];
-			else
-				$datos = [
-					"title" => $data["nombre"],
-					"category_id" => $data["categoria"],
-					"price" => $data["precio"],
-					"currency_id" => "COP",
-					"available_quantity" => $data["cantidad"],
-					"condition" => "new",
-					"listing_type_id" => "gold_pro",
-					"pictures" => $imagen,
-					"attributes" => $data["attributes"],
-					"channels" => ["marketplace"],
-				];
 
-			$respuesta = $this->mercadolibre->postMercadolibre($datos);
-
-			$respuesta = (array) json_decode($respuesta);
-			if (array_key_exists("id", $respuesta)) {
-				// INSERTAR EN LA BASE DE DATOS
-				$idP = '';
-				$categoryP = '';
-				$linkP = '';
-				$response = $respuesta;
-				$idP = $response["id"];
-				$categoryP = $response["category_id"];
-				$linkP = $response["permalink"];
-				$dataProduct = [
-					"nombre" => $data["nombre"],
-					"precio" => $data["precio"],
-					"categoria" => $categoryP,
-					"codigo"  => $idP,
-					"imagen" => json_encode($data["imagen"]),
-					"link" => $linkP,
-					"cantidad" => $data["cantidad"],
-					"descripcion" => $data["descripcion"],
-					"Owner" => session("id"),
+			$messages = [
+				"nombre" => [
+					"min_length" => "El campo debe tener un minimo de 3 caracteres",
+					"regex_match" => "El campo debe contener solo letras"
+				],
+				"precio" => [
+					"min_length" => "El campo debe tener un minimo de 4 digitos",
+					"numeric" => "El campo debe ser númerico"
+				],
+				"categoria" => [
+					"min_length" => "El campo debe tener un minimo de 4 caracteres"
+				],
+				"cantidad" => [
+					"min_length" => "El campo debe tener un minimo de 1 digito",
+					"numeric" => "El campo debe ser númerico"
+				],
+				"imagen" => [
+					"required" => "El campo imagen no puede ser vacio"
+				],
+				"descripcion" => [
+					"regex_match" => "El campo no debe contener caracteres especiales"
+				],
+				"mshops" => [
+					"min_length" => "El campo debe tener un minimo de 4 caracteres"
+				],
+			];
+			if ($this->validate($rule, $messages)) {
+				$data = [
+					"nombre" => trim($this->producto->escapeString($this->request->getVar("nombre"))),
+					"precio" => trim($this->producto->escapeString($this->request->getVar("precio"))),
+					"categoria" => trim($this->producto->escapeString($this->request->getVar("categoria"))),
+					"cantidad" => trim($this->producto->escapeString($this->request->getVar("cantidad"))),
+					"imagen" => json_decode($this->request->getVar("imagen")),
+					"descripcion" => trim($this->request->getVar("descripcion")),
+					"attributes" => json_decode($this->request->getVar("attributes")),
+					"mshops" => $this->request->getVar("mshops")
 				];
-				$res = $this->producto->save($dataProduct);
-				if ($res) {
-					$this->mercadolibre->addDescriptionMercadolibre($idP, $data["descripcion"]);
-					echo json_encode(["result" => 1]);
-				} else {
-					echo json_encode(["result" => 0]);
+				$imagen = $data["imagen"];
+				foreach ($imagen as $key => $img) {
+					$imagen[$key] = array("source" => $img);
 				}
-			} else if (array_key_exists("status", $respuesta)) {
-				if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
-					echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
+				if ($data["mshops"] == "true")
+					$datos = [
+						"title" => $data["nombre"],
+						"category_id" => $data["categoria"],
+						"price" => $data["precio"],
+						"currency_id" => "COP",
+						"available_quantity" => $data["cantidad"],
+						"condition" => "new",
+						"listing_type_id" => "gold_pro",
+						"pictures" => $imagen,
+						"attributes" => $data["attributes"],
+						"channels" => ["marketplace", "mshops"],
+					];
+				else
+					$datos = [
+						"title" => $data["nombre"],
+						"category_id" => $data["categoria"],
+						"price" => $data["precio"],
+						"currency_id" => "COP",
+						"available_quantity" => $data["cantidad"],
+						"condition" => "new",
+						"listing_type_id" => "gold_pro",
+						"pictures" => $imagen,
+						"attributes" => $data["attributes"],
+						"channels" => ["marketplace"],
+					];
+
+				$respuesta = $this->mercadolibre->postMercadolibre($datos);
+
+				$respuesta = (array) json_decode($respuesta);
+				if (array_key_exists("id", $respuesta)) {
+					// INSERTAR EN LA BASE DE DATOS
+					$idP = '';
+					$categoryP = '';
+					$linkP = '';
+					$response = $respuesta;
+					$idP = $response["id"];
+					$categoryP = $response["category_id"];
+					$linkP = $response["permalink"];
+					$dataProduct = [
+						"nombre" => $data["nombre"],
+						"precio" => $data["precio"],
+						"categoria" => $categoryP,
+						"codigo"  => $idP,
+						"imagen" => json_encode($data["imagen"]),
+						"link" => $linkP,
+						"cantidad" => $data["cantidad"],
+						"descripcion" => $data["descripcion"],
+						"Owner" => session("id"),
+					];
+					$res = $this->producto->save($dataProduct);
+					if ($res) {
+						$this->mercadolibre->addDescriptionMercadolibre($idP, $data["descripcion"]);
+						echo json_encode(["result" => 1]);
+					} else {
+						echo json_encode(["result" => 0]);
+					}
+				} else if (array_key_exists("status", $respuesta)) {
+					if ($respuesta["status"] != 400 || $respuesta["status"] != 401)
+						echo json_encode(["result" => 0, "cause" => $respuesta["cause"], "mensaje" => $respuesta["message"]]);
+				} else {
+					echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
+				}
 			} else {
-				echo json_encode(["result" => 0, "mensaje" => "Ocurrió un error"]);
+				print json_encode(["result" => 5, "errors" => $this->validator->getErrors()]);
 			}
 		} else {
 			echo json_encode(["result" => 0, "mensaje" => "llene todos los campos"]);
@@ -276,72 +317,103 @@ class Productos extends Controller
 	public function actualizarProducto()
 	{
 		if ($this->request->getVar("codigo") != "" && $this->request->getVar("id") != "" && $this->request->getVar("nombre") != "" && $this->request->getVar("precio") != "" && $this->request->getVar("cantidad") != "") {
+			$rule = [
+				"nombre" => "required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ\- ]*$/u]|min_length[3]",
+				"precio" => "required|numeric|min_length[4]",
+				"cantidad" => "required|numeric|min_length[1]",
+				"imagen" => "required",
+				"descripcion" => "regex_match[/^[0-9a-zñáéíóúüA-ZÑÁÉÍÓÚÜ\- ]*$/u]|min_length[0]",
+			];
 
-			$id = $this->producto->escapeString($this->request->getVar("codigo"));
-			$codigo = $this->producto->escapeString($this->request->getVar("id"));
-			$data = [
-				"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
-				"precio" => $this->producto->escapeString($this->request->getVar("precio")),
-				"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
-				"imagen" => json_decode($this->request->getVar("imagen")),
-				"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+			$messages = [
+				"nombre" => [
+					"min_length" => "El campo debe tener un minimo de 3 caracteres",
+					"regex_match" => "El campo debe contener solo letras"
+				],
+				"precio" => [
+					"min_length" => "El campo debe tener un minimo de 4 digitos",
+					"numeric" => "El campo debe ser númerico"
+				],
+				"cantidad" => [
+					"min_length" => "El campo debe tener un minimo de 1 digito",
+					"numeric" => "El campo debe ser númerico"
+				],
+				"imagen" => [
+					"required" => "El campo imagen no puede ser vacio"
+				],
+				"descripcion" => [
+					"regex_match" => "El campo no debe contener caracteres especiales"
+				],
 			];
-			$imagen = $data["imagen"];
-			foreach ($imagen as $key => $img) {
-				$imagen[$key] = array("source" => $img);
-			}
-			$datos = [
-				"title" => $data["nombre"],
-				"price" => $data["precio"],
-				"available_quantity" => $data["cantidad"],
-				"pictures" => $imagen,
-			];
-			// agregar descripcion al producto
-			$descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
-			$descripcion = (array) json_decode($descripcion);
-			// Item already has a description, use PUT instead
-			if (array_key_exists("plain_text", $descripcion)) {
-				if ($descripcion) {
-					//actualizar productos en mercadolibre
-					if ($this->mercadolibre->updateMercadolibre($codigo, $datos)) {
-						// actualizo en la base de datos
-						if ($this->producto->update($id, $data))
-							echo json_encode(["result" => 1]);
-						else
-							echo json_encode(["result" => 0]);
-					} else {
-						echo json_encode(["result" => 10]);
-					}
-				} else {
-					echo json_encode(["result" => 20, "data" => $descripcion]);
+			if ($this->validate($rule, $messages)) {
+				$id = $this->producto->escapeString($this->request->getVar("codigo"));
+				$codigo = $this->producto->escapeString($this->request->getVar("id"));
+				$data = [
+					"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
+					"precio" => $this->producto->escapeString($this->request->getVar("precio")),
+					"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
+					"imagen" => json_decode($this->request->getVar("imagen")),
+					"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+				];
+				$imagen = $data["imagen"];
+				foreach ($imagen as $key => $img) {
+					$imagen[$key] = array("source" => $img);
 				}
-			} else {
-				if (array_key_exists("message", $descripcion)) {
-					//actualizar productos en mercadolibre
-					$re = $this->mercadolibre->updateMercadolibre($codigo, $datos);
-					$re = (array) json_decode($re);
-					if (array_key_exists("id", $re)) {
-						$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
-						if ($descripcion) {
-							$dataAC = [
-								"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
-								"precio" => $this->producto->escapeString($this->request->getVar("precio")),
-								"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
-								"imagen" => ($this->request->getVar("imagen")),
-								"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
-							];
-							if ($this->producto->update($id, $dataAC)) {
+				$datos = [
+					"title" => $data["nombre"],
+					"price" => $data["precio"],
+					"available_quantity" => $data["cantidad"],
+					"pictures" => $imagen,
+				];
+				// agregar descripcion al producto
+				$descripcion = $this->mercadolibre->addDescriptionMercadolibre($codigo, $data["descripcion"]);
+				$descripcion = (array) json_decode($descripcion);
+				// Item already has a description, use PUT instead
+				if (array_key_exists("plain_text", $descripcion)) {
+					if ($descripcion) {
+						//actualizar productos en mercadolibre
+						if ($this->mercadolibre->updateMercadolibre($codigo, $datos)) {
+							// actualizo en la base de datos
+							if ($this->producto->update($id, $data))
 								echo json_encode(["result" => 1]);
-							} else if (array_key_exists("status", $re)) {
-								echo json_encode(["result" => 20, "data" => $descripcion]);
-							}
+							else
+								echo json_encode(["result" => 0]);
 						} else {
 							echo json_encode(["result" => 10]);
 						}
 					} else {
-						echo json_encode(["result" => 0, "cause" => $re["cause"], "mensaje" => $re["message"]]);
+						echo json_encode(["result" => 20, "data" => $descripcion]);
+					}
+				} else {
+					if (array_key_exists("message", $descripcion)) {
+						//actualizar productos en mercadolibre
+						$re = $this->mercadolibre->updateMercadolibre($codigo, $datos);
+						$re = (array) json_decode($re);
+						if (array_key_exists("id", $re)) {
+							$descripcion = $this->mercadolibre->addDescriptionMercadolibrePUT($codigo, $data["descripcion"]);
+							if ($descripcion) {
+								$dataAC = [
+									"nombre" => $this->producto->escapeString($this->request->getVar("nombre")),
+									"precio" => $this->producto->escapeString($this->request->getVar("precio")),
+									"descripcion" => $this->producto->escapeString($this->request->getVar("descripcion")),
+									"imagen" => ($this->request->getVar("imagen")),
+									"cantidad" => $this->producto->escapeString($this->request->getVar("cantidad")),
+								];
+								if ($this->producto->update($id, $dataAC)) {
+									echo json_encode(["result" => 1]);
+								} else if (array_key_exists("status", $re)) {
+									echo json_encode(["result" => 20, "data" => $descripcion]);
+								}
+							} else {
+								echo json_encode(["result" => 10]);
+							}
+						} else {
+							echo json_encode(["result" => 0, "cause" => $re["cause"], "mensaje" => $re["message"]]);
+						}
 					}
 				}
+			} else {
+				print json_encode(["result" => 5, "errors" => $this->validator->getErrors()]);
 			}
 		} else {
 			echo json_encode(["result" => 30]);

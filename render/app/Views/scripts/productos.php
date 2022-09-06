@@ -520,6 +520,14 @@
 								swal("Bien", "producto actualizado!", "success");
 								app.camposVacios = false;
 								$("#cerrarAC").click();
+							}  else if(response.result == 5) {
+								$.each(response.errors, function (indexInArray, valueOfElement) {
+									$(`#${indexInArray}AC`).addClass("border border-danger")
+									$(`#${indexInArray}AC`).val("")
+									$(`#${indexInArray}AC`).prop("placeholder", valueOfElement)
+									$(`#${indexInArray}AC`).prop("title", valueOfElement)
+									console.log(indexInArray, valueOfElement)
+								});
 							} else if (response.result == 30) {
 								swal("Error", "Rellene todos los datos", "info")
 							} else {
@@ -576,7 +584,15 @@
 								app.inputImagen = []
 								app.childrenCategories = []
 								app.detallesEncontrados = []
-							} else {
+							} else if(response.result == 5) {
+								$.each(response.errors, function (indexInArray, valueOfElement) {
+									$(`#${indexInArray}PN`).addClass("border border-danger")
+									$(`#${indexInArray}PN`).val("")
+									$(`#${indexInArray}PN`).prop("placeholder", valueOfElement)
+									$(`#${indexInArray}PN`).prop("title", valueOfElement)
+									console.log(indexInArray, valueOfElement)
+								});
+							} else  {
 								let error = [];
 								$.each(response.cause, function(indexInArray, valueOfElement) {
 									// console.log(valueOfElement.message)
