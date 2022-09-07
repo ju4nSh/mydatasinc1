@@ -77,7 +77,8 @@
                                                         <label for="example-text-input"
                                                             class="form-control-label">Identificacion</label>
                                                         <input class="form-control" type="number" id="Id" name="Id"
-                                                            min="10000000" style="border: 0px;" required>
+                                                            min="10000000" >
+                                                            <span v-if="CondicionvalId == true"  style="color: red;">{{valId}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
@@ -85,8 +86,9 @@
                                                         <label for="example-text-input" class="form-control-label">First
                                                             name</label>
                                                         <input class="form-control" type="text" id="Nombre"
-                                                            name="Nombre" minlength="3" maxlength="15"
-                                                            style="border: 0px;" required>
+                                                            name="Nombre"
+                                                            >
+                                                            <span v-if="CondicionvalNombre == true"  style="color: red;">{{valNombre}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
@@ -94,8 +96,9 @@
                                                         <label for="example-text-input" class="form-control-label">Last
                                                             name</label>
                                                         <input class="form-control" type="text" id="Apellido"
-                                                            name="Apellido" minlength="3" maxlength="20"
-                                                            style="border: 0px;" required>
+                                                            name="Apellido"
+                                                             >
+                                                            <span v-if="CondicionvalApellido == true"  style="color: red;">{{valApellido}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,8 +109,9 @@
                                                         <label for="example-text-input" class="form-control-label">Email
                                                             address</label>
                                                         <input class="form-control" type="email" id="Correo"
-                                                            name="Correo" minlength="11" maxlength="30" required
-                                                            style="border: 0px;">
+                                                            name="Correo" 
+                                                            >
+                                                            <span v-if="CondicionvalCorreo == true"  style="color: red;">{{valCorreo}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -117,8 +121,9 @@
                                                         <label for="example-text-input"
                                                             class="form-control-label">City</label>
                                                         <input class="form-control" type="text" id="Ciudad"
-                                                            name="Ciudad" minlength="3" maxlength="20"
-                                                            style="border: 0px;" required>
+                                                            name="Ciudad" 
+                                                           >
+                                                            <span v-if="CondicionvalCiudad == true"  style="color: red;">{{valCiudad}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -126,7 +131,8 @@
                                                         <label for="example-text-input"
                                                             class="form-control-label">Country</label>
                                                         <input class="form-control" type="text" id="Pais" name="Pais"
-                                                            minlength="3" maxlength="20" required style="border: 0px;">
+                                                            >
+                                                            <span v-if="CondicionvalPais == true"  style="color: red;">{{valPais}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,8 +142,8 @@
                                                         <label for="example-text-input"
                                                             class="form-control-label">Usuario</label>
                                                         <input class="form-control" type="text" id="Usuario"
-                                                            name="Usuario" minlength="3" maxlength="20" required
-                                                            style="border: 0px;">
+                                                            name="Usuario">
+                                                            <span v-if="CondicionvalUsuario == true"  style="color: red;">{{valUsuario}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">

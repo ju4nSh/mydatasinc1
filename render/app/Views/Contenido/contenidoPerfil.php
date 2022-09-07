@@ -24,14 +24,22 @@
                                             <label for="example-text-input" class="form-control-label">First
                                                 name</label>
                                             <input class="form-control" type="text" :value="variable.Nombre" id="Nombre"
-                                                name="Nombre" minlength="3" maxlength="15" required>
+                                                name="Nombre">
+                                                <template v-if="CondicionvalNombre == true" >
+                                                <span  style="color: red;">{{valNombre}}</span>
+                                                </template>
+                                                
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Last name</label>
                                             <input class="form-control" type="text" :value="variable.Apellido"
-                                                id="Apellido" name="Apellido" minlength="6" maxlength="20" required>
+                                                id="Apellido" name="Apellido">
+                                                <template v-if="CondicionvalApellido == true">
+                                                <span   style="color: red;">{{valApellido}}</span>
+                                                </template>
+                                                
                                         </div>
                                     </div>
                                 </div>
@@ -39,7 +47,11 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Email address</label>
                                         <input class="form-control" type="email" :value="variable.Correo" id="Correo"
-                                            name="Correo" minlength="9" maxlength="30" required>
+                                            name="Correo">
+                                            <template v-if="CondicionvalCorreo == true">
+                                            <span   style="color: red;">{{valCorreo}}</span>
+                                            </template>
+                                            
                                     </div>
                                 </div>
                         </div>
@@ -50,21 +62,33 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Address</label>
                                     <input class="form-control" type="text" :value="variable.Direccion" id="Direccion"
-                                        name="Direccion" minlength="9" maxlength="40" required>
+                                        name="Direccion" >
+                                        <template v-if="CondicionvalDireccion == true" >
+                                        <span  style="color: red;">{{valDireccion}}</span>
+                                        </template>
+                                        
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">City</label>
                                     <input class="form-control" type="text" :value="variable.Ciudad" id="Ciudad"
-                                        name="Ciudad" minlength="3" maxlength="20" required>
+                                        name="Ciudad">
+                                        <template v-if="CondicionvalCiudad == true">
+                                        <span   style="color: red;">{{valCiudad}}</span>
+                                        </template>
+                                        
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Country</label>
-                                    <input class="form-control" type="text" minlength="4" maxlength="20"
-                                        :value="variable.Pais" id="Pais" name="Pais" required>
+                                    <input class="form-control" type="text" id="Pais" name="Pais"
+                                        :value="variable.Pais">
+                                        <template v-if="CondicionvalPais == true">
+                                        <span style="color: red;">{{valPais}}</span>
+                                        </template>
+                                        
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -81,15 +105,21 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">About me</label>
-                                    <input class="form-control" type="text" :value="variable.SobreMi" minlength="10"
-                                        maxlength="250" id="SobreMi" name="SobreMi" required>
+                                    <input class="form-control" type="text" :value="variable.SobreMi" name="SobreMi" id="SobreMi">
+                                        <template v-if="CondicionvalSobreMi == true" >
+                                        <span  style="color: red;">{{valSobreMi}}</span>
+                                        </template>
+                                        
+                                        
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Foto Url</label>
-                                    <input class="form-control" type="text" :value="variable.Foto" minlength="15"
-                                        maxlength="255" id="Foto" name="Foto" required>
+                                    <input class="form-control" type="text" :value="variable.Foto" id="Foto" name="Foto">
+                                        <template v-if="CondicionvalFoto == true">
+                                        <span  style="color: red;">{{valFoto}}</span>
+                                        </template>     
                                 </div>
                             </div>
                         </div>
